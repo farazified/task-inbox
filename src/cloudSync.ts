@@ -4,6 +4,7 @@ import type { InboxState } from './types'
 export const GITHUB_REPO = 'farazified/task-inbox'
 export const INBOX_DATA_PATH = 'public/data/inbox.json'
 export const RAW_INBOX_URL = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${INBOX_DATA_PATH}`
+const BUNDLED_DATA_URL = `${import.meta.env.BASE_URL}data/inbox.json`
 const TOKEN_KEY = 'task-inbox:gh-token'
 
 export type CloudStatus = 'off' | 'loading' | 'syncing' | 'synced' | 'offline' | 'error'
@@ -39,16 +40,19 @@ export function mergeStates(local: InboxState, remote: InboxState): InboxState {
 }
 
 export async function fetchCloudState(): Promise<InboxState | null> {
-  try {
-    const res = await fetch(`${RAW_INBOX_URL}?t=${Date.now()}`, { cache: 'no-store' })
-    if (res.status === 404) return null
-    if (!res.ok) throw new Error(`fetch failed (${res.status})`)
-    const data = (await res.json()) as unknown
-    if (!data || typeof data !== 'object') return null
-    return normalizeState(data as InboxState)
-  } catch {
-    return null
+  for (const base of [BUNDLED_DATA_URL, RAW_INBOX_URL]) {
+    try {
+      const res = await fetch(`${base}?t=${Date.now()}`, { cache: 'no-store' })
+      if (res.status === 404) continue
+      if (!res.ok) throw new Error(`fetch failed (${res.status})`)
+      const data = (await res.json()) as unknown
+      if (!data || typeof data !== 'object') continue
+      return normalizeState(data as InboxState)
+    } catch {
+      /* try next source */
+    }
   }
+  return null
 }
 
 type GitHubContent = {

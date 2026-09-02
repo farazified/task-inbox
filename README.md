@@ -58,4 +58,10 @@ Phone opens in **List**. Laptop opens in **Table**. Switch anytime: Table, Kanba
 
 Tap a row to edit. The checkbox (or status) marks it done. **Hide done** tucks completed tasks away.
 
-Tasks are stored in your browser (localStorage). Local dev and the live site are separate lists unless you use the same live URL on every device.
+Tasks sync through GitHub (`public/data/inbox.json`). Local and live stay matched automatically.
+
+- **Read:** live app loads tasks from GitHub on open
+- **Write:** run `./setup-cloud-sync.sh` once so local edits push back
+- **Before push:** `push-task-inbox-live.command` exports your browser tasks into the repo
+
+Use the live URL on your phone (Add to Home Screen) so tasks stay in one place.
