@@ -1,5 +1,5 @@
 import type { DueGroup } from './dates'
-import type { Client, Task } from './types'
+import type { Client, Task, TaskProgress } from './types'
 
 export type TaskViewProps = {
   tasks: Task[]
@@ -7,7 +7,7 @@ export type TaskViewProps = {
   hideCompleted: boolean
   emptyTitle?: string
   onToggle: (id: string) => void
-  onStatusChange?: (taskId: string, done: boolean) => void
+  onStatusChange?: (taskId: string, progress: TaskProgress) => void
   onOpen: (id: string) => void
   onClientChange?: (taskId: string, clientId: string) => void
   onDueChange?: (taskId: string, dueDate: string | null) => void

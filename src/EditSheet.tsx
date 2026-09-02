@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { chipVars } from './chipVars'
 import { addDaysISO, formatDue, todayISO } from './dates'
+import { PROGRESS_LABELS, PROGRESS_OPTIONS, taskProgress } from './taskStatus'
 import { trimNotes, trimTitle } from './validate'
 import { TrashIcon } from './TrashIcon'
-import { PERSONAL_ID, type Client, type Task } from './types'
+import { PERSONAL_ID, type Client, type Task, type TaskProgress } from './types'
 
 type Props = {
   task: Task
@@ -76,6 +77,19 @@ export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
           onChange={(event) => setNotes(event.target.value)}
           onBlur={commitNotes}
         />
+        <p className="sheet-label">Status</p>
+        <div className="chip-row wrap">
+          {PROGRESS_OPTIONS.map((value) => (
+            <button
+              key={value}
+              type="button"
+              className={`chip ${taskProgress(task) === value ? 'on' : ''}`}
+              onClick={() => onSave({ progress: value as TaskProgress })}
+            >
+              {PROGRESS_LABELS[value]}
+            </button>
+          ))}
+        </div>
         <p className="sheet-label">Client</p>
         <div className="chip-row wrap">
           <button

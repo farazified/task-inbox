@@ -5,6 +5,7 @@ import {
   DEFAULT_CLIENTS,
 } from './defaults'
 import { parseDueDate, trimClientName, trimNotes, trimTitle } from './validate'
+import { normalizeProgress } from './taskStatus'
 import {
   CLIENT_COLORS,
   PERSONAL_ID,
@@ -86,12 +87,15 @@ function parseTasks(raw: unknown, clientIds: Set<string>): Task[] {
         : createdAt
     const notes =
       typeof item.notes === 'string' ? trimNotes(item.notes) : ''
+    const done = Boolean(item.done)
+    const progress = normalizeProgress(item.progress, done)
     tasks.push({
       id,
       title,
       clientId,
       dueDate: parseDueDate(item.dueDate),
-      done: Boolean(item.done),
+      done: progress === 'done',
+      progress,
       ...(notes ? { notes } : {}),
       createdAt,
       updatedAt,

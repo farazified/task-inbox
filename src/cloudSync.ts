@@ -107,6 +107,7 @@ export function statesDiffer(local: InboxState, merged: InboxState): boolean {
       current.clientId !== task.clientId ||
       current.dueDate !== task.dueDate ||
       current.done !== task.done ||
+      current.progress !== task.progress ||
       (current.notes ?? '') !== (task.notes ?? '') ||
       taskStamp(current) !== taskStamp(task)
     ) {

@@ -5,6 +5,7 @@ import { Composer } from './Composer'
 import { dueBucket, dueDateForGroup, todayISO, type DueGroup } from './dates'
 import { EditSheet } from './EditSheet'
 import { loadState, nid, nextColor, saveState } from './storage'
+import { withProgress } from './taskStatus'
 import {
   isCloudEnabled,
   mergeStates,
@@ -27,6 +28,7 @@ import {
   type Filter,
   type InboxState,
   type Task,
+  type TaskProgress,
   type ViewMode,
 } from './types'
 import './App.css'
@@ -196,6 +198,7 @@ export default function App() {
       clientId: parsed.clientId ?? activeClient,
       dueDate: parseDueDate(parsed.dueDate ?? dueDate),
       done: false,
+      progress: 'open',
       createdAt: now,
       updatedAt: now,
     }
@@ -277,15 +280,17 @@ export default function App() {
     onToggle: (id: string) =>
       patch((prev) => ({
         ...prev,
-        tasks: prev.tasks.map((task) =>
-          task.id === id ? touchTask(task, { done: !task.done }) : task,
-        ),
+        tasks: prev.tasks.map((task) => {
+          if (task.id !== id) return task
+          const next: TaskProgress = task.progress === 'done' || task.done ? 'open' : 'done'
+          return touchTask(task, withProgress(next))
+        }),
       })),
-    onStatusChange: (taskId: string, done: boolean) =>
+    onStatusChange: (taskId: string, progress: TaskProgress) =>
       patch((prev) => ({
         ...prev,
         tasks: prev.tasks.map((task) =>
-          task.id === taskId ? touchTask(task, { done }) : task,
+          task.id === taskId ? touchTask(task, withProgress(progress)) : task,
         ),
       })),
     onOpen: (id: string) => setEditingId(id),
@@ -308,9 +313,9 @@ export default function App() {
         ...prev,
         tasks: prev.tasks.map((task) => {
           if (task.id !== taskId) return task
-          if (group === 'done') return touchTask(task, { done: true })
+          if (group === 'done') return touchTask(task, withProgress('done'))
           return touchTask(task, {
-            done: false,
+            ...withProgress(task.progress === 'done' ? 'open' : task.progress),
             dueDate: dueDateForGroup(group),
           })
         }),
@@ -559,7 +564,13 @@ export default function App() {
                   ? null
                   : parseDueDate(next.dueDate) ?? editing.dueDate
             }
-            if ('done' in next) patchTask.done = next.done
+            if ('done' in next || 'progress' in next) {
+              if (next.progress) {
+                Object.assign(patchTask, withProgress(next.progress))
+              } else if (typeof next.done === 'boolean') {
+                Object.assign(patchTask, withProgress(next.done ? 'done' : 'open'))
+              }
+            }
             if ('notes' in next) {
               patchTask.notes =
                 typeof next.notes === 'string' && next.notes.trim()

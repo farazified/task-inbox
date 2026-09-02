@@ -155,7 +155,7 @@ function TaskRow({
           <StatusPicker
             task={task}
             today={today}
-            onChange={(nextDone) => onStatusChange(task.id, nextDone)}
+            onChange={(next) => onStatusChange(task.id, next)}
           />
         ) : (
           <button type="button" className="status-pill" onClick={() => onToggle(task.id)}>

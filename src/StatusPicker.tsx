@@ -1,29 +1,32 @@
-import { STATUS_LABELS, taskStatus, type TaskStatus } from './taskStatus'
-import type { Task } from './types'
+import {
+  PROGRESS_LABELS,
+  PROGRESS_OPTIONS,
+  taskProgress,
+  taskStatus,
+} from './taskStatus'
+import type { Task, TaskProgress } from './types'
 
 type Props = {
   task: Task
   today: string
-  onChange: (done: boolean) => void
+  onChange: (progress: TaskProgress) => void
 }
 
 export function StatusPicker({ task, today, onChange }: Props) {
-  const status = taskStatus(task, today)
-
-  function handleChange(next: TaskStatus) {
-    onChange(next === 'done')
-  }
+  const display = taskStatus(task, today)
+  const progress = taskProgress(task)
 
   return (
     <select
-      className={`status-select status-${status}`}
-      value={status}
-      onChange={(event) => handleChange(event.target.value as TaskStatus)}
+      className={`status-select status-${display}`}
+      value={progress}
+      onChange={(event) => onChange(event.target.value as TaskProgress)}
       aria-label="Status"
     >
-      {(Object.keys(STATUS_LABELS) as TaskStatus[]).map((key) => (
-        <option key={key} value={key} disabled={key === 'overdue' && status !== 'overdue'}>
-          {STATUS_LABELS[key]}
+      {PROGRESS_OPTIONS.map((key) => (
+        <option key={key} value={key}>
+          {PROGRESS_LABELS[key]}
+          {key === 'open' && display === 'overdue' ? ' (overdue)' : ''}
         </option>
       ))}
     </select>

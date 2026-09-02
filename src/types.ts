@@ -6,12 +6,16 @@ export type Client = {
   color: string
 }
 
+export type TaskProgress = 'open' | 'doing' | 'done'
+
 export type Task = {
   id: string
   title: string
   clientId: string
   dueDate: string | null
+  /** Kept in sync with progress === 'done' for older filters/views. */
   done: boolean
+  progress: TaskProgress
   notes?: string
   createdAt: number
   updatedAt?: number

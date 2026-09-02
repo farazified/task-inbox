@@ -480,6 +480,11 @@
   box-shadow: inset 3px 0 0 #34d399;
 }
 
+.task-row.status-row-doing {
+  background: color-mix(in srgb, #f5c563 8%, var(--surface));
+  box-shadow: inset 3px 0 0 #f5c563;
+}
+
 .task-row.status-row-overdue {
   background: color-mix(in srgb, var(--danger) 8%, var(--surface));
   box-shadow: inset 3px 0 0 var(--danger);
@@ -552,6 +557,12 @@
   border-color: color-mix(in srgb, var(--accent) 45%, transparent);
   background: color-mix(in srgb, var(--accent) 14%, var(--surface-2));
   color: #dbe4ff;
+}
+
+.status-select.status-doing {
+  border-color: color-mix(in srgb, #f5c563 55%, transparent);
+  background: color-mix(in srgb, #f5c563 16%, var(--surface-2));
+  color: #fde68a;
 }
 
 .status-select.status-overdue {
