@@ -58,6 +58,7 @@
       "clientId": "andor-willow",
       "dueDate": "2026-09-03",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -67,6 +68,7 @@
       "clientId": "andor-willow",
       "dueDate": "2026-09-06",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -76,6 +78,7 @@
       "clientId": "andor-willow",
       "dueDate": "2026-10-03",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -85,6 +88,7 @@
       "clientId": "andor-willow",
       "dueDate": "2026-10-06",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -94,6 +98,7 @@
       "clientId": "andor-willow",
       "dueDate": "2026-11-03",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -103,6 +108,7 @@
       "clientId": "andor-willow",
       "dueDate": "2026-11-06",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -112,6 +118,7 @@
       "clientId": "andor-willow",
       "dueDate": "2026-12-03",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -121,6 +128,7 @@
       "clientId": "andor-willow",
       "dueDate": "2026-12-06",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -130,6 +138,7 @@
       "clientId": "elizabetta",
       "dueDate": "2026-09-08",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -139,6 +148,7 @@
       "clientId": "elizabetta",
       "dueDate": "2026-09-15",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -148,6 +158,7 @@
       "clientId": "elizabetta",
       "dueDate": "2026-10-08",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -157,6 +168,7 @@
       "clientId": "elizabetta",
       "dueDate": "2026-10-15",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -166,6 +178,7 @@
       "clientId": "elizabetta",
       "dueDate": "2026-11-08",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -175,6 +188,7 @@
       "clientId": "elizabetta",
       "dueDate": "2026-11-15",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -184,6 +198,7 @@
       "clientId": "elizabetta",
       "dueDate": "2026-12-08",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -193,6 +208,7 @@
       "clientId": "elizabetta",
       "dueDate": "2026-12-15",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -202,6 +218,7 @@
       "clientId": "qbounce-sport",
       "dueDate": "2026-09-09",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -211,6 +228,7 @@
       "clientId": "qbounce-sport",
       "dueDate": "2026-09-13",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -220,6 +238,7 @@
       "clientId": "qbounce-sport",
       "dueDate": "2026-10-09",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -229,6 +248,7 @@
       "clientId": "qbounce-sport",
       "dueDate": "2026-10-13",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -238,6 +258,7 @@
       "clientId": "qbounce-sport",
       "dueDate": "2026-11-09",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -247,6 +268,7 @@
       "clientId": "qbounce-sport",
       "dueDate": "2026-11-13",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -256,6 +278,7 @@
       "clientId": "qbounce-sport",
       "dueDate": "2026-12-09",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -265,6 +288,7 @@
       "clientId": "qbounce-sport",
       "dueDate": "2026-12-13",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -274,6 +298,7 @@
       "clientId": "fibropool",
       "dueDate": "2026-09-12",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -283,6 +308,7 @@
       "clientId": "fibropool",
       "dueDate": "2026-09-16",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -292,6 +318,7 @@
       "clientId": "fibropool",
       "dueDate": "2026-10-12",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -301,6 +328,7 @@
       "clientId": "fibropool",
       "dueDate": "2026-10-16",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -310,6 +338,7 @@
       "clientId": "fibropool",
       "dueDate": "2026-11-12",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -319,6 +348,7 @@
       "clientId": "fibropool",
       "dueDate": "2026-11-16",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -328,6 +358,7 @@
       "clientId": "fibropool",
       "dueDate": "2026-12-12",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -337,6 +368,7 @@
       "clientId": "fibropool",
       "dueDate": "2026-12-16",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -346,6 +378,7 @@
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-09-13",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -355,6 +388,7 @@
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-09-17",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -364,6 +398,7 @@
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-10-13",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -373,6 +408,7 @@
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-10-17",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -382,6 +418,7 @@
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-11-13",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -391,6 +428,7 @@
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-11-17",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -400,6 +438,7 @@
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-12-13",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -409,6 +448,7 @@
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-12-17",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -418,6 +458,7 @@
       "clientId": "snyders-furniture",
       "dueDate": "2026-09-23",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -427,6 +468,7 @@
       "clientId": "snyders-furniture",
       "dueDate": "2026-09-27",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -436,6 +478,7 @@
       "clientId": "snyders-furniture",
       "dueDate": "2026-10-23",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -445,6 +488,7 @@
       "clientId": "snyders-furniture",
       "dueDate": "2026-10-27",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -454,6 +498,7 @@
       "clientId": "snyders-furniture",
       "dueDate": "2026-11-23",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -463,6 +508,7 @@
       "clientId": "snyders-furniture",
       "dueDate": "2026-11-27",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -472,6 +518,7 @@
       "clientId": "snyders-furniture",
       "dueDate": "2026-12-23",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -481,6 +528,7 @@
       "clientId": "snyders-furniture",
       "dueDate": "2026-12-27",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -490,6 +538,7 @@
       "clientId": "wired4signs-usa",
       "dueDate": "2026-09-26",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -499,6 +548,7 @@
       "clientId": "wired4signs-usa",
       "dueDate": "2026-09-30",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -508,6 +558,7 @@
       "clientId": "wired4signs-usa",
       "dueDate": "2026-10-26",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -517,6 +568,7 @@
       "clientId": "wired4signs-usa",
       "dueDate": "2026-10-30",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -526,6 +578,7 @@
       "clientId": "wired4signs-usa",
       "dueDate": "2026-11-26",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -535,6 +588,7 @@
       "clientId": "wired4signs-usa",
       "dueDate": "2026-11-30",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -544,6 +598,7 @@
       "clientId": "wired4signs-usa",
       "dueDate": "2026-12-26",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -553,6 +608,7 @@
       "clientId": "wired4signs-usa",
       "dueDate": "2026-12-30",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -562,6 +618,7 @@
       "clientId": "electric-ride-on-cars",
       "dueDate": "2026-09-30",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -571,6 +628,7 @@
       "clientId": "electric-ride-on-cars",
       "dueDate": "2026-10-04",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -580,6 +638,7 @@
       "clientId": "electric-ride-on-cars",
       "dueDate": "2026-10-31",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -589,6 +648,7 @@
       "clientId": "electric-ride-on-cars",
       "dueDate": "2026-11-04",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -598,6 +658,7 @@
       "clientId": "electric-ride-on-cars",
       "dueDate": "2026-11-30",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -607,6 +668,7 @@
       "clientId": "electric-ride-on-cars",
       "dueDate": "2026-12-04",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -616,6 +678,7 @@
       "clientId": "electric-ride-on-cars",
       "dueDate": "2026-12-31",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315453,
       "updatedAt": 1788361315453
     },
@@ -625,6 +688,7 @@
       "clientId": "electric-ride-on-cars",
       "dueDate": "2027-01-04",
       "done": false,
+      "progress": "open",
       "createdAt": 1788361315454,
       "updatedAt": 1788361315454
     },
@@ -634,6 +698,7 @@
       "clientId": "personal",
       "dueDate": "2026-09-02",
       "done": false,
+      "progress": "open",
       "createdAt": 1788342597548,
       "updatedAt": 1788342597548
     },
@@ -643,6 +708,7 @@
       "clientId": "qbounce-sport",
       "dueDate": "2026-09-02",
       "done": false,
+      "progress": "open",
       "createdAt": 1788342585295,
       "updatedAt": 1788342585295
     },
@@ -652,6 +718,7 @@
       "clientId": "fibropool",
       "dueDate": "2026-09-02",
       "done": false,
+      "progress": "open",
       "createdAt": 1788342568672,
       "updatedAt": 1788342568672
     },
@@ -661,6 +728,7 @@
       "clientId": "wired4signs-usa",
       "dueDate": "2026-09-02",
       "done": false,
+      "progress": "open",
       "createdAt": 1788342518365,
       "updatedAt": 1788342518365
     },
@@ -670,6 +738,7 @@
       "clientId": "snyders-furniture",
       "dueDate": "2026-09-02",
       "done": true,
+      "progress": "done",
       "createdAt": 1788342485393,
       "updatedAt": 1788372392606
     },
@@ -679,6 +748,7 @@
       "clientId": "snyders-furniture",
       "dueDate": null,
       "done": false,
+      "progress": "open",
       "createdAt": 1788342123727,
       "updatedAt": 1788342123727
     },
@@ -688,8 +758,9 @@
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-09-02",
       "done": false,
+      "progress": "doing",
       "createdAt": 1788341601367,
-      "updatedAt": 1788341601367
+      "updatedAt": 1788375105676
     }
   ],
   "deletedTaskIds": [
@@ -703,6 +774,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788372425621
+    "updatedAt": 1788375106288
   }
 }
