@@ -39,6 +39,16 @@
       "id": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "name": "Madam Sew",
       "color": "#38bdf8"
+    },
+    {
+      "id": "d0005200-2cfb-4462-8942-a70ec5326a1f",
+      "name": "Acme SEO",
+      "color": "#7c9cff"
+    },
+    {
+      "id": "f4cc0be5-8240-4e84-a51c-d7e7fb99416e",
+      "name": "Northwind",
+      "color": "#5eead4"
     }
   ],
   "tasks": [
@@ -664,6 +674,15 @@
       "updatedAt": 1788342485393
     },
     {
+      "id": "d447861b-0611-4f0a-b5be-049f2f9bb9f1",
+      "title": "test",
+      "clientId": "snyders-furniture",
+      "dueDate": null,
+      "done": false,
+      "createdAt": 1788342123727,
+      "updatedAt": 1788342123727
+    },
+    {
       "id": "852ce9e0-513b-4979-9e8d-9882545e06e7",
       "title": "Offboard Madamsew",
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
@@ -685,8 +704,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "table",
+    "viewMode": "calendar",
     "defaultsVersion": 1,
-    "updatedAt": 1788363162006
+    "updatedAt": 1788363743656
   }
 }
