@@ -3,37 +3,37 @@
     {
       "id": "andor-willow",
       "name": "Andor Willow",
-      "color": "#7c9cff"
+      "color": "#f5c563"
     },
     {
       "id": "wired4signs-usa",
       "name": "Wired4Signs USA",
-      "color": "#5eead4"
+      "color": "#f472b6"
     },
     {
       "id": "snyders-furniture",
       "name": "Snyder's Furniture",
-      "color": "#f5c563"
+      "color": "#a78bfa"
     },
     {
       "id": "elizabetta",
       "name": "Elizabetta",
-      "color": "#f472b6"
+      "color": "#34d399"
     },
     {
       "id": "fibropool",
       "name": "FibroPool",
-      "color": "#a78bfa"
+      "color": "#fb923c"
     },
     {
       "id": "electric-ride-on-cars",
       "name": "Electric Ride-On Cars",
-      "color": "#34d399"
+      "color": "#38bdf8"
     },
     {
       "id": "qbounce-sport",
       "name": "Qbounce Sport",
-      "color": "#fb923c"
+      "color": "#fb7185"
     },
     {
       "id": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
@@ -634,6 +634,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788361315453
+    "updatedAt": 1788361470081
   }
 }
