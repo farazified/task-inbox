@@ -701,8 +701,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "list",
+    "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788366787064
+    "updatedAt": 1788366791946
   }
 }
