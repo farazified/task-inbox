@@ -27,9 +27,15 @@ export type Prefs = {
   updatedAt?: number
 }
 
+export type DeletedTask = {
+  id: string
+  deletedAt: number
+}
+
 export type InboxState = {
   clients: Client[]
   tasks: Task[]
+  deletedTaskIds: DeletedTask[]
   prefs: Prefs
 }
 

@@ -11,10 +11,13 @@ type Props = {
 }
 
 export function ClientPicker({ value, clients, onChange, compact }: Props) {
-  const color =
+  const selected =
     value === PERSONAL_ID
-      ? PERSONAL_COLOR
-      : clients.find((client) => client.id === value)?.color ?? PERSONAL_COLOR
+      ? { name: 'Personal', color: PERSONAL_COLOR }
+      : clients.find((client) => client.id === value) ?? {
+          name: 'Personal',
+          color: PERSONAL_COLOR,
+        }
 
   return (
     <div className={`client-picker ${compact ? 'compact' : ''}`}>
@@ -23,11 +26,16 @@ export function ClientPicker({ value, clients, onChange, compact }: Props) {
         value={value}
         onChange={(event) => onChange(event.target.value)}
         aria-label="Client"
-        style={chipVars(color, true)}
+        style={{
+          ...chipVars(selected.color, true),
+          color: selected.color,
+        }}
       >
-        <option value={PERSONAL_ID}>Personal</option>
+        <option value={PERSONAL_ID} style={{ color: PERSONAL_COLOR }}>
+          Personal
+        </option>
         {clients.map((client) => (
-          <option key={client.id} value={client.id}>
+          <option key={client.id} value={client.id} style={{ color: client.color }}>
             {client.name}
           </option>
         ))}

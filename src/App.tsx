@@ -200,9 +200,14 @@ export default function App() {
     const task = state.tasks.find((item) => item.id === id)
     if (!task) return
     if (!window.confirm(`Delete “${task.title}” permanently?`)) return
+    const deletedAt = Date.now()
     patch((prev) => ({
       ...prev,
       tasks: prev.tasks.filter((item) => item.id !== id),
+      deletedTaskIds: [
+        ...prev.deletedTaskIds.filter((item) => item.id !== id),
+        { id, deletedAt },
+      ],
     }))
     if (editingId === id) setEditingId(null)
   }
@@ -363,7 +368,10 @@ export default function App() {
             </div>
             <div className="top-actions">
               {cloudStatus !== 'off' && (
-                <span className={`sync-dot sync-${cloudStatus}`} title={cloudLabel(cloudStatus)}>
+                <span
+                  className={`sync-dot sync-${cloudStatus}`}
+                  title={cloudExplain(cloudStatus)}
+                >
                   {cloudLabel(cloudStatus)}
                 </span>
               )}
@@ -429,10 +437,20 @@ export default function App() {
                     className="filter-client-select"
                     value={clientFilter}
                     onChange={(event) => setFilter(event.target.value || 'all')}
+                    style={
+                      clientFilter
+                        ? {
+                            color:
+                              state.clients.find((client) => client.id === clientFilter)?.color,
+                            borderColor: state.clients.find((client) => client.id === clientFilter)
+                              ?.color,
+                          }
+                        : undefined
+                    }
                   >
                     <option value="">All clients</option>
                     {state.clients.map((client) => (
-                      <option key={client.id} value={client.id}>
+                      <option key={client.id} value={client.id} style={{ color: client.color }}>
                         {client.name}
                       </option>
                     ))}
@@ -545,6 +563,23 @@ export default function App() {
       )}
     </div>
   )
+}
+
+function cloudExplain(status: CloudStatus): string {
+  switch (status) {
+    case 'loading':
+      return 'Checking GitHub for the latest tasks…'
+    case 'syncing':
+      return 'Saving your tasks to GitHub so phone and laptop stay in sync…'
+    case 'synced':
+      return 'Tasks are saved to GitHub. Your phone and laptop stay in sync.'
+    case 'offline':
+      return 'You are offline. Changes stay on this device until you reconnect.'
+    case 'error':
+      return 'Could not sync with GitHub. Your edits are still saved on this device.'
+    default:
+      return 'Cloud sync is off.'
+  }
 }
 
 function cloudLabel(status: CloudStatus): string {

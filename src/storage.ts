@@ -5,7 +5,15 @@ import {
   DEFAULT_CLIENTS,
 } from './defaults'
 import { parseDueDate, trimClientName, trimNotes, trimTitle } from './validate'
-import { CLIENT_COLORS, PERSONAL_ID, type Client, type InboxState, type Task, type ViewMode } from './types'
+import {
+  CLIENT_COLORS,
+  PERSONAL_ID,
+  type Client,
+  type DeletedTask,
+  type InboxState,
+  type Task,
+  type ViewMode,
+} from './types'
 
 const KEY = 'task-inbox:v1'
 const VIEW_MODES = new Set<ViewMode>(['table', 'kanban', 'calendar', 'list'])
@@ -19,6 +27,7 @@ function emptyState(): InboxState {
   return normalizeState({
     clients: buildDefaultClients(),
     tasks: [],
+    deletedTaskIds: [],
     prefs: {
       lastClientId: PERSONAL_ID,
       hideCompleted: false,
@@ -109,6 +118,27 @@ function mergeDefaultClients(clients: Client[]): Client[] {
   return merged
 }
 
+function parseDeletedTaskIds(raw: unknown): DeletedTask[] {
+  if (!Array.isArray(raw)) return []
+  const seen = new Set<string>()
+  const deleted: DeletedTask[] = []
+  for (const item of raw) {
+    if (!isRecord(item)) continue
+    if (typeof item.id !== 'string' || !item.id.trim()) continue
+    const id = item.id.trim()
+    if (seen.has(id)) continue
+    const deletedAt =
+      typeof item.deletedAt === 'number' && Number.isFinite(item.deletedAt)
+        ? item.deletedAt
+        : Date.now()
+    seen.add(id)
+    deleted.push({ id, deletedAt })
+  }
+  return deleted
+}
+
+const TOMBSTONE_TTL_MS = 1000 * 60 * 60 * 24 * 90
+
 export function normalizeState(state: InboxState): InboxState {
   let clients = parseClients(state.clients)
   const defaultsVersion =
@@ -119,7 +149,18 @@ export function normalizeState(state: InboxState): InboxState {
   }
 
   const clientIds = new Set([PERSONAL_ID, ...clients.map((client) => client.id)])
-  const tasks = parseTasks(state.tasks, clientIds)
+  const cutoff = Date.now() - TOMBSTONE_TTL_MS
+  const deletedTaskIds = parseDeletedTaskIds(state.deletedTaskIds).filter(
+    (item) => item.deletedAt >= cutoff,
+  )
+  const deletedAt = new Map(deletedTaskIds.map((item) => [item.id, item.deletedAt]))
+  const tasks = parseTasks(state.tasks, clientIds).filter((task) => {
+    const removedAt = deletedAt.get(task.id)
+    if (removedAt == null) return true
+    return (task.updatedAt ?? task.createdAt) > removedAt
+  })
+  const activeIds = new Set(tasks.map((task) => task.id))
+  const prunedDeletes = deletedTaskIds.filter((item) => !activeIds.has(item.id))
 
   const prefs = state.prefs
   const lastClientId =
@@ -130,6 +171,7 @@ export function normalizeState(state: InboxState): InboxState {
   return {
     clients,
     tasks,
+    deletedTaskIds: prunedDeletes,
     prefs: {
       lastClientId,
       hideCompleted: Boolean(prefs.hideCompleted),
@@ -155,6 +197,7 @@ function parseState(raw: unknown): InboxState {
   return normalizeState({
     clients,
     tasks,
+    deletedTaskIds: parseDeletedTaskIds(raw.deletedTaskIds),
     prefs: {
       lastClientId:
         typeof prefs.lastClientId === 'string' ? prefs.lastClientId : PERSONAL_ID,

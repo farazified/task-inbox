@@ -124,7 +124,9 @@ function TaskRow({
         <span className="task-title">{task.title}</span>
         <span className="task-meta">
           <span className="dot" style={{ background: client?.color ?? '#a78bfa' }} />
-          {label}
+          <span className="client-name" style={{ color: client?.color ?? '#a78bfa' }}>
+            {label}
+          </span>
           {task.dueDate && (
             <>
               <span className="sep">·</span>

@@ -153,7 +153,9 @@ function KanbanCard({
         <span className="kanban-title">{task.title}</span>
         <span className="kanban-meta">
           <span className="dot" style={{ background: client.color }} />
-          {client.name}
+          <span className="client-name" style={{ color: client.color }}>
+            {client.name}
+          </span>
           {task.dueDate && (
             <>
               <span className="sep">·</span>

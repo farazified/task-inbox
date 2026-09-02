@@ -39,6 +39,12 @@ export function mergeStates(local: InboxState, remote: InboxState): InboxState {
   for (const client of remote.clients) clientMap.set(client.id, client)
   for (const client of local.clients) clientMap.set(client.id, client)
 
+  const deletedMap = new Map<string, number>()
+  for (const item of [...remote.deletedTaskIds, ...local.deletedTaskIds]) {
+    const prev = deletedMap.get(item.id) ?? 0
+    if (item.deletedAt >= prev) deletedMap.set(item.id, item.deletedAt)
+  }
+
   const taskMap = new Map<string, InboxState['tasks'][number]>()
   for (const task of remote.tasks) taskMap.set(task.id, task)
   for (const task of local.tasks) {
@@ -50,6 +56,16 @@ export function mergeStates(local: InboxState, remote: InboxState): InboxState {
     taskMap.set(task.id, preferTask(existing, task))
   }
 
+  for (const [id, deletedAt] of deletedMap) {
+    const task = taskMap.get(id)
+    if (!task) continue
+    if ((task.updatedAt ?? task.createdAt) <= deletedAt) {
+      taskMap.delete(id)
+    } else {
+      deletedMap.delete(id)
+    }
+  }
+
   const localAt = local.prefs.updatedAt ?? 0
   const remoteAt = remote.prefs.updatedAt ?? 0
   const prefs = remoteAt > localAt ? remote.prefs : local.prefs
@@ -57,6 +73,7 @@ export function mergeStates(local: InboxState, remote: InboxState): InboxState {
   return normalizeState({
     clients: [...clientMap.values()],
     tasks: [...taskMap.values()],
+    deletedTaskIds: [...deletedMap.entries()].map(([id, deletedAt]) => ({ id, deletedAt })),
     prefs: {
       ...prefs,
       updatedAt: Math.max(localAt, remoteAt, Date.now()),
@@ -78,6 +95,7 @@ function preferTask(
 export function statesDiffer(local: InboxState, merged: InboxState): boolean {
   if (local.tasks.length !== merged.tasks.length) return true
   if (local.clients.length !== merged.clients.length) return true
+  if (local.deletedTaskIds.length !== merged.deletedTaskIds.length) return true
 
   const localTasks = new Map(local.tasks.map((task) => [task.id, task]))
   for (const task of merged.tasks) {
@@ -93,6 +111,11 @@ export function statesDiffer(local: InboxState, merged: InboxState): boolean {
     ) {
       return true
     }
+  }
+
+  const localDeletes = new Map(local.deletedTaskIds.map((item) => [item.id, item.deletedAt]))
+  for (const item of merged.deletedTaskIds) {
+    if (localDeletes.get(item.id) !== item.deletedAt) return true
   }
 
   const localClients = new Map(local.clients.map((client) => [client.id, client]))
@@ -219,7 +242,7 @@ export async function syncWithCloud(
   const merged = mergeStates(local, remote)
   const changed = statesDiffer(local, merged)
 
-  if (isCloudEnabled() && changed && (local.prefs.updatedAt ?? 0) > (remote.prefs.updatedAt ?? 0)) {
+  if (isCloudEnabled() && changed) {
     onStatus('syncing')
     const pushed = await pushCloudState(merged)
     onStatus(pushed ? 'synced' : navigator.onLine ? 'error' : 'offline')

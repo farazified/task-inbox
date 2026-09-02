@@ -572,9 +572,12 @@
   color: #ffc8cf;
 }
 
+.client-name {
+  font-weight: 600;
+}
+
 .client-select {
-  border-color: color-mix(in srgb, var(--chip) 45%, transparent);
-  background: color-mix(in srgb, var(--chip) 12%, var(--surface-2));
+  font-weight: 600;
 }
 
 .task-table tr.is-done .table-task {

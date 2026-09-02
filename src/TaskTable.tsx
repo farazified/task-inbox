@@ -144,7 +144,9 @@ function TaskRow({
         ) : (
           <span className="client-pill">
             <span className="dot" style={{ background: client.color }} />
-            {client.name}
+            <span className="client-name" style={{ color: client.color }}>
+              {client.name}
+            </span>
           </span>
         )}
       </td>
