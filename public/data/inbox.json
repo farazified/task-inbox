@@ -669,9 +669,9 @@
       "title": "Audit",
       "clientId": "snyders-furniture",
       "dueDate": "2026-09-02",
-      "done": false,
+      "done": true,
       "createdAt": 1788342485393,
-      "updatedAt": 1788342485393
+      "updatedAt": 1788372392606
     },
     {
       "id": "d447861b-0611-4f0a-b5be-049f2f9bb9f1",
@@ -703,6 +703,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788366791946
+    "updatedAt": 1788372393230
   }
 }
