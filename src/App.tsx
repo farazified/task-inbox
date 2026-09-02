@@ -1,10 +1,18 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { chipVars } from './chipVars'
 import { ClientsScreen } from './ClientsScreen'
 import { Composer } from './Composer'
 import { dueBucket, todayISO } from './dates'
 import { EditSheet } from './EditSheet'
 import { loadState, nid, nextColor, saveState } from './storage'
+import {
+  getGitHubToken,
+  isCloudEnabled,
+  scheduleCloudPush,
+  setGitHubToken,
+  syncWithCloud,
+  type CloudStatus,
+} from './cloudSync'
 import { InlineClientRename } from './InlineClientRename'
 import { parseTaskInput } from './parseTask'
 import { TaskCalendar } from './TaskCalendar'
@@ -33,10 +41,66 @@ export default function App() {
   const [manualClient, setManualClient] = useState(false)
   const [manualDue, setManualDue] = useState(false)
   const [renamingClientId, setRenamingClientId] = useState<string | null>(null)
+  const [cloudStatus, setCloudStatus] = useState<CloudStatus>('loading')
+  const cloudReady = useRef(false)
+  const skipCloudPush = useRef(false)
+  const stateRef = useRef(state)
+  stateRef.current = state
+
+  useEffect(() => {
+    const envToken = import.meta.env.VITE_GITHUB_TOKEN as string | undefined
+    if (envToken?.trim() && !getGitHubToken()) setGitHubToken(envToken.trim())
+
+    const params = new URLSearchParams(window.location.search)
+    const urlToken = params.get('saveToken')
+    if (urlToken?.trim()) {
+      setGitHubToken(urlToken.trim())
+      params.delete('saveToken')
+      const next = `${window.location.pathname}${params.size ? `?${params}` : ''}`
+      window.history.replaceState({}, '', next)
+    }
+  }, [])
 
   useEffect(() => {
     saveState(state)
+    if (!cloudReady.current || skipCloudPush.current) {
+      skipCloudPush.current = false
+      return
+    }
+    if (isCloudEnabled()) scheduleCloudPush(state, setCloudStatus)
   }, [state])
+
+  useEffect(() => {
+    let cancelled = false
+
+    syncWithCloud(loadState(), setCloudStatus).then(({ state: merged, changed }) => {
+      if (cancelled) return
+      if (changed) {
+        skipCloudPush.current = true
+        setState(merged)
+      }
+      cloudReady.current = true
+    })
+
+    const refresh = () => {
+      if (document.hidden || !cloudReady.current) return
+      syncWithCloud(stateRef.current, setCloudStatus).then(({ state: merged, changed }) => {
+        if (cancelled || !changed) return
+        skipCloudPush.current = true
+        setState(merged)
+      })
+    }
+
+    const poll = window.setInterval(refresh, 30_000)
+    document.addEventListener('visibilitychange', refresh)
+    window.addEventListener('focus', refresh)
+    return () => {
+      cancelled = true
+      clearInterval(poll)
+      document.removeEventListener('visibilitychange', refresh)
+      window.removeEventListener('focus', refresh)
+    }
+  }, [])
 
   useEffect(() => {
     const viewport = window.visualViewport
@@ -77,7 +141,13 @@ export default function App() {
   const editing = state.tasks.find((task) => task.id === editingId) ?? null
 
   function patch(updater: (prev: InboxState) => InboxState) {
-    setState((prev) => updater(prev))
+    setState((prev) => {
+      const next = updater(prev)
+      return {
+        ...next,
+        prefs: { ...next.prefs, updatedAt: Date.now() },
+      }
+    })
   }
 
   function addTask() {
@@ -240,6 +310,11 @@ export default function App() {
               <h1>Tasks</h1>
             </div>
             <div className="top-actions">
+              {cloudStatus !== 'off' && (
+                <span className={`sync-dot sync-${cloudStatus}`} title={cloudLabel(cloudStatus)}>
+                  {cloudLabel(cloudStatus)}
+                </span>
+              )}
               <ViewSwitcher value={viewMode} onChange={setViewMode} />
               <button
                 type="button"
@@ -383,6 +458,23 @@ export default function App() {
       )}
     </div>
   )
+}
+
+function cloudLabel(status: CloudStatus): string {
+  switch (status) {
+    case 'loading':
+      return 'Loading…'
+    case 'syncing':
+      return 'Syncing…'
+    case 'synced':
+      return 'Synced'
+    case 'offline':
+      return 'Offline'
+    case 'error':
+      return 'Sync error'
+    default:
+      return 'Cloud'
+  }
 }
 
 function FilterChip({

@@ -129,6 +129,10 @@ export function normalizeState(state: InboxState): InboxState {
           ? prefs.viewMode
           : defaultViewMode(),
       defaultsVersion: DEFAULTS_VERSION,
+      updatedAt:
+        typeof prefs.updatedAt === 'number' && Number.isFinite(prefs.updatedAt)
+          ? prefs.updatedAt
+          : undefined,
     },
   }
 }
@@ -152,6 +156,10 @@ function parseState(raw: unknown): InboxState {
           : defaultViewMode(),
       defaultsVersion:
         typeof prefs.defaultsVersion === 'number' ? prefs.defaultsVersion : 0,
+      updatedAt:
+        typeof prefs.updatedAt === 'number' && Number.isFinite(prefs.updatedAt)
+          ? prefs.updatedAt
+          : undefined,
     },
   })
 }

@@ -132,6 +132,44 @@
   flex-shrink: 0;
 }
 
+.sync-dot {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.sync-dot::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+  background: var(--muted);
+}
+
+.sync-loading::before,
+.sync-syncing::before {
+  background: #f5c563;
+  animation: sync-pulse 1s ease-in-out infinite;
+}
+
+.sync-synced::before {
+  background: #34d399;
+}
+
+.sync-offline::before,
+.sync-error::before {
+  background: #fb7185;
+}
+
+@keyframes sync-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
 .filter-bar {
   display: flex;
   align-items: center;

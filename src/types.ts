@@ -22,6 +22,7 @@ export type Prefs = {
   hideCompleted: boolean
   viewMode: ViewMode
   defaultsVersion: number
+  updatedAt?: number
 }
 
 export type InboxState = {

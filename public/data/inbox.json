@@ -1,0 +1,66 @@
+{
+  "clients": [
+    {
+      "id": "d0005200-2cfb-4462-8942-a70ec5326a1f",
+      "name": "Acme SEO",
+      "color": "#7c9cff"
+    },
+    {
+      "id": "f4cc0be5-8240-4e84-a51c-d7e7fb99416e",
+      "name": "Northwind",
+      "color": "#5eead4"
+    },
+    {
+      "id": "andor-willow",
+      "name": "Andor Willow",
+      "color": "#f5c563"
+    },
+    {
+      "id": "wired4signs-usa",
+      "name": "Wired4Signs USA",
+      "color": "#f472b6"
+    },
+    {
+      "id": "snyders-furniture",
+      "name": "Snyder's Furniture",
+      "color": "#a78bfa"
+    },
+    {
+      "id": "elizabetta",
+      "name": "Elizabetta",
+      "color": "#34d399"
+    },
+    {
+      "id": "fibropool",
+      "name": "FibroPool",
+      "color": "#fb923c"
+    },
+    {
+      "id": "electric-ride-on-cars",
+      "name": "Electric Ride-On Cars",
+      "color": "#38bdf8"
+    },
+    {
+      "id": "qbounce-sport",
+      "name": "Qbounce Sport",
+      "color": "#fb7185"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "a803b485-905a-4ae1-a57d-6726386b09da",
+      "title": "Buy domain for personal site",
+      "clientId": "personal",
+      "dueDate": "2026-09-02",
+      "done": false,
+      "createdAt": 1788341459650
+    }
+  ],
+  "prefs": {
+    "lastClientId": "personal",
+    "hideCompleted": false,
+    "viewMode": "list",
+    "defaultsVersion": 1,
+    "updatedAt": 1756822400000
+  }
+}

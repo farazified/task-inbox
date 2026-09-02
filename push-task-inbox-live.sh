@@ -19,6 +19,9 @@ fi
 echo "=== Push Task Inbox live (GitHub Pages) ==="
 echo
 
+echo "Publishing local browser tasks to public/data/inbox.json..."
+npm run publish:tasks
+
 git add -A
 
 if git diff --staged --quiet; then
