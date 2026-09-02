@@ -757,10 +757,10 @@
       "title": "Offboard Madamsew",
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-09-02",
-      "done": false,
-      "progress": "doing",
+      "done": true,
+      "progress": "done",
       "createdAt": 1788341601367,
-      "updatedAt": 1788375105676
+      "updatedAt": 1788378397292
     }
   ],
   "deletedTaskIds": [
@@ -774,6 +774,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788378394387
+    "updatedAt": 1788378397903
   }
 }
