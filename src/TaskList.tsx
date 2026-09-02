@@ -1,5 +1,6 @@
 import { PERSONAL_ID, type Client, type Task } from './types'
-import { dueBucket, formatDue, todayISO, type DueBucket } from './dates'
+import { formatDue, todayISO } from './dates'
+import { groupOpenTasksByDue } from './taskGroups'
 
 type Props = {
   tasks: Task[]
@@ -9,15 +10,6 @@ type Props = {
   onToggle: (id: string) => void
   onOpen: (id: string) => void
 }
-
-const LABELS: Record<DueBucket, string> = {
-  overdue: 'Overdue',
-  today: 'Today',
-  upcoming: 'Upcoming',
-  nodate: 'No date',
-}
-
-const ORDER: DueBucket[] = ['overdue', 'today', 'upcoming', 'nodate']
 
 export function TaskList({
   tasks,
@@ -30,13 +22,7 @@ export function TaskList({
   const today = todayISO()
   const open = tasks.filter((task) => !task.done)
   const done = tasks.filter((task) => task.done)
-
-  const groups = ORDER.map((bucket) => ({
-    bucket,
-    items: open
-      .filter((task) => dueBucket(task.dueDate, today) === bucket)
-      .sort(sortOpen),
-  })).filter((group) => group.items.length > 0)
+  const groups = groupOpenTasksByDue(tasks, today)
 
   if (open.length === 0 && (hideCompleted || done.length === 0)) {
     return (
@@ -50,8 +36,11 @@ export function TaskList({
   return (
     <div className="list">
       {groups.map((group) => (
-        <section key={group.bucket} className="group">
-          <h2 className={`group-title ${group.bucket}`}>{LABELS[group.bucket]}</h2>
+        <section key={group.group} className="group">
+          <div className="group-head">
+            <h2 className={`group-title ${group.group}`}>{group.label}</h2>
+            <span className="group-count">{group.items.length}</span>
+          </div>
           <ul>
             {group.items.map((task) => (
               <TaskRow
@@ -69,7 +58,10 @@ export function TaskList({
 
       {!hideCompleted && done.length > 0 && (
         <section className="group done-group">
-          <h2 className="group-title">Done</h2>
+          <div className="group-head">
+            <h2 className="group-title">Done</h2>
+            <span className="group-count">{done.length}</span>
+          </div>
           <ul>
             {done
               .slice()
@@ -138,13 +130,4 @@ function TaskRow({
       </button>
     </li>
   )
-}
-
-function sortOpen(a: Task, b: Task): number {
-  if (a.dueDate && b.dueDate && a.dueDate !== b.dueDate) {
-    return a.dueDate.localeCompare(b.dueDate)
-  }
-  if (a.dueDate && !b.dueDate) return -1
-  if (!a.dueDate && b.dueDate) return 1
-  return b.createdAt - a.createdAt
 }

@@ -3,7 +3,27 @@
   margin: 0 auto;
   background: var(--bg);
   position: relative;
-  padding: 8px 16px 0;
+  padding: 8px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.sidebar {
+  flex-shrink: 0;
+}
+
+.main-pane {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -17,14 +37,29 @@
 
 @media (min-width: 768px) {
   .app {
-    max-width: 1100px;
+    max-width: 1320px;
     padding: 24px 32px 32px;
+    gap: 16px;
+  }
+
+  .workspace {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .sidebar {
+    width: 300px;
+    position: sticky;
+    top: 20px;
+  }
+
+  .main-pane {
     gap: 16px;
   }
 
   .top {
     padding: 0;
-    order: 0;
   }
 
   .top h1,
@@ -36,32 +71,6 @@
     align-items: center;
     flex-wrap: wrap;
     justify-content: flex-end;
-  }
-
-  .filter-bar {
-    order: 1;
-  }
-
-  .composer {
-    position: static;
-    left: auto;
-    transform: none;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    order: 2;
-    z-index: auto;
-  }
-
-  .view-shell,
-  .list {
-    order: 3;
-    padding-bottom: 0;
-  }
-
-  .composer-card {
-    border-radius: 16px;
-    box-shadow: none;
   }
 
   .composer-meta {
@@ -319,7 +328,67 @@
 
 .list,
 .view-shell {
-  padding-bottom: calc(180px + env(safe-area-inset-bottom) + var(--kb));
+  padding-bottom: 8px;
+}
+
+.table-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.table-section {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.table-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.table-section-head .group-title {
+  margin: 0;
+  font-size: 13px;
+}
+
+.table-section-head .group-count {
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.section-overdue .table-section-head {
+  background: color-mix(in srgb, var(--danger) 10%, var(--surface-2));
+}
+
+.section-overdue .table-section-head .group-title {
+  color: var(--danger);
+}
+
+.section-today .table-section-head {
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface-2));
+}
+
+.section-done .table-section-head {
+  background: color-mix(in srgb, #34d399 10%, var(--surface-2));
+}
+
+.table-section .table-wrap {
+  border: 0;
+  border-radius: 0;
+  max-height: none;
+  overflow-x: auto;
 }
 
 .view-switcher {
@@ -758,7 +827,7 @@
 }
 
 .list {
-  padding-bottom: calc(220px + env(safe-area-inset-bottom) + var(--kb));
+  padding-bottom: 8px;
 }
 
 .group {
@@ -774,12 +843,24 @@
   gap: 8px;
 }
 
+.group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
 .group-title {
-  margin: 0 0 8px;
+  margin: 0;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--muted);
+}
+
+.group-count {
+  font-size: 12px;
   color: var(--muted);
 }
 
@@ -880,13 +961,18 @@
 }
 
 .composer {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: calc(10px + env(safe-area-inset-bottom) + var(--kb));
-  width: min(480px, 100%);
-  padding: 0 12px;
-  z-index: 5;
+  position: static;
+  width: 100%;
+  padding: 0;
+  z-index: auto;
+}
+
+.composer-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
 .composer-hint {
@@ -927,13 +1013,6 @@
   outline-offset: 2px;
 }
 
-.composer-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 14px 16px;
-}
-
 .composer-label {
   display: block;
   margin-bottom: 10px;
@@ -945,7 +1024,18 @@
 
 .composer-main {
   display: flex;
+  flex-direction: column;
   gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .composer-main {
+    flex-direction: column;
+  }
+
+  .composer-card {
+    box-shadow: none;
+  }
 }
 
 .composer-meta {

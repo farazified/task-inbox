@@ -77,13 +77,13 @@ export function Composer({
             className="composer-input"
             value={title}
             onChange={(event) => onTitle(event.target.value)}
-            placeholder="What needs doing? Names & dates auto-detect."
+            placeholder="What needs doing?"
             enterKeyHint="done"
             autoComplete="off"
             autoCapitalize="sentences"
           />
           <button className="add-btn" type="submit" disabled={!title.trim()}>
-            Add
+            Add task
           </button>
         </div>
         {guessLabel && <p className="composer-hint">Detected: {guessLabel}</p>}

@@ -326,84 +326,90 @@ export default function App() {
             </div>
           </header>
 
-          <div className="filter-bar">
-            <nav className="filters filters-quick" aria-label="Quick filters">
-              <FilterChip
-                label="All"
-                active={filter === 'all'}
-                onClick={() => setFilter('all')}
+          <div className="workspace">
+            <aside className="sidebar" aria-label="Quick add">
+              <Composer
+                title={title}
+                onTitle={handleTitleChange}
+                clientId={activeClient}
+                onClient={setClient}
+                dueDate={dueDate}
+                onDue={setDueDate}
+                clients={state.clients}
+                onAdd={addTask}
+                manualClient={manualClient}
+                manualDue={manualDue}
+                onManualClient={() => setManualClient(true)}
+                onManualDue={() => setManualDue(true)}
               />
-              <FilterChip
-                label="Today"
-                count={todayCount}
-                active={filter === 'today'}
-                onClick={() => setFilter('today')}
-              />
-              <FilterChip
-                label="Overdue"
-                count={overdueCount}
-                danger
-                active={filter === 'overdue'}
-                onClick={() => setFilter('overdue')}
-              />
-              <FilterChip
-                label="Personal"
-                active={filter === 'personal'}
-                onClick={() => setFilter('personal')}
-              />
-            </nav>
-            <label className="filter-client">
-              <span>Client</span>
-              <select
-                className="filter-client-select"
-                value={clientFilter}
-                onChange={(event) => setFilter(event.target.value || 'all')}
-              >
-                <option value="">All clients</option>
-                {state.clients.map((client) => (
-                  <option key={client.id} value={client.id}>
-                    {client.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            {clientFilter && renamingClientId === clientFilter ? (
-              <InlineClientRename
-                client={state.clients.find((client) => client.id === clientFilter)!}
-                onSave={(name) => {
-                  const ok = renameClient(clientFilter, name)
-                  if (ok) setRenamingClientId(null)
-                  return ok
-                }}
-                onCancel={() => setRenamingClientId(null)}
-              />
-            ) : clientFilter ? (
-              <button
-                type="button"
-                className="text-btn muted rename-link"
-                onClick={() => setRenamingClientId(clientFilter)}
-              >
-                Rename
-              </button>
-            ) : null}
+            </aside>
+
+            <div className="main-pane">
+              <div className="filter-bar">
+                <nav className="filters filters-quick" aria-label="Quick filters">
+                  <FilterChip
+                    label="All"
+                    active={filter === 'all'}
+                    onClick={() => setFilter('all')}
+                  />
+                  <FilterChip
+                    label="Today"
+                    count={todayCount}
+                    active={filter === 'today'}
+                    onClick={() => setFilter('today')}
+                  />
+                  <FilterChip
+                    label="Overdue"
+                    count={overdueCount}
+                    danger
+                    active={filter === 'overdue'}
+                    onClick={() => setFilter('overdue')}
+                  />
+                  <FilterChip
+                    label="Personal"
+                    active={filter === 'personal'}
+                    onClick={() => setFilter('personal')}
+                  />
+                </nav>
+                <label className="filter-client">
+                  <span>Client</span>
+                  <select
+                    className="filter-client-select"
+                    value={clientFilter}
+                    onChange={(event) => setFilter(event.target.value || 'all')}
+                  >
+                    <option value="">All clients</option>
+                    {state.clients.map((client) => (
+                      <option key={client.id} value={client.id}>
+                        {client.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {clientFilter && renamingClientId === clientFilter ? (
+                  <InlineClientRename
+                    client={state.clients.find((client) => client.id === clientFilter)!}
+                    onSave={(name) => {
+                      const ok = renameClient(clientFilter, name)
+                      if (ok) setRenamingClientId(null)
+                      return ok
+                    }}
+                    onCancel={() => setRenamingClientId(null)}
+                  />
+                ) : clientFilter ? (
+                  <button
+                    type="button"
+                    className="text-btn muted rename-link"
+                    onClick={() => setRenamingClientId(clientFilter)}
+                  >
+                    Rename
+                  </button>
+                ) : null}
+              </div>
+
+              {renderView()}
+            </div>
           </div>
-
-          <Composer
-            title={title}
-            onTitle={handleTitleChange}
-            clientId={activeClient}
-            onClient={setClient}
-            dueDate={dueDate}
-            onDue={setDueDate}
-            clients={state.clients}
-            onAdd={addTask}
-            manualClient={manualClient}
-            manualDue={manualDue}
-            onManualClient={() => setManualClient(true)}
-            onManualDue={() => setManualDue(true)}
-          />
-
-          {renderView()}
         </>
       )}
 

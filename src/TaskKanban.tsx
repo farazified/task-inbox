@@ -1,13 +1,14 @@
-import { dueBucket, formatDue, todayISO, type DueBucket } from './dates'
+import { DUE_GROUP_LABELS, DUE_GROUP_ORDER, dueGroup, formatDue, todayISO, type DueGroup } from './dates'
 import type { Client, Task } from './types'
 import { clientLabel, sortTasks } from './taskUtils'
 import type { TaskViewProps } from './taskViewTypes'
 
-const COLUMNS: { id: DueBucket | 'done'; label: string; className?: string }[] = [
-  { id: 'overdue', label: 'Overdue', className: 'overdue-col' },
-  { id: 'today', label: 'Today' },
-  { id: 'upcoming', label: 'Upcoming' },
-  { id: 'nodate', label: 'No date' },
+const COLUMNS: { id: DueGroup | 'done'; label: string; className?: string }[] = [
+  ...DUE_GROUP_ORDER.map((id) => ({
+    id,
+    label: DUE_GROUP_LABELS[id],
+    className: id === 'overdue' ? 'overdue-col' : undefined,
+  })),
   { id: 'done', label: 'Done' },
 ]
 
@@ -28,7 +29,7 @@ export function TaskKanban({
       column.id === 'done'
         ? tasks.filter((task) => task.done).sort((a, b) => b.createdAt - a.createdAt)
         : tasks
-            .filter((task) => !task.done && dueBucket(task.dueDate, today) === column.id)
+            .filter((task) => !task.done && dueGroup(task.dueDate, today) === column.id)
             .sort(sortTasks),
   }))
 
@@ -44,25 +45,27 @@ export function TaskKanban({
   return (
     <div className="view-shell kanban-view">
       <div className="kanban-board">
-        {grouped.map((column) => (
-          <section key={column.id} className={`kanban-col ${column.className ?? ''}`}>
-            <header className="kanban-head">
-              <h2>{column.label}</h2>
-              <span>{column.items.length}</span>
-            </header>
-            <ul>
-              {column.items.map((task) => (
-                <KanbanCard
-                  key={task.id}
-                  task={task}
-                  clients={clients}
-                  onToggle={onToggle}
-                  onOpen={onOpen}
-                />
-              ))}
-            </ul>
-          </section>
-        ))}
+        {grouped
+          .filter((column) => column.items.length > 0)
+          .map((column) => (
+            <section key={column.id} className={`kanban-col ${column.className ?? ''}`}>
+              <header className="kanban-head">
+                <h2>{column.label}</h2>
+                <span>{column.items.length}</span>
+              </header>
+              <ul>
+                {column.items.map((task) => (
+                  <KanbanCard
+                    key={task.id}
+                    task={task}
+                    clients={clients}
+                    onToggle={onToggle}
+                    onOpen={onOpen}
+                  />
+                ))}
+              </ul>
+            </section>
+          ))}
       </div>
     </div>
   )

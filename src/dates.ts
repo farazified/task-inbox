@@ -27,11 +27,81 @@ export function addDaysISO(days: number): string {
 
 export type DueBucket = 'overdue' | 'today' | 'upcoming' | 'nodate'
 
+export type DueGroup =
+  | 'overdue'
+  | 'today'
+  | 'tomorrow'
+  | 'thisWeek'
+  | 'nextWeek'
+  | 'thisMonth'
+  | 'future'
+  | 'nodate'
+
+export const DUE_GROUP_ORDER: DueGroup[] = [
+  'overdue',
+  'today',
+  'tomorrow',
+  'thisWeek',
+  'nextWeek',
+  'thisMonth',
+  'future',
+  'nodate',
+]
+
+export const DUE_GROUP_LABELS: Record<DueGroup, string> = {
+  overdue: 'Overdue',
+  today: 'Today',
+  tomorrow: 'Tomorrow',
+  thisWeek: 'This week',
+  nextWeek: 'Next week',
+  thisMonth: 'This month',
+  future: 'Future',
+  nodate: 'No date',
+}
+
 export function dueBucket(dueDate: string | null, today = todayISO()): DueBucket {
   if (!dueDate) return 'nodate'
   if (dueDate < today) return 'overdue'
   if (dueDate === today) return 'today'
   return 'upcoming'
+}
+
+function startOfWeek(iso: string): string {
+  const date = parseISO(iso)
+  const weekday = date.getDay()
+  const offset = weekday === 0 ? -6 : 1 - weekday
+  date.setDate(date.getDate() + offset)
+  return toISO(date)
+}
+
+function endOfWeek(iso: string): string {
+  const date = parseISO(startOfWeek(iso))
+  date.setDate(date.getDate() + 6)
+  return toISO(date)
+}
+
+function endOfMonth(iso: string): string {
+  const date = parseISO(monthStart(iso))
+  date.setMonth(date.getMonth() + 1)
+  date.setDate(0)
+  return toISO(date)
+}
+
+export function dueGroup(dueDate: string | null, today = todayISO()): DueGroup {
+  if (!dueDate) return 'nodate'
+  if (dueDate < today) return 'overdue'
+  if (dueDate === today) return 'today'
+  if (dueDate === shiftISO(today, 1)) return 'tomorrow'
+
+  const weekEnd = endOfWeek(today)
+  const nextWeekStart = shiftISO(startOfWeek(today), 7)
+  const nextWeekEnd = endOfWeek(nextWeekStart)
+  const monthEnd = endOfMonth(today)
+
+  if (dueDate <= weekEnd) return 'thisWeek'
+  if (dueDate >= nextWeekStart && dueDate <= nextWeekEnd) return 'nextWeek'
+  if (dueDate <= monthEnd) return 'thisMonth'
+  return 'future'
 }
 
 export function formatDueDate(iso: string | null, today = todayISO()): string {
