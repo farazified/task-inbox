@@ -717,10 +717,10 @@
       "title": "Message",
       "clientId": "fibropool",
       "dueDate": "2026-09-02",
-      "done": false,
-      "progress": "doing",
+      "done": true,
+      "progress": "done",
       "createdAt": 1788342568672,
-      "updatedAt": 1788375615843
+      "updatedAt": 1788378393774
     },
     {
       "id": "935c1e99-0d08-4a85-b0d4-783e7d4901dd",
@@ -774,6 +774,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788375671658
+    "updatedAt": 1788378394387
   }
 }
