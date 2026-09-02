@@ -26,6 +26,7 @@ jobs:
       - run: npm run build
         env:
           BASE_PATH: /task-inbox/
+          VITE_GITHUB_TOKEN: ${{ secrets.INBOX_GITHUB_TOKEN }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

@@ -4,19 +4,22 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT"
 
+chmod +x scripts/ensure-cloud-sync.sh
+./scripts/ensure-cloud-sync.sh
+
 if ! command -v gh >/dev/null; then
-  echo "GitHub CLI (gh) is required."
+  echo "Install GitHub CLI first: brew install gh && gh auth login"
+  exit 1
+fi
+
+if ! gh auth status >/dev/null 2>&1; then
+  echo "Run: gh auth login"
   exit 1
 fi
 
 TOKEN="$(gh auth token)"
-cat > .env.local <<EOF
-VITE_GITHUB_TOKEN=$TOKEN
-EOF
+gh secret set INBOX_GITHUB_TOKEN --body "$TOKEN" --repo farazified/task-inbox 2>/dev/null || \
+  gh secret set INBOX_GITHUB_TOKEN --body "$TOKEN"
 
-echo "Wrote .env.local with your GitHub token for local sync."
-echo
-echo "Optional — enable edits from your phone on the live site:"
-echo "  https://farazified.github.io/task-inbox/?saveToken=$TOKEN"
-echo
-echo "Remove saveToken from the URL after it loads once."
+echo "Done — live site can now sync tasks automatically."
+echo "Restart your dashboard: ./start-task-inbox-dashboard.command"

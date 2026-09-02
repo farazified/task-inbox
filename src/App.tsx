@@ -6,7 +6,6 @@ import { dueBucket, todayISO } from './dates'
 import { EditSheet } from './EditSheet'
 import { loadState, nid, nextColor, saveState } from './storage'
 import {
-  getGitHubToken,
   isCloudEnabled,
   scheduleCloudPush,
   setGitHubToken,
@@ -49,15 +48,8 @@ export default function App() {
 
   useEffect(() => {
     const envToken = import.meta.env.VITE_GITHUB_TOKEN as string | undefined
-    if (envToken?.trim() && !getGitHubToken()) setGitHubToken(envToken.trim())
-
-    const params = new URLSearchParams(window.location.search)
-    const urlToken = params.get('saveToken')
-    if (urlToken?.trim()) {
-      setGitHubToken(urlToken.trim())
-      params.delete('saveToken')
-      const next = `${window.location.pathname}${params.size ? `?${params}` : ''}`
-      window.history.replaceState({}, '', next)
+    if (envToken?.trim() && !localStorage.getItem('task-inbox:gh-token')) {
+      setGitHubToken(envToken.trim())
     }
   }, [])
 

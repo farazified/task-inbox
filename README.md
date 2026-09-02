@@ -2,66 +2,46 @@
 
 Dump client and personal tasks from your phone or laptop. Dark, fast, no account.
 
-Same workflow as your **SEO·IQ dashboard**: run locally, push to GitHub, live on GitHub Pages.
+**Everything stays in sync automatically** — local edits, live site, and your phone all share the same task list.
 
 Seven CLI SEO clients are already loaded: Andor Willow, Wired4Signs USA, Snyder's Furniture, Elizabetta, FibroPool, Electric Ride-On Cars, and Qbounce Sport. Add, rename, or delete others from **Clients**. Personal is always there.
 
-## Run locally
+## Daily use
 
-Double-click **`start-task-inbox-dashboard.command`** (opens Chrome at the locked local URL).
+Double-click **`start-task-inbox-dashboard.command`**
 
-Or:
+That starts the local app and turns on auto-sync:
 
-```bash
-./start-task-inbox-dashboard.sh
-npm run serve   # build + preview
-npm run dev     # live reload while editing
-```
+- **Tasks** — every add/edit syncs to GitHub within a second (header shows **Synced**)
+- **App code** — saves auto-push to GitHub; Pages rebuilds in ~1 minute
+- **Local URL:** http://127.0.0.1:5173/
+- **Live URL:** https://farazified.github.io/task-inbox/
 
-Local URL: **http://127.0.0.1:5173/**
+Use the **live URL** on your phone (Add to Home Screen) — same tasks everywhere.
 
-## Go live (like SEO·IQ)
-
-After you change the app:
-
-**Double-click `push-task-inbox-live.command`** — or:
-
-```bash
-./push-task-inbox-live.sh
-```
-
-That commits and runs `git push origin main`. GitHub Pages rebuilds automatically.
-
-Live URL: **https://farazified.github.io/task-inbox/**
-
-## One-time GitHub setup
-
-If this folder is not on GitHub yet:
+## One-time setup
 
 ```bash
 npm install
-git init -b main
-git add -A && git commit -m "Initial commit"
-gh repo create task-inbox --public --source=. --remote=origin
-git push -u origin main
+./setup-cloud-sync.sh
 ```
 
-In the repo on GitHub: **Settings → Pages → Build and deployment → GitHub Actions**.
-
-Use the live URL on your phone (Add to Home Screen) so tasks stay in that browser.
+`setup-cloud-sync.sh` stores your GitHub token so the live site can sync tasks too. You only run this once.
 
 ## Use it
 
-Type a task and tap **Add** or press Enter. Client names and due words (`today`, `tomorrow`, `next week`) are detected as you type. You can also set Client and Due by hand.
+Type a task and tap **Add** or press Enter. Client names and due words (`today`, `tomorrow`, `next week`) are detected as you type.
+
+Due dates show as **today**, **tomorrow**, **thursday**, etc.
 
 Phone opens in **List**. Laptop opens in **Table**. Switch anytime: Table, Kanban, Calendar, or List.
 
 Tap a row to edit. The checkbox (or status) marks it done. **Hide done** tucks completed tasks away.
 
-Tasks sync through GitHub (`public/data/inbox.json`). Local and live stay matched automatically.
+## Manual push (optional)
 
-- **Read:** live app loads tasks from GitHub on open
-- **Write:** run `./setup-cloud-sync.sh` once so local edits push back
-- **Before push:** `push-task-inbox-live.command` exports your browser tasks into the repo
+Usually not needed — auto-sync handles it. If you want to force a push:
 
-Use the live URL on your phone (Add to Home Screen) so tasks stay in one place.
+```bash
+./push-task-inbox-live.sh
+```

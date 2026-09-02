@@ -96,7 +96,7 @@ export function TaskTable({
                   >
                     {onDueChange ? (
                       <DuePicker
-                        mode="date"
+                        compact
                         value={task.dueDate}
                         onChange={(next) => onDueChange(task.id, next)}
                       />

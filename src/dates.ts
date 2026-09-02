@@ -74,20 +74,35 @@ export function calendarCells(monthIso: string): { iso: string; inMonth: boolean
   })
 }
 
+function dayDiff(fromIso: string, toIso: string): number {
+  return Math.round((parseISO(toIso).getTime() - parseISO(fromIso).getTime()) / 86_400_000)
+}
+
+function weekdayLabel(iso: string): string {
+  return parseISO(iso).toLocaleDateString(undefined, { weekday: 'long' }).toLowerCase()
+}
+
 export function formatDue(iso: string | null, today = todayISO()): string {
-  if (!iso) return 'No date'
-  if (iso < today) {
-    const days = Math.round(
-      (parseISO(today).getTime() - parseISO(iso).getTime()) / 86_400_000,
-    )
-    if (days === 1) return 'Yesterday'
-    return `${days}d overdue`
+  if (!iso) return 'no date'
+
+  const diff = dayDiff(today, iso)
+
+  if (diff < 0) {
+    const ago = -diff
+    if (ago === 1) return 'yesterday'
+    if (ago <= 6) return weekdayLabel(iso)
+    return `${ago} days ago`
   }
-  if (iso === today) return 'Today'
-  if (iso === shiftISO(today, 1)) return 'Tomorrow'
-  return parseISO(iso).toLocaleDateString(undefined, {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-  })
+  if (diff === 0) return 'today'
+  if (diff === 1) return 'tomorrow'
+  if (diff <= 6) return weekdayLabel(iso)
+  if (diff === 7) return 'next week'
+
+  return parseISO(iso)
+    .toLocaleDateString(undefined, {
+      weekday: 'long',
+      month: 'short',
+      day: 'numeric',
+    })
+    .toLowerCase()
 }

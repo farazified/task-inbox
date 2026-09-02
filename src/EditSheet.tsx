@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { trimTitle } from './validate'
 import { chipVars } from './chipVars'
-import { addDaysISO, todayISO } from './dates'
+import { addDaysISO, formatDue, todayISO } from './dates'
 import { PERSONAL_ID, type Client, type Task } from './types'
 
 type Props = {
@@ -84,31 +84,31 @@ export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
             className={`chip ${task.dueDate === null ? 'on' : ''}`}
             onClick={() => onSave({ dueDate: null })}
           >
-            No date
+            no date
           </button>
           <button
             type="button"
             className={`chip ${task.dueDate === today ? 'on' : ''}`}
             onClick={() => onSave({ dueDate: today })}
           >
-            Today
+            today
           </button>
           <button
             type="button"
             className={`chip ${task.dueDate === tomorrow ? 'on' : ''}`}
             onClick={() => onSave({ dueDate: tomorrow })}
           >
-            Tomorrow
+            tomorrow
           </button>
           <button
             type="button"
             className={`chip ${task.dueDate === nextWeek ? 'on' : ''}`}
             onClick={() => onSave({ dueDate: nextWeek })}
           >
-            Next week
+            next week
           </button>
           <label className={`chip date-chip ${customDate ? 'on' : ''}`}>
-            {customDate && task.dueDate ? formatChipDate(task.dueDate) : 'Date'}
+            {customDate && task.dueDate ? formatDue(task.dueDate, today) : 'pick date…'}
             <input
               type="date"
               value={task.dueDate ?? ''}
@@ -122,12 +122,4 @@ export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
       </div>
     </div>
   )
-}
-
-function formatChipDate(iso: string): string {
-  const [y, m, d] = iso.split('-').map(Number)
-  return new Date(y, (m ?? 1) - 1, d ?? 1).toLocaleDateString(undefined, {
-    month: 'short',
-    day: 'numeric',
-  })
 }

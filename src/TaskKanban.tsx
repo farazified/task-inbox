@@ -1,4 +1,4 @@
-import { dueBucket, todayISO, type DueBucket } from './dates'
+import { dueBucket, formatDue, todayISO, type DueBucket } from './dates'
 import type { Client, Task } from './types'
 import { clientLabel, sortTasks } from './taskUtils'
 import type { TaskViewProps } from './taskViewTypes'
@@ -91,6 +91,12 @@ function KanbanCard({
         <span className="kanban-meta">
           <span className="dot" style={{ background: client.color }} />
           {client.name}
+          {task.dueDate && (
+            <>
+              <span className="sep">·</span>
+              {formatDue(task.dueDate, todayISO())}
+            </>
+          )}
         </span>
       </button>
     </li>

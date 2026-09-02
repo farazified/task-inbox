@@ -5,11 +5,13 @@ export const GITHUB_REPO = 'farazified/task-inbox'
 export const INBOX_DATA_PATH = 'public/data/inbox.json'
 export const RAW_INBOX_URL = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/${INBOX_DATA_PATH}`
 const BUNDLED_DATA_URL = `${import.meta.env.BASE_URL}data/inbox.json`
+const ENV_TOKEN = (import.meta.env.VITE_GITHUB_TOKEN as string | undefined)?.trim() || ''
 const TOKEN_KEY = 'task-inbox:gh-token'
 
 export type CloudStatus = 'off' | 'loading' | 'syncing' | 'synced' | 'offline' | 'error'
 
 export function getGitHubToken(): string | null {
+  if (ENV_TOKEN) return ENV_TOKEN
   try {
     return localStorage.getItem(TOKEN_KEY)?.trim() || null
   } catch {
@@ -63,7 +65,7 @@ export function statesDiffer(local: InboxState, merged: InboxState): boolean {
 }
 
 export async function fetchCloudState(): Promise<InboxState | null> {
-  for (const base of [BUNDLED_DATA_URL, RAW_INBOX_URL]) {
+  for (const base of [RAW_INBOX_URL, BUNDLED_DATA_URL]) {
     try {
       const res = await fetch(`${base}?t=${Date.now()}`, { cache: 'no-store' })
       if (res.status === 404) continue
@@ -176,12 +178,12 @@ export async function syncWithCloud(
   const merged = mergeStates(local, remote)
   const changed = statesDiffer(local, merged)
 
-  if (isCloudEnabled() && (local.prefs.updatedAt ?? 0) > (remote.prefs.updatedAt ?? 0)) {
+  if (isCloudEnabled() && changed && (local.prefs.updatedAt ?? 0) > (remote.prefs.updatedAt ?? 0)) {
     onStatus('syncing')
     const pushed = await pushCloudState(merged)
     onStatus(pushed ? 'synced' : navigator.onLine ? 'error' : 'offline')
   } else {
-    onStatus('synced')
+    onStatus(isCloudEnabled() ? 'synced' : 'off')
   }
 
   return { state: merged, changed }
