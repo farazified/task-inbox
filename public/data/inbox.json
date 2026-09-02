@@ -1,6 +1,46 @@
 {
   "clients": [
     {
+      "id": "andor-willow",
+      "name": "Andor Willow",
+      "color": "#7c9cff"
+    },
+    {
+      "id": "wired4signs-usa",
+      "name": "Wired4Signs USA",
+      "color": "#5eead4"
+    },
+    {
+      "id": "snyders-furniture",
+      "name": "Snyder's Furniture",
+      "color": "#f5c563"
+    },
+    {
+      "id": "elizabetta",
+      "name": "Elizabetta",
+      "color": "#f472b6"
+    },
+    {
+      "id": "fibropool",
+      "name": "FibroPool",
+      "color": "#a78bfa"
+    },
+    {
+      "id": "electric-ride-on-cars",
+      "name": "Electric Ride-On Cars",
+      "color": "#34d399"
+    },
+    {
+      "id": "qbounce-sport",
+      "name": "Qbounce Sport",
+      "color": "#fb923c"
+    },
+    {
+      "id": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
+      "name": "Madam Sew",
+      "color": "#38bdf8"
+    },
+    {
       "id": "d0005200-2cfb-4462-8942-a70ec5326a1f",
       "name": "Acme SEO",
       "color": "#7c9cff"
@@ -9,44 +49,65 @@
       "id": "f4cc0be5-8240-4e84-a51c-d7e7fb99416e",
       "name": "Northwind",
       "color": "#5eead4"
-    },
-    {
-      "id": "andor-willow",
-      "name": "Andor Willow",
-      "color": "#f5c563"
-    },
-    {
-      "id": "wired4signs-usa",
-      "name": "Wired4Signs USA",
-      "color": "#f472b6"
-    },
-    {
-      "id": "snyders-furniture",
-      "name": "Snyder's Furniture",
-      "color": "#a78bfa"
-    },
-    {
-      "id": "elizabetta",
-      "name": "Elizabetta",
-      "color": "#34d399"
-    },
-    {
-      "id": "fibropool",
-      "name": "FibroPool",
-      "color": "#fb923c"
-    },
-    {
-      "id": "electric-ride-on-cars",
-      "name": "Electric Ride-On Cars",
-      "color": "#38bdf8"
-    },
-    {
-      "id": "qbounce-sport",
-      "name": "Qbounce Sport",
-      "color": "#fb7185"
     }
   ],
   "tasks": [
+    {
+      "id": "67a85994-782f-466a-8c91-ec1dd01a5281",
+      "title": "Meetings Schedule",
+      "clientId": "personal",
+      "dueDate": "2026-09-02",
+      "done": false,
+      "createdAt": 1788342597548
+    },
+    {
+      "id": "67e29d8f-7e67-4e8d-9a88-b48364dfb9cb",
+      "title": "Report",
+      "clientId": "qbounce-sport",
+      "dueDate": "2026-09-02",
+      "done": false,
+      "createdAt": 1788342585295
+    },
+    {
+      "id": "c1bf3a67-e810-4aa3-a113-88a9dd9587b9",
+      "title": "Message",
+      "clientId": "fibropool",
+      "dueDate": "2026-09-02",
+      "done": false,
+      "createdAt": 1788342568672
+    },
+    {
+      "id": "935c1e99-0d08-4a85-b0d4-783e7d4901dd",
+      "title": "Audit",
+      "clientId": "wired4signs-usa",
+      "dueDate": "2026-09-02",
+      "done": false,
+      "createdAt": 1788342518365
+    },
+    {
+      "id": "c9364ece-70af-488f-887b-7ca8570a9b97",
+      "title": "Audit",
+      "clientId": "snyders-furniture",
+      "dueDate": "2026-09-02",
+      "done": false,
+      "createdAt": 1788342485393
+    },
+    {
+      "id": "d447861b-0611-4f0a-b5be-049f2f9bb9f1",
+      "title": "test",
+      "clientId": "snyders-furniture",
+      "dueDate": null,
+      "done": false,
+      "createdAt": 1788342123727
+    },
+    {
+      "id": "852ce9e0-513b-4979-9e8d-9882545e06e7",
+      "title": "Offboard Madamsew",
+      "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
+      "dueDate": "2026-09-02",
+      "done": false,
+      "createdAt": 1788341601367
+    },
     {
       "id": "a803b485-905a-4ae1-a57d-6726386b09da",
       "title": "Buy domain for personal site",
@@ -59,8 +120,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "list",
+    "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1756822400000
+    "updatedAt": 1788356321520
   }
 }
