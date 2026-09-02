@@ -33,10 +33,33 @@ function withUpdatedAt(state: InboxState): InboxState {
 }
 
 export function mergeStates(local: InboxState, remote: InboxState): InboxState {
+  const clientMap = new Map<string, InboxState['clients'][number]>()
+  for (const client of remote.clients) clientMap.set(client.id, client)
+  for (const client of local.clients) clientMap.set(client.id, client)
+
+  const taskMap = new Map<string, InboxState['tasks'][number]>()
+  for (const task of remote.tasks) taskMap.set(task.id, task)
+  for (const task of local.tasks) taskMap.set(task.id, task)
+
   const localAt = local.prefs.updatedAt ?? 0
   const remoteAt = remote.prefs.updatedAt ?? 0
-  if (remoteAt > localAt) return normalizeState(remote)
-  return normalizeState(local)
+  const prefs = (remoteAt > localAt ? remote.prefs : local.prefs)
+
+  return normalizeState({
+    clients: [...clientMap.values()],
+    tasks: [...taskMap.values()],
+    prefs: {
+      ...prefs,
+      updatedAt: Math.max(localAt, remoteAt, Date.now()),
+    },
+  })
+}
+
+export function statesDiffer(local: InboxState, merged: InboxState): boolean {
+  if (local.tasks.length !== merged.tasks.length) return true
+  if (local.clients.length !== merged.clients.length) return true
+  const localIds = new Set(local.tasks.map((task) => task.id))
+  return merged.tasks.some((task) => !localIds.has(task.id))
 }
 
 export async function fetchCloudState(): Promise<InboxState | null> {
@@ -151,11 +174,9 @@ export async function syncWithCloud(
   }
 
   const merged = mergeStates(local, remote)
-  const localAt = local.prefs.updatedAt ?? 0
-  const remoteAt = remote.prefs.updatedAt ?? 0
-  const changed = (merged.prefs.updatedAt ?? 0) !== localAt || remoteAt > localAt
+  const changed = statesDiffer(local, merged)
 
-  if (isCloudEnabled() && localAt > remoteAt) {
+  if (isCloudEnabled() && (local.prefs.updatedAt ?? 0) > (remote.prefs.updatedAt ?? 0)) {
     onStatus('syncing')
     const pushed = await pushCloudState(merged)
     onStatus(pushed ? 'synced' : navigator.onLine ? 'error' : 'offline')
