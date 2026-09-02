@@ -76,7 +76,8 @@ export function mergeStates(local: InboxState, remote: InboxState): InboxState {
     deletedTaskIds: [...deletedMap.entries()].map(([id, deletedAt]) => ({ id, deletedAt })),
     prefs: {
       ...prefs,
-      updatedAt: Math.max(localAt, remoteAt, Date.now()),
+      // Keep the newer stamp; don't force Date.now() here so quiet pulls don't look dirty.
+      updatedAt: Math.max(localAt, remoteAt),
     },
   })
 }
@@ -200,10 +201,35 @@ export async function pushCloudState(state: InboxState): Promise<boolean> {
 }
 
 let pushTimer: ReturnType<typeof setTimeout> | null = null
+let retryTimer: ReturnType<typeof setTimeout> | null = null
 let pending: InboxState | null = null
 let pushing = false
+let retryDelayMs = 4_000
 
-export function scheduleCloudPush(state: InboxState, onStatus: (status: CloudStatus) => void): void {
+function clearRetry(): void {
+  if (retryTimer) {
+    clearTimeout(retryTimer)
+    retryTimer = null
+  }
+}
+
+function queueRetry(onStatus: (status: CloudStatus) => void): void {
+  clearRetry()
+  const delay = retryDelayMs
+  retryDelayMs = Math.min(retryDelayMs * 2, 60_000)
+  retryTimer = setTimeout(() => {
+    retryTimer = null
+    if (!pending || !isCloudEnabled()) return
+    scheduleCloudPush(pending, onStatus, 0)
+  }, delay)
+}
+
+/** Local-first: queue the latest state for upload; retries later if offline/errors. */
+export function scheduleCloudPush(
+  state: InboxState,
+  onStatus: (status: CloudStatus) => void,
+  debounceMs = 600,
+): void {
   if (!isCloudEnabled()) return
   pending = state
   if (pushTimer) clearTimeout(pushTimer)
@@ -215,26 +241,56 @@ export function scheduleCloudPush(state: InboxState, onStatus: (status: CloudSta
     pushing = true
     onStatus('syncing')
     const ok = await pushCloudState(next)
-    onStatus(ok ? 'synced' : navigator.onLine ? 'error' : 'offline')
     pushing = false
-    if (pending) scheduleCloudPush(pending, onStatus)
-  }, 800)
+
+    if (ok) {
+      retryDelayMs = 4_000
+      clearRetry()
+      onStatus('synced')
+      // If newer edits arrived while we pushed, upload those too.
+      if (pending) scheduleCloudPush(pending, onStatus, 0)
+      return
+    }
+
+    // Keep trying with the newest known state — never roll back local edits.
+    pending = pending ?? next
+    onStatus(navigator.onLine ? 'error' : 'offline')
+    queueRetry(onStatus)
+  }, debounceMs)
 }
 
+/**
+ * Pull remote and merge into the *current* local snapshot (via getter).
+ * Local deletes/edits always win when newer. Sync failure never mutates local.
+ */
 export async function syncWithCloud(
-  local: InboxState,
+  getLocal: () => InboxState,
   onStatus: (status: CloudStatus) => void,
+  options?: { initial?: boolean },
 ): Promise<{ state: InboxState; changed: boolean }> {
-  onStatus('loading')
-  const remote = await fetchCloudState()
+  if (options?.initial) onStatus('loading')
+
+  let remote: InboxState | null = null
+  try {
+    remote = await fetchCloudState()
+  } catch {
+    remote = null
+  }
+
+  // Always read local AFTER the network wait so mid-flight edits aren't overwritten.
+  const local = getLocal()
 
   if (!remote) {
-    if (isCloudEnabled() && local.tasks.length > 0) {
-      onStatus('syncing')
-      const pushed = await pushCloudState(local)
-      onStatus(pushed ? 'synced' : navigator.onLine ? 'error' : 'offline')
+    if (isCloudEnabled()) {
+      // Still try to push whatever we have when remote is unreachable.
+      scheduleCloudPush(local, onStatus, 0)
+      if (!options?.initial) {
+        /* keep current badge unless initial */
+      } else {
+        onStatus(navigator.onLine ? 'error' : 'offline')
+      }
     } else {
-      onStatus(isCloudEnabled() ? 'synced' : 'off')
+      onStatus('off')
     }
     return { state: local, changed: false }
   }
@@ -242,12 +298,16 @@ export async function syncWithCloud(
   const merged = mergeStates(local, remote)
   const changed = statesDiffer(local, merged)
 
-  if (isCloudEnabled() && changed) {
-    onStatus('syncing')
-    const pushed = await pushCloudState(merged)
-    onStatus(pushed ? 'synced' : navigator.onLine ? 'error' : 'offline')
+  if (isCloudEnabled()) {
+    // Push the merge result (includes local tombstones / new tasks) when needed,
+    // or quietly confirm sync when already aligned.
+    if (changed || (local.prefs.updatedAt ?? 0) > (remote.prefs.updatedAt ?? 0)) {
+      scheduleCloudPush(merged, onStatus, changed ? 0 : 800)
+    } else {
+      onStatus('synced')
+    }
   } else {
-    onStatus(isCloudEnabled() ? 'synced' : 'off')
+    onStatus('off')
   }
 
   return { state: merged, changed }

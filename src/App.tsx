@@ -7,8 +7,10 @@ import { EditSheet } from './EditSheet'
 import { loadState, nid, nextColor, saveState } from './storage'
 import {
   isCloudEnabled,
+  mergeStates,
   scheduleCloudPush,
   setGitHubToken,
+  statesDiffer,
   syncWithCloud,
   type CloudStatus,
 } from './cloudSync'
@@ -61,38 +63,51 @@ export default function App() {
       skipCloudPush.current = false
       return
     }
+    // Local save always happens above. Cloud upload is best-effort and can lag.
     if (isCloudEnabled()) scheduleCloudPush(state, setCloudStatus)
   }, [state])
 
   useEffect(() => {
     let cancelled = false
 
-    syncWithCloud(loadState(), setCloudStatus).then(({ state: merged, changed }) => {
-      if (cancelled) return
-      if (changed) {
+    const applyPull = (merged: InboxState, changed: boolean) => {
+      if (cancelled || !changed) return
+      // Re-merge against whatever the user did during the network round-trip.
+      setState((prev) => {
+        const latest = mergeStates(prev, merged)
+        if (!statesDiffer(prev, latest)) return prev
         skipCloudPush.current = true
-        setState(merged)
-      }
-      cloudReady.current = true
-    })
+        // Queue upload of the reconciled state without blocking the UI.
+        if (isCloudEnabled()) scheduleCloudPush(latest, setCloudStatus, 0)
+        return latest
+      })
+    }
+
+    syncWithCloud(() => stateRef.current, setCloudStatus, { initial: true }).then(
+      ({ state: merged, changed }) => {
+        if (cancelled) return
+        applyPull(merged, changed)
+        cloudReady.current = true
+      },
+    )
 
     const refresh = () => {
       if (document.hidden || !cloudReady.current) return
-      syncWithCloud(stateRef.current, setCloudStatus).then(({ state: merged, changed }) => {
-        if (cancelled || !changed) return
-        skipCloudPush.current = true
-        setState(merged)
+      syncWithCloud(() => stateRef.current, setCloudStatus).then(({ state: merged, changed }) => {
+        applyPull(merged, changed)
       })
     }
 
     const poll = window.setInterval(refresh, 30_000)
     document.addEventListener('visibilitychange', refresh)
     window.addEventListener('focus', refresh)
+    window.addEventListener('online', refresh)
     return () => {
       cancelled = true
       clearInterval(poll)
       document.removeEventListener('visibilitychange', refresh)
       window.removeEventListener('focus', refresh)
+      window.removeEventListener('online', refresh)
     }
   }, [])
 
@@ -568,17 +583,17 @@ export default function App() {
 function cloudExplain(status: CloudStatus): string {
   switch (status) {
     case 'loading':
-      return 'Checking GitHub for the latest tasks…'
+      return 'Checking GitHub for updates… Edits still work offline.'
     case 'syncing':
-      return 'Saving your tasks to GitHub so phone and laptop stay in sync…'
+      return 'Uploading local changes to GitHub in the background…'
     case 'synced':
-      return 'Tasks are saved to GitHub. Your phone and laptop stay in sync.'
+      return 'Local changes are saved here and on GitHub.'
     case 'offline':
-      return 'You are offline. Changes stay on this device until you reconnect.'
+      return 'Offline — edits stay on this device and will sync when you reconnect.'
     case 'error':
-      return 'Could not sync with GitHub. Your edits are still saved on this device.'
+      return 'Cloud upload failed — edits are safe on this device and will retry.'
     default:
-      return 'Cloud sync is off.'
+      return 'Cloud sync is off. Everything still works on this device.'
   }
 }
 
