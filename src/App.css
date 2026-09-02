@@ -1064,6 +1064,26 @@
   width: min(440px, 100%);
 }
 
+.composer-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.composer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.composer-head .composer-label {
+  margin: 0;
+}
+
 .quick-add-fab {
   position: fixed;
   right: max(16px, env(safe-area-inset-right));
