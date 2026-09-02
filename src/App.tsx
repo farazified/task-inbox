@@ -35,6 +35,7 @@ export default function App() {
   const [clientId, setClientId] = useState(state.prefs.lastClientId)
   const [dueDate, setDueDate] = useState<string | null>(null)
   const [filter, setFilter] = useState<Filter>('all')
+  const [showComposer, setShowComposer] = useState(false)
   const [search, setSearch] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
   const [showClients, setShowClients] = useState(false)
@@ -94,6 +95,15 @@ export default function App() {
       window.removeEventListener('focus', refresh)
     }
   }, [])
+
+  useEffect(() => {
+    if (!showComposer) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setShowComposer(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [showComposer])
 
   useEffect(() => {
     const viewport = window.visualViewport
@@ -183,6 +193,18 @@ export default function App() {
     setDueDate(null)
     setManualClient(false)
     setManualDue(false)
+    setShowComposer(false)
+  }
+
+  function deleteTask(id: string) {
+    const task = state.tasks.find((item) => item.id === id)
+    if (!task) return
+    if (!window.confirm(`Delete “${task.title}” permanently?`)) return
+    patch((prev) => ({
+      ...prev,
+      tasks: prev.tasks.filter((item) => item.id !== id),
+    }))
+    if (editingId === id) setEditingId(null)
   }
 
   function setClient(id: string) {
@@ -273,6 +295,7 @@ export default function App() {
           })
         }),
       })),
+    onDelete: deleteTask,
   }
 
   const clientFilter = state.clients.some((client) => client.id === filter) ? filter : ''
@@ -357,31 +380,16 @@ export default function App() {
               >
                 {state.prefs.hideCompleted ? 'Show done' : 'Hide done'}
               </button>
+              <button type="button" className="add-btn quick-add-trigger" onClick={() => setShowComposer(true)}>
+                Quick add
+              </button>
               <button type="button" className="ghost-btn" onClick={() => setShowClients(true)}>
                 Clients
               </button>
             </div>
           </header>
 
-          <div className="workspace">
-            <aside className="sidebar" aria-label="Quick add">
-              <Composer
-                title={title}
-                onTitle={handleTitleChange}
-                clientId={activeClient}
-                onClient={setClient}
-                dueDate={dueDate}
-                onDue={setDueDate}
-                clients={state.clients}
-                onAdd={addTask}
-                manualClient={manualClient}
-                manualDue={manualDue}
-                onManualClient={() => setManualClient(true)}
-                onManualDue={() => setManualDue(true)}
-              />
-            </aside>
-
-            <div className="main-pane">
+          <div className="main-pane">
               <div className="filter-bar">
                 <nav className="filters filters-quick" aria-label="Quick filters">
                   <FilterChip
@@ -455,8 +463,35 @@ export default function App() {
               </div>
 
               {renderView()}
-            </div>
           </div>
+
+          {showComposer && (
+            <div className="composer-overlay" role="presentation">
+              <button
+                type="button"
+                className="backdrop"
+                aria-label="Close quick add"
+                onClick={() => setShowComposer(false)}
+              />
+              <div className="composer-widget" role="dialog" aria-label="Quick add">
+                <Composer
+                  title={title}
+                  onTitle={handleTitleChange}
+                  clientId={activeClient}
+                  onClient={setClient}
+                  dueDate={dueDate}
+                  onDue={setDueDate}
+                  clients={state.clients}
+                  onAdd={addTask}
+                  onClose={() => setShowComposer(false)}
+                  manualClient={manualClient}
+                  manualDue={manualDue}
+                  onManualClient={() => setManualClient(true)}
+                  onManualDue={() => setManualDue(true)}
+                />
+              </div>
+            </div>
+          )}
         </>
       )}
 
@@ -498,13 +533,7 @@ export default function App() {
               ),
             }))
           }}
-          onDelete={() => {
-            patch((prev) => ({
-              ...prev,
-              tasks: prev.tasks.filter((task) => task.id !== editing.id),
-            }))
-            setEditingId(null)
-          }}
+          onDelete={() => deleteTask(editing.id)}
         />
       )}
     </div>

@@ -19,6 +19,7 @@ export function TaskTable({
   onOpen,
   onClientChange,
   onDueChange,
+  onDelete,
 }: TaskViewProps) {
   const today = todayISO()
   const groups = groupOpenTasksByDue(tasks, today)
@@ -39,7 +40,7 @@ export function TaskTable({
     return (
       <div className="empty">
         <p>{emptyTitle}</p>
-        <span>Use Quick add in the sidebar.</span>
+        <span>Tap Quick add to create a task.</span>
       </div>
     )
   }
@@ -64,6 +65,7 @@ export function TaskTable({
                     <th>Client</th>
                     <th>Status</th>
                     <th>Due date</th>
+                    {onDelete && <th className="col-actions"> </th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -78,6 +80,7 @@ export function TaskTable({
                       onOpen={onOpen}
                       onClientChange={onClientChange}
                       onDueChange={onDueChange}
+                      onDelete={onDelete}
                     />
                   ))}
                 </tbody>
@@ -99,6 +102,7 @@ function TaskRow({
   onOpen,
   onClientChange,
   onDueChange,
+  onDelete,
 }: {
   task: TaskViewProps['tasks'][number]
   clients: TaskViewProps['clients']
@@ -108,6 +112,7 @@ function TaskRow({
   onOpen: TaskViewProps['onOpen']
   onClientChange?: TaskViewProps['onClientChange']
   onDueChange?: TaskViewProps['onDueChange']
+  onDelete?: TaskViewProps['onDelete']
 }) {
   const client = clientLabel(task.clientId, clients)
   const status = taskStatus(task, today)
@@ -169,6 +174,17 @@ function TaskRow({
           formatDueDate(task.dueDate, today)
         )}
       </td>
+      {onDelete && (
+        <td className="cell-actions" onClick={(event) => event.stopPropagation()}>
+          <button
+            type="button"
+            className="text-btn danger row-delete"
+            onClick={() => onDelete(task.id)}
+          >
+            Delete
+          </button>
+        </td>
+      )}
     </tr>
   )
 }

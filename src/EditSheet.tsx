@@ -137,7 +137,7 @@ export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
           </label>
         </div>
         <button type="button" className="danger-btn" onClick={onDelete}>
-          Delete task
+          Delete permanently
         </button>
       </div>
     </div>

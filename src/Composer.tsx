@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { ClientPicker } from './ClientPicker'
 import { DuePicker } from './DuePicker'
 import { formatDue, todayISO } from './dates'
@@ -14,6 +14,7 @@ type Props = {
   onDue: (iso: string | null) => void
   clients: Client[]
   onAdd: () => void
+  onClose?: () => void
   manualClient: boolean
   manualDue: boolean
   onManualClient: () => void
@@ -29,12 +30,14 @@ export function Composer({
   onDue,
   clients,
   onAdd,
+  onClose,
   manualClient,
   manualDue,
   onManualClient,
   onManualDue,
 }: Props) {
   const today = todayISO()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const guess = useMemo(
     () => (title.trim() ? parseTaskInput(title, clients, clientId, today) : null),
@@ -61,6 +64,10 @@ export function Composer({
     if (!manualDue && guess.dueDate && guess.dueDate !== dueDate) onDue(guess.dueDate)
   }, [title, guess, manualClient, manualDue, clientId, dueDate, onClient, onDue])
 
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [])
+
   return (
     <form
       className="composer"
@@ -71,9 +78,20 @@ export function Composer({
       }}
     >
       <div className="composer-card">
-        <label className="composer-label">Quick add</label>
+        <div className="composer-head">
+          <label className="composer-label" htmlFor="quick-add-input">
+            Quick add
+          </label>
+          {onClose && (
+            <button type="button" className="text-btn" onClick={onClose}>
+              Close
+            </button>
+          )}
+        </div>
         <div className="composer-main">
           <input
+            id="quick-add-input"
+            ref={inputRef}
             className="composer-input"
             value={title}
             onChange={(event) => onTitle(event.target.value)}

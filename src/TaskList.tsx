@@ -9,6 +9,7 @@ type Props = {
   emptyTitle?: string
   onToggle: (id: string) => void
   onOpen: (id: string) => void
+  onDelete?: (id: string) => void
 }
 
 export function TaskList({
@@ -18,6 +19,7 @@ export function TaskList({
   emptyTitle = 'Nothing in the inbox.',
   onToggle,
   onOpen,
+  onDelete,
 }: Props) {
   const today = todayISO()
   const open = tasks.filter((task) => !task.done)
@@ -28,7 +30,7 @@ export function TaskList({
     return (
       <div className="empty">
         <p>{emptyTitle}</p>
-        <span>Type below and tap Add. That’s it.</span>
+        <span>Tap Quick add to create a task.</span>
       </div>
     )
   }
@@ -50,6 +52,7 @@ export function TaskList({
                 today={today}
                 onToggle={onToggle}
                 onOpen={onOpen}
+                onDelete={onDelete}
               />
             ))}
           </ul>
@@ -74,6 +77,7 @@ export function TaskList({
                   today={today}
                   onToggle={onToggle}
                   onOpen={onOpen}
+                  onDelete={onDelete}
                 />
               ))}
           </ul>
@@ -89,12 +93,14 @@ function TaskRow({
   today,
   onToggle,
   onOpen,
+  onDelete,
 }: {
   task: Task
   clients: Client[]
   today: string
   onToggle: (id: string) => void
   onOpen: (id: string) => void
+  onDelete?: (id: string) => void
 }) {
   const client =
     task.clientId === PERSONAL_ID
@@ -129,6 +135,16 @@ function TaskRow({
         </span>
         {task.notes && <span className="task-notes">{task.notes}</span>}
       </button>
+      {onDelete && (
+        <button
+          type="button"
+          className="text-btn danger row-delete"
+          aria-label={`Delete ${task.title}`}
+          onClick={() => onDelete(task.id)}
+        >
+          Delete
+        </button>
+      )}
     </li>
   )
 }

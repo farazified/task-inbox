@@ -42,18 +42,6 @@
     gap: 16px;
   }
 
-  .workspace {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 24px;
-  }
-
-  .sidebar {
-    width: 300px;
-    position: sticky;
-    top: 20px;
-  }
-
   .main-pane {
     gap: 16px;
   }
@@ -75,6 +63,11 @@
 
   .composer-meta {
     flex-direction: row;
+  }
+
+  .composer-main {
+    flex-direction: row;
+    align-items: stretch;
   }
 
   .panel {
@@ -945,6 +938,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
+  padding-right: 4px;
 }
 
 .task.is-done .task-title {
@@ -1046,12 +1040,66 @@
   z-index: auto;
 }
 
+.composer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.composer-overlay .backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.composer-widget {
+  position: relative;
+  z-index: 1;
+  width: min(440px, 100%);
+}
+
+.composer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.composer-head .composer-label {
+  margin: 0;
+}
+
 .composer-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 14px 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.quick-add-trigger {
+  white-space: nowrap;
+}
+
+.col-actions,
+.cell-actions {
+  width: 72px;
+  text-align: right;
+}
+
+.row-delete {
+  flex-shrink: 0;
+  padding: 0 8px;
+  min-height: 36px;
+}
+
+.text-btn.danger {
+  color: var(--danger);
 }
 
 .composer-hint {
@@ -1105,16 +1153,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-@media (min-width: 768px) {
-  .composer-main {
-    flex-direction: column;
-  }
-
-  .composer-card {
-    box-shadow: none;
-  }
 }
 
 .composer-meta {
