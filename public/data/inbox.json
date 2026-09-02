@@ -690,15 +690,12 @@
       "done": false,
       "createdAt": 1788341601367,
       "updatedAt": 1788341601367
-    },
+    }
+  ],
+  "deletedTaskIds": [
     {
       "id": "a803b485-905a-4ae1-a57d-6726386b09da",
-      "title": "Buy domain for personal site",
-      "clientId": "personal",
-      "dueDate": "2026-09-02",
-      "done": false,
-      "createdAt": 1788341459650,
-      "updatedAt": 1788341459650
+      "deletedAt": 1788366298757
     }
   ],
   "prefs": {
@@ -706,6 +703,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788366096675
+    "updatedAt": 1788366299570
   }
 }
