@@ -4,7 +4,7 @@ import {
   DEFAULTS_VERSION,
   DEFAULT_CLIENTS,
 } from './defaults'
-import { parseDueDate, trimClientName, trimTitle } from './validate'
+import { parseDueDate, trimClientName, trimNotes, trimTitle } from './validate'
 import { CLIENT_COLORS, PERSONAL_ID, type Client, type InboxState, type Task, type ViewMode } from './types'
 
 const KEY = 'task-inbox:v1'
@@ -67,16 +67,25 @@ function parseTasks(raw: unknown, clientIds: Set<string>): Task[] {
       typeof item.clientId === 'string' && clientIds.has(item.clientId)
         ? item.clientId
         : PERSONAL_ID
+    const createdAt =
+      typeof item.createdAt === 'number' && Number.isFinite(item.createdAt)
+        ? item.createdAt
+        : Date.now()
+    const updatedAt =
+      typeof item.updatedAt === 'number' && Number.isFinite(item.updatedAt)
+        ? item.updatedAt
+        : createdAt
+    const notes =
+      typeof item.notes === 'string' ? trimNotes(item.notes) : ''
     tasks.push({
       id,
       title,
       clientId,
       dueDate: parseDueDate(item.dueDate),
       done: Boolean(item.done),
-      createdAt:
-        typeof item.createdAt === 'number' && Number.isFinite(item.createdAt)
-          ? item.createdAt
-          : Date.now(),
+      ...(notes ? { notes } : {}),
+      createdAt,
+      updatedAt,
     })
   }
   return tasks

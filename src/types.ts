@@ -12,7 +12,9 @@ export type Task = {
   clientId: string
   dueDate: string | null
   done: boolean
+  notes?: string
   createdAt: number
+  updatedAt?: number
 }
 
 export type ViewMode = 'table' | 'kanban' | 'calendar' | 'list'

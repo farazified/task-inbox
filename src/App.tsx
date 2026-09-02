@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { chipVars } from './chipVars'
 import { ClientsScreen } from './ClientsScreen'
 import { Composer } from './Composer'
-import { dueBucket, todayISO } from './dates'
+import { dueBucket, dueDateForGroup, todayISO, type DueGroup } from './dates'
 import { EditSheet } from './EditSheet'
 import { loadState, nid, nextColor, saveState } from './storage'
 import {
@@ -35,6 +35,7 @@ export default function App() {
   const [clientId, setClientId] = useState(state.prefs.lastClientId)
   const [dueDate, setDueDate] = useState<string | null>(null)
   const [filter, setFilter] = useState<Filter>('all')
+  const [search, setSearch] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
   const [showClients, setShowClients] = useState(false)
   const [manualClient, setManualClient] = useState(false)
@@ -117,18 +118,35 @@ export default function App() {
 
   const visibleTasks = useMemo(() => {
     const today = todayISO()
+    const query = search.trim().toLowerCase()
     return state.tasks.filter((task) => {
-      if (filter === 'all') return true
-      if (filter === 'personal') return task.clientId === PERSONAL_ID
-      if (filter === 'today') {
+      if (filter === 'personal') {
+        if (task.clientId !== PERSONAL_ID) return false
+      } else if (filter === 'today') {
         if (dueBucket(task.dueDate, today) !== 'today') return false
         if (task.done && state.prefs.hideCompleted) return false
-        return true
+      } else if (filter === 'overdue') {
+        if (task.done || dueBucket(task.dueDate, today) !== 'overdue') return false
+      } else if (filter !== 'all') {
+        if (task.clientId !== filter) return false
       }
-      if (filter === 'overdue') return !task.done && dueBucket(task.dueDate, today) === 'overdue'
-      return task.clientId === filter
+
+      if (!query) return true
+      const clientName =
+        task.clientId === PERSONAL_ID
+          ? 'personal'
+          : state.clients.find((client) => client.id === task.clientId)?.name ?? ''
+      return (
+        task.title.toLowerCase().includes(query) ||
+        (task.notes ?? '').toLowerCase().includes(query) ||
+        clientName.toLowerCase().includes(query)
+      )
     })
-  }, [state.tasks, filter, state.prefs.hideCompleted])
+  }, [state.tasks, state.clients, filter, search, state.prefs.hideCompleted])
+
+  function touchTask(task: Task, patch: Partial<Task>): Task {
+    return { ...task, ...patch, updatedAt: Date.now() }
+  }
 
   const editing = state.tasks.find((task) => task.id === editingId) ?? null
 
@@ -146,13 +164,15 @@ export default function App() {
     const parsed = parseTaskInput(title, state.clients, activeClient)
     const nextTitle = trimTitle(parsed.title || title)
     if (taskTitleError(nextTitle)) return
+    const now = Date.now()
     const task: Task = {
       id: nid(),
       title: nextTitle,
       clientId: parsed.clientId ?? activeClient,
       dueDate: parseDueDate(parsed.dueDate ?? dueDate),
       done: false,
-      createdAt: Date.now(),
+      createdAt: now,
+      updatedAt: now,
     }
     patch((prev) => ({
       ...prev,
@@ -201,7 +221,12 @@ export default function App() {
   ).length
 
   const viewMode = state.prefs.viewMode
-  const emptyTitle = filter === 'all' ? 'Nothing in the inbox.' : 'Nothing in this filter.'
+  const emptyTitle =
+    search.trim()
+      ? 'No matches.'
+      : filter === 'all'
+        ? 'Nothing in the inbox.'
+        : 'Nothing in this filter.'
   const viewProps = {
     tasks: visibleTasks,
     clients: state.clients,
@@ -211,14 +236,14 @@ export default function App() {
       patch((prev) => ({
         ...prev,
         tasks: prev.tasks.map((task) =>
-          task.id === id ? { ...task, done: !task.done } : task,
+          task.id === id ? touchTask(task, { done: !task.done }) : task,
         ),
       })),
     onStatusChange: (taskId: string, done: boolean) =>
       patch((prev) => ({
         ...prev,
         tasks: prev.tasks.map((task) =>
-          task.id === taskId ? { ...task, done } : task,
+          task.id === taskId ? touchTask(task, { done }) : task,
         ),
       })),
     onOpen: (id: string) => setEditingId(id),
@@ -226,15 +251,27 @@ export default function App() {
       patch((prev) => ({
         ...prev,
         tasks: prev.tasks.map((task) =>
-          task.id === taskId ? { ...task, clientId: nextClientId } : task,
+          task.id === taskId ? touchTask(task, { clientId: nextClientId }) : task,
         ),
       })),
     onDueChange: (taskId: string, dueDate: string | null) =>
       patch((prev) => ({
         ...prev,
         tasks: prev.tasks.map((task) =>
-          task.id === taskId ? { ...task, dueDate: parseDueDate(dueDate) } : task,
+          task.id === taskId ? touchTask(task, { dueDate: parseDueDate(dueDate) }) : task,
         ),
+      })),
+    onMoveToGroup: (taskId: string, group: DueGroup | 'done') =>
+      patch((prev) => ({
+        ...prev,
+        tasks: prev.tasks.map((task) => {
+          if (task.id !== taskId) return task
+          if (group === 'done') return touchTask(task, { done: true })
+          return touchTask(task, {
+            done: false,
+            dueDate: dueDateForGroup(group),
+          })
+        }),
       })),
   }
 
@@ -371,6 +408,16 @@ export default function App() {
                     onClick={() => setFilter('personal')}
                   />
                 </nav>
+                <label className="filter-search">
+                  <span>Search</span>
+                  <input
+                    className="filter-search-input"
+                    type="search"
+                    value={search}
+                    placeholder="Find task, note, client…"
+                    onChange={(event) => setSearch(event.target.value)}
+                  />
+                </label>
                 <label className="filter-client">
                   <span>Client</span>
                   <select
@@ -438,10 +485,16 @@ export default function App() {
                   : parseDueDate(next.dueDate) ?? editing.dueDate
             }
             if ('done' in next) patchTask.done = next.done
+            if ('notes' in next) {
+              patchTask.notes =
+                typeof next.notes === 'string' && next.notes.trim()
+                  ? next.notes.trim()
+                  : undefined
+            }
             patch((prev) => ({
               ...prev,
               tasks: prev.tasks.map((task) =>
-                task.id === editing.id ? { ...task, ...patchTask } : task,
+                task.id === editing.id ? touchTask(task, patchTask) : task,
               ),
             }))
           }}

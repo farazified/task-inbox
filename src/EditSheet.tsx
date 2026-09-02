@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { trimTitle } from './validate'
+import { useEffect, useState } from 'react'
 import { chipVars } from './chipVars'
 import { addDaysISO, formatDue, todayISO } from './dates'
+import { trimNotes, trimTitle } from './validate'
 import { PERSONAL_ID, type Client, type Task } from './types'
 
 type Props = {
@@ -14,6 +14,7 @@ type Props = {
 
 export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
   const [title, setTitle] = useState(task.title)
+  const [notes, setNotes] = useState(task.notes ?? '')
   const today = todayISO()
   const tomorrow = addDaysISO(1)
   const nextWeek = addDaysISO(7)
@@ -23,6 +24,11 @@ export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
     task.dueDate !== tomorrow &&
     task.dueDate !== nextWeek
 
+  useEffect(() => {
+    setTitle(task.title)
+    setNotes(task.notes ?? '')
+  }, [task.id, task.title, task.notes])
+
   function commitTitle() {
     const next = trimTitle(title)
     if (!next) {
@@ -31,6 +37,11 @@ export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
     }
     if (next !== task.title) onSave({ title: next })
     else setTitle(task.title)
+  }
+
+  function commitNotes() {
+    const next = trimNotes(notes)
+    if (next !== (task.notes ?? '')) onSave({ notes: next || undefined })
   }
 
   return (
@@ -54,6 +65,15 @@ export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
               event.currentTarget.blur()
             }
           }}
+        />
+        <p className="sheet-label">Notes / link</p>
+        <textarea
+          className="sheet-notes"
+          value={notes}
+          placeholder="GSC, Sheet, Drive link, or a short note…"
+          rows={3}
+          onChange={(event) => setNotes(event.target.value)}
+          onBlur={commitNotes}
         />
         <p className="sheet-label">Client</p>
         <div className="chip-row wrap">

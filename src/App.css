@@ -208,11 +208,33 @@
   flex-shrink: 0;
 }
 
+.filter-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 160px;
+  max-width: 280px;
+}
+
+.filter-search span,
 .filter-client span {
   font-size: 12px;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+.filter-search-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 14px;
 }
 
 .filter-client-select,
@@ -487,9 +509,30 @@
   padding: 0;
   color: inherit;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   max-width: 100%;
+}
+
+.table-task-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.table-task-title {
+  display: block;
+}
+
+.table-task-notes {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 320px;
 }
 
 .row-accent {
@@ -665,6 +708,32 @@
   margin-top: 4px;
   font-size: 12px;
   color: var(--muted);
+}
+
+.kanban-hint {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.kanban-col.is-drop-target {
+  outline: 2px dashed color-mix(in srgb, var(--accent) 70%, transparent);
+  outline-offset: 2px;
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+
+.kanban-card.is-dragging {
+  opacity: 0.45;
+}
+
+.kanban-notes {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .calendar-toolbar {
@@ -938,6 +1007,16 @@
   gap: 6px;
   color: var(--muted);
   font-size: 12px;
+}
+
+.task-notes {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .sep {
@@ -1306,6 +1385,20 @@
 
 .sheet-input {
   margin: 12px 0 8px;
+}
+
+.sheet-notes {
+  width: 100%;
+  min-height: 72px;
+  resize: vertical;
+  margin: 0 0 4px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  line-height: 1.4;
 }
 
 .sheet-label {

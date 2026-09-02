@@ -127,6 +127,7 @@ function TaskRow({
             </>
           )}
         </span>
+        {task.notes && <span className="task-notes">{task.notes}</span>}
       </button>
     </li>
   )

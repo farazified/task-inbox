@@ -41,11 +41,18 @@ export function mergeStates(local: InboxState, remote: InboxState): InboxState {
 
   const taskMap = new Map<string, InboxState['tasks'][number]>()
   for (const task of remote.tasks) taskMap.set(task.id, task)
-  for (const task of local.tasks) taskMap.set(task.id, task)
+  for (const task of local.tasks) {
+    const existing = taskMap.get(task.id)
+    if (!existing) {
+      taskMap.set(task.id, task)
+      continue
+    }
+    taskMap.set(task.id, preferTask(existing, task))
+  }
 
   const localAt = local.prefs.updatedAt ?? 0
   const remoteAt = remote.prefs.updatedAt ?? 0
-  const prefs = (remoteAt > localAt ? remote.prefs : local.prefs)
+  const prefs = remoteAt > localAt ? remote.prefs : local.prefs
 
   return normalizeState({
     clients: [...clientMap.values()],
@@ -57,11 +64,45 @@ export function mergeStates(local: InboxState, remote: InboxState): InboxState {
   })
 }
 
+function taskStamp(task: InboxState['tasks'][number]): number {
+  return task.updatedAt ?? task.createdAt ?? 0
+}
+
+function preferTask(
+  a: InboxState['tasks'][number],
+  b: InboxState['tasks'][number],
+): InboxState['tasks'][number] {
+  return taskStamp(b) >= taskStamp(a) ? b : a
+}
+
 export function statesDiffer(local: InboxState, merged: InboxState): boolean {
   if (local.tasks.length !== merged.tasks.length) return true
   if (local.clients.length !== merged.clients.length) return true
-  const localIds = new Set(local.tasks.map((task) => task.id))
-  return merged.tasks.some((task) => !localIds.has(task.id))
+
+  const localTasks = new Map(local.tasks.map((task) => [task.id, task]))
+  for (const task of merged.tasks) {
+    const current = localTasks.get(task.id)
+    if (!current) return true
+    if (
+      current.title !== task.title ||
+      current.clientId !== task.clientId ||
+      current.dueDate !== task.dueDate ||
+      current.done !== task.done ||
+      (current.notes ?? '') !== (task.notes ?? '') ||
+      taskStamp(current) !== taskStamp(task)
+    ) {
+      return true
+    }
+  }
+
+  const localClients = new Map(local.clients.map((client) => [client.id, client]))
+  for (const client of merged.clients) {
+    const current = localClients.get(client.id)
+    if (!current) return true
+    if (current.name !== client.name || current.color !== client.color) return true
+  }
+
+  return false
 }
 
 export async function fetchCloudState(): Promise<InboxState | null> {

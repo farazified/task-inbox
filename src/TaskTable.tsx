@@ -6,6 +6,7 @@ import { StatusPicker } from './StatusPicker'
 import { STATUS_LABELS, taskStatus } from './taskStatus'
 import { groupOpenTasksByDue } from './taskGroups'
 import { clientLabel } from './taskUtils'
+import type { Task } from './types'
 import type { TaskViewProps } from './taskViewTypes'
 
 export function TaskTable({
@@ -22,7 +23,7 @@ export function TaskTable({
   const today = todayISO()
   const groups = groupOpenTasksByDue(tasks, today)
   const done = hideCompleted ? [] : tasks.filter((task) => task.done).sort((a, b) => b.createdAt - a.createdAt)
-  const sections: { id: string; groupClass: string; label: string; items: TaskDueGroup['items'] }[] = [
+  const sections: { id: string; groupClass: string; label: string; items: Task[] }[] = [
     ...groups.map((group) => ({
       id: group.group,
       groupClass: group.group,
@@ -120,7 +121,10 @@ function TaskRow({
       <td>
         <button type="button" className="table-task" onClick={() => onOpen(task.id)}>
           <span className="row-accent" aria-hidden />
-          {task.title}
+          <span className="table-task-copy">
+            <span className="table-task-title">{task.title}</span>
+            {task.notes && <span className="table-task-notes">{task.notes}</span>}
+          </span>
         </button>
       </td>
       <td className="cell-edit" onClick={(event) => event.stopPropagation()}>

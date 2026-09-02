@@ -104,6 +104,37 @@ export function dueGroup(dueDate: string | null, today = todayISO()): DueGroup {
   return 'future'
 }
 
+/** Representative due date when dropping a task onto a kanban column. */
+export function dueDateForGroup(group: DueGroup, today = todayISO()): string | null {
+  switch (group) {
+    case 'overdue':
+      return shiftISO(today, -1)
+    case 'today':
+      return today
+    case 'tomorrow':
+      return shiftISO(today, 1)
+    case 'thisWeek': {
+      const weekEnd = endOfWeek(today)
+      const candidate = shiftISO(today, 2)
+      return candidate <= weekEnd ? candidate : weekEnd
+    }
+    case 'nextWeek':
+      return shiftISO(startOfWeek(today), 7)
+    case 'thisMonth': {
+      const nextWeekEnd = endOfWeek(shiftISO(startOfWeek(today), 7))
+      const monthEnd = endOfMonth(today)
+      const candidate = shiftISO(nextWeekEnd, 1)
+      return candidate <= monthEnd ? candidate : monthEnd
+    }
+    case 'future': {
+      const nextMonth = shiftMonthISO(today, 1)
+      return nextMonth
+    }
+    case 'nodate':
+      return null
+  }
+}
+
 export function formatDueDate(iso: string | null, today = todayISO()): string {
   if (!iso) return '—'
   return formatDue(iso, today)

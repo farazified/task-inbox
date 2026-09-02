@@ -1,3 +1,4 @@
+import type { DueGroup } from './dates'
 import type { Client, Task } from './types'
 
 export type TaskViewProps = {
@@ -10,4 +11,5 @@ export type TaskViewProps = {
   onOpen: (id: string) => void
   onClientChange?: (taskId: string, clientId: string) => void
   onDueChange?: (taskId: string, dueDate: string | null) => void
+  onMoveToGroup?: (taskId: string, group: DueGroup | 'done') => void
 }
