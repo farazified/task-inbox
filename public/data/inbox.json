@@ -701,12 +701,11 @@
       "updatedAt": 1788341459650
     }
   ],
-  "deletedTaskIds": [],
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788366049679
+    "updatedAt": 1788366096675
   }
 }
