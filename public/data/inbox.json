@@ -631,9 +631,9 @@
   ],
   "prefs": {
     "lastClientId": "personal",
-    "hideCompleted": false,
+    "hideCompleted": true,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788361837239
+    "updatedAt": 1788362859611
   }
 }
