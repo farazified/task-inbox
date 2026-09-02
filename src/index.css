@@ -1,0 +1,59 @@
+:root {
+  --bg: #0b0c10;
+  --bg-side: #07080a;
+  --surface: #14161c;
+  --surface-2: #1c1f28;
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #f4f5f7;
+  --muted: #8b91a1;
+  --accent: #8ba4ff;
+  --danger: #ff6b7d;
+  --chip: var(--accent);
+  --chip-dot: var(--accent);
+  --kb: 0px;
+  --sans: "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg-side);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input {
+  appearance: none;
+  border: 0;
+  background: transparent;
+}
+
+input:focus,
+button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent) 70%, white);
+  outline-offset: 2px;
+}
