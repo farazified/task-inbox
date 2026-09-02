@@ -1,6 +1,7 @@
 import { PERSONAL_ID, type Client, type Task } from './types'
 import { formatDue, todayISO } from './dates'
 import { groupOpenTasksByDue } from './taskGroups'
+import { TrashIcon } from './TrashIcon'
 
 type Props = {
   tasks: Task[]
@@ -138,11 +139,12 @@ function TaskRow({
       {onDelete && (
         <button
           type="button"
-          className="text-btn danger row-delete"
+          className="icon-btn danger row-delete"
           aria-label={`Delete ${task.title}`}
+          title="Delete permanently"
           onClick={() => onDelete(task.id)}
         >
-          Delete
+          <TrashIcon />
         </button>
       )}
     </li>

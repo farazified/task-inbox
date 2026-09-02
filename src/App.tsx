@@ -380,9 +380,6 @@ export default function App() {
               >
                 {state.prefs.hideCompleted ? 'Show done' : 'Hide done'}
               </button>
-              <button type="button" className="add-btn quick-add-trigger" onClick={() => setShowComposer(true)}>
-                Quick add
-              </button>
               <button type="button" className="ghost-btn" onClick={() => setShowClients(true)}>
                 Clients
               </button>
@@ -464,6 +461,16 @@ export default function App() {
 
               {renderView()}
           </div>
+
+          {!showComposer && (
+            <button
+              type="button"
+              className="add-btn quick-add-fab"
+              onClick={() => setShowComposer(true)}
+            >
+              Quick add
+            </button>
+          )}
 
           {showComposer && (
             <div className="composer-overlay" role="presentation">

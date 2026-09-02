@@ -6,6 +6,7 @@ import { StatusPicker } from './StatusPicker'
 import { STATUS_LABELS, taskStatus } from './taskStatus'
 import { groupOpenTasksByDue } from './taskGroups'
 import { clientLabel } from './taskUtils'
+import { TrashIcon } from './TrashIcon'
 import type { Task } from './types'
 import type { TaskViewProps } from './taskViewTypes'
 
@@ -178,10 +179,12 @@ function TaskRow({
         <td className="cell-actions" onClick={(event) => event.stopPropagation()}>
           <button
             type="button"
-            className="text-btn danger row-delete"
+            className="icon-btn danger row-delete"
+            aria-label={`Delete ${task.title}`}
+            title="Delete permanently"
             onClick={() => onDelete(task.id)}
           >
-            Delete
+            <TrashIcon />
           </button>
         </td>
       )}

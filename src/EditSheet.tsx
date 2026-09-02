@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { chipVars } from './chipVars'
 import { addDaysISO, formatDue, todayISO } from './dates'
 import { trimNotes, trimTitle } from './validate'
+import { TrashIcon } from './TrashIcon'
 import { PERSONAL_ID, type Client, type Task } from './types'
 
 type Props = {
@@ -136,7 +137,8 @@ export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
             />
           </label>
         </div>
-        <button type="button" className="danger-btn" onClick={onDelete}>
+        <button type="button" className="danger-btn delete-permanent" onClick={onDelete}>
+          <TrashIcon />
           Delete permanently
         </button>
       </div>
