@@ -67,10 +67,10 @@
       "title": "Monthly report",
       "clientId": "andor-willow",
       "dueDate": "2026-09-06",
-      "done": false,
-      "progress": "open",
+      "done": true,
+      "progress": "done",
       "createdAt": 1788361315454,
-      "updatedAt": 1788361315454
+      "updatedAt": 1788788381474
     },
     {
       "id": "47328de4-b0f4-4e2d-840b-ed2202d9eefc",
@@ -774,6 +774,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1788378397903
+    "updatedAt": 1788788382084
   }
 }
