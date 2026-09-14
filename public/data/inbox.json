@@ -703,16 +703,6 @@
       "updatedAt": 1788342597548
     },
     {
-      "id": "67e29d8f-7e67-4e8d-9a88-b48364dfb9cb",
-      "title": "Report",
-      "clientId": "qbounce-sport",
-      "dueDate": "2026-09-02",
-      "done": false,
-      "progress": "open",
-      "createdAt": 1788342585295,
-      "updatedAt": 1788342585295
-    },
-    {
       "id": "c1bf3a67-e810-4aa3-a113-88a9dd9587b9",
       "title": "Message",
       "clientId": "fibropool",
@@ -775,6 +765,10 @@
     {
       "id": "resize-test-1",
       "deletedAt": 1789391569019
+    },
+    {
+      "id": "67e29d8f-7e67-4e8d-9a88-b48364dfb9cb",
+      "deletedAt": 1789395716819
     }
   ],
   "prefs": {
@@ -782,6 +776,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789395707315
+    "updatedAt": 1789395717844
   }
 }
