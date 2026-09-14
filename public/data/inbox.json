@@ -618,8 +618,13 @@
       "done": false,
       "progress": "open",
       "durationMin": 240,
+      "focus": {
+        "start": "2026-09-21T12:15:00.000Z",
+        "durationMin": 240,
+        "eventId": "vmf31kt2u05pt4qf9um0idprao"
+      },
       "createdAt": 1788361315453,
-      "updatedAt": 1789404719155
+      "updatedAt": 1789404950589
     },
     {
       "id": "6cc06457-d0f5-4bd4-ada6-dc1b125bda03",
@@ -889,6 +894,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789404949216
+    "updatedAt": 1789404950704
   }
 }
