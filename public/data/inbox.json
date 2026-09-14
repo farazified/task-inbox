@@ -154,7 +154,7 @@
         "eventId": "9gg9q25tpj0akjflq6fm91acl0"
       },
       "createdAt": 1788361315453,
-      "updatedAt": 1789404936861
+      "updatedAt": 1789404936863
     },
     {
       "id": "d0ec0e51-04bc-4581-9ecf-38d7301baeab",
@@ -541,8 +541,13 @@
       "done": false,
       "progress": "open",
       "durationMin": 90,
+      "focus": {
+        "start": "2026-09-21T16:30:00.000Z",
+        "durationMin": 90,
+        "eventId": "l1tbrtdebs06lc8v1jk9036iok"
+      },
       "createdAt": 1788361315454,
-      "updatedAt": 1789404719155
+      "updatedAt": 1789404951266
     },
     {
       "id": "d1bb62ec-d15f-453d-9b37-2c1e6c2fb63f",
@@ -894,6 +899,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789404950704
+    "updatedAt": 1789404954475
   }
 }
