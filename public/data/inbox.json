@@ -61,10 +61,10 @@
       "progress": "open",
       "focus": {
         "start": "2026-09-16T06:00:00.000Z",
-        "durationMin": 120
+        "durationMin": 180
       },
       "createdAt": 1789391493223,
-      "updatedAt": 1789391506880
+      "updatedAt": 1789391507891
     },
     {
       "id": "86a11c18-52fa-46f3-bfba-3cf961be9573",
@@ -792,6 +792,6 @@
     "hideCompleted": false,
     "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789391507509
+    "updatedAt": 1789391509020
   }
 }
