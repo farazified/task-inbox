@@ -761,6 +761,20 @@
       "progress": "done",
       "createdAt": 1788341601367,
       "updatedAt": 1788378397292
+    },
+    {
+      "id": "resize-test-1",
+      "title": "Resize probe",
+      "clientId": "personal",
+      "dueDate": null,
+      "done": false,
+      "progress": "open",
+      "focus": {
+        "start": "2026-09-16T06:00:00.000Z",
+        "durationMin": 60
+      },
+      "createdAt": 1789391493223,
+      "updatedAt": 1789391493223
     }
   ],
   "deletedTaskIds": [
@@ -776,8 +790,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "table",
+    "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789391473673
+    "updatedAt": 1789391499218
   }
 }
