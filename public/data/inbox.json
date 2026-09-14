@@ -148,8 +148,13 @@
       "done": false,
       "progress": "open",
       "durationMin": 240,
+      "focus": {
+        "start": "2026-09-15T08:00:00.000Z",
+        "durationMin": 240,
+        "eventId": "9gg9q25tpj0akjflq6fm91acl0"
+      },
       "createdAt": 1788361315453,
-      "updatedAt": 1789404719155
+      "updatedAt": 1789404936861
     },
     {
       "id": "d0ec0e51-04bc-4581-9ecf-38d7301baeab",
@@ -159,8 +164,13 @@
       "done": false,
       "progress": "open",
       "durationMin": 90,
+      "focus": {
+        "start": "2026-09-15T14:00:00.000Z",
+        "durationMin": 90,
+        "eventId": "ge0gnp91uf6anuhdr0kq0tvpn0"
+      },
       "createdAt": 1788361315454,
-      "updatedAt": 1789404719155
+      "updatedAt": 1789404938267
     },
     {
       "id": "1b890226-0bc2-4b5f-aeb1-24cb44d7071b",
@@ -247,8 +257,13 @@
       "done": false,
       "progress": "open",
       "durationMin": 90,
+      "focus": {
+        "start": "2026-09-15T12:15:00.000Z",
+        "durationMin": 90,
+        "eventId": "cu2emok96s6rn2s859q1ksuv30"
+      },
       "createdAt": 1788361315454,
-      "updatedAt": 1789404719155
+      "updatedAt": 1789404937477
     },
     {
       "id": "6d155181-493c-4af6-9263-89cd23686828",
@@ -854,6 +869,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789404936820
+    "updatedAt": 1789404938536
   }
 }
