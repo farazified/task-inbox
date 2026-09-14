@@ -780,8 +780,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "kanban",
+    "viewMode": "calendar",
     "defaultsVersion": 1,
-    "updatedAt": 1789395640529
+    "updatedAt": 1789395643456
   }
 }
