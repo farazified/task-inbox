@@ -371,7 +371,7 @@ export function SettingsView({
         <h3>Schedule</h3>
         <div className="focus-row">
           <label className="field">
-            <span>Working hours start</span>
+            <span>Active hours start</span>
             <input
               type="time"
               className="focus-input"
@@ -386,9 +386,14 @@ export function SettingsView({
             <input
               type="time"
               className="focus-input"
-              value={settings.workingHours.end}
+              value={settings.workingHours.end === '24:00' ? '00:00' : settings.workingHours.end}
               onChange={(event) =>
-                persist({ workingHours: { ...settings.workingHours, end: event.target.value } })
+                persist({
+                  workingHours: {
+                    ...settings.workingHours,
+                    end: event.target.value === '00:00' ? '24:00' : event.target.value,
+                  },
+                })
               }
             />
           </label>

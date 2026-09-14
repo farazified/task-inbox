@@ -35,13 +35,18 @@ function hourOf(hhmm: string): number {
   return (hours || 0) + (minutes || 0) / 60
 }
 
-function formatHourLabel(hhmm: string): string {
-  const hoursTotal = hourOf(hhmm)
-  const hours = Math.min(23, Math.floor(hoursTotal) % 24)
+/** Midnight as an end time is 24:00, not 00:00. */
+function hourOfEnd(hhmm: string): number {
+  const value = hourOf(hhmm)
+  return value === 0 || value >= 24 ? 24 : value
+}
+
+function formatHourLabel(hhmm: string, asEnd = false): string {
+  const hoursTotal = asEnd ? hourOfEnd(hhmm) : hourOf(hhmm)
   const minutes = hoursTotal >= 24 ? 0 : Math.round((hoursTotal - Math.floor(hoursTotal)) * 60)
   const date = new Date()
-  date.setHours(hoursTotal >= 24 ? 0 : hours, hoursTotal >= 24 ? 0 : minutes, 0, 0)
-  return date.toLocaleTimeString(undefined, { hour: 'numeric', minute: minutes ? '2-digit' : undefined })
+  date.setHours(hoursTotal >= 24 ? 0 : Math.floor(hoursTotal) % 24, minutes, 0, 0)
+  return date.toLocaleTimeString(undefined, minutes ? { hour: 'numeric', minute: '2-digit' } : { hour: 'numeric' })
 }
 
 function formatHourTick(hour: number): string {
@@ -133,13 +138,12 @@ export function TaskTimeline({
   const timedEvents = events.filter((event) => !event.allDay)
   const allDayEvents = events.filter((event) => event.allDay)
 
-  // Karachi/US split: active hours are afternoon–night locally. Never open the
-  // grid at midnight just because a long hold or overnight meeting exists.
+  // Karachi/US split: show the 12-hour active window (noon–midnight), not calendar midnight.
   const { dayStartHour, dayEndHour } = useMemo(() => {
     const workStart = hourOf(workingHours.start)
-    const workEnd = Math.min(24, hourOf(workingHours.end))
-    const startHour = Math.max(0, Math.floor(workStart - 1))
-    let endHour = Math.min(24, Math.max(startHour + 1, Math.ceil(workEnd < 24 ? workEnd + 1 : 24)))
+    const workEnd = hourOfEnd(workingHours.end)
+    const startHour = Math.max(0, Math.floor(workStart))
+    let endHour = Math.min(24, Math.max(startHour + 1, Math.ceil(workEnd)))
 
     const expandEnd = (startIso: string, endIso: string, ignoreLong: boolean) => {
       const start = Date.parse(startIso)
@@ -282,7 +286,7 @@ export function TaskTimeline({
               ` – ${days[days.length - 1].toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}`}
             <span className="timeline-active-hours">
               {' '}
-              · Active {formatHourLabel(workingHours.start)} – {formatHourLabel(workingHours.end)}
+              · Active {formatHourLabel(workingHours.start)} – {formatHourLabel(workingHours.end, true)}
             </span>
           </span>
         </div>
@@ -395,7 +399,8 @@ export function TaskTimeline({
               )
               const workHeight = Math.max(
                 0,
-                ((Math.min(hourOf(workingHours.end), dayEndHour) - Math.max(hourOf(workingHours.start), dayStartHour)) /
+                ((Math.min(hourOfEnd(workingHours.end), dayEndHour) -
+                  Math.max(hourOf(workingHours.start), dayStartHour)) /
                   hours.length) *
                   gridHeight,
               )

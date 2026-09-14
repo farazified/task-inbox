@@ -592,7 +592,7 @@ export default function App() {
             clients={state.clients}
             session={focusState?.session ?? null}
             pomodoro={focusState?.pomodoro ?? { phase: 'idle', cycle: 0, secondsLeft: 0, anchor: null }}
-            workingHours={focusState?.settings.workingHours ?? { start: '09:00', end: '18:00' }}
+            workingHours={focusState?.settings.workingHours ?? { start: '12:00', end: '24:00' }}
             ghosts={plan?.items.map((item) => ({
               taskId: item.taskId,
               start: item.start,

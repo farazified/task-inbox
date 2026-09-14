@@ -1,5 +1,5 @@
 {
-  "name": "task-inbox",
+  "name": "focus-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,9 +8,9 @@
     "build": "tsc -b && vite build",
     "start": "vite preview",
     "serve": "npm run build && vite preview",
-    "push:live": "./push-task-inbox-live.sh",
+    "push:live": "../scripts/push-live.sh",
     "publish:tasks": "node scripts/recover-tasks-from-chrome.mjs",
-    "setup:cloud": "./setup-cloud-sync.sh",
+    "setup:cloud": "../scripts/setup-cloud-sync.sh",
     "lint": "oxlint"
   },
   "dependencies": {
