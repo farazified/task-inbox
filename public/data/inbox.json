@@ -377,10 +377,10 @@
       "title": "SEO sprint",
       "clientId": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
       "dueDate": "2026-09-13",
-      "done": false,
-      "progress": "open",
+      "done": true,
+      "progress": "done",
       "createdAt": 1788361315453,
-      "updatedAt": 1788361315453
+      "updatedAt": 1789395707128
     },
     {
       "id": "08cff219-5bff-4859-a44e-52bc1e14c625",
@@ -782,6 +782,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789395705772
+    "updatedAt": 1789395707315
   }
 }
