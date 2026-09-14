@@ -771,10 +771,10 @@
       "progress": "open",
       "focus": {
         "start": "2026-09-16T06:00:00.000Z",
-        "durationMin": 180
+        "durationMin": 120
       },
       "createdAt": 1789391493223,
-      "updatedAt": 1789391507891
+      "updatedAt": 1789391551205
     }
   ],
   "deletedTaskIds": [
@@ -792,6 +792,6 @@
     "hideCompleted": false,
     "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789391528737
+    "updatedAt": 1789391552037
   }
 }
