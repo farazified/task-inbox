@@ -897,8 +897,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "table",
+    "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789414643406
+    "updatedAt": 1789414658406
   }
 }
