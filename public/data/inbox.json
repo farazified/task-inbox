@@ -3,37 +3,37 @@
     {
       "id": "andor-willow",
       "name": "Andor Willow",
-      "color": "#7c9cff"
+      "color": "#f5c563"
     },
     {
       "id": "wired4signs-usa",
       "name": "Wired4Signs USA",
-      "color": "#5eead4"
+      "color": "#f472b6"
     },
     {
       "id": "snyders-furniture",
       "name": "Snyder's Furniture",
-      "color": "#f5c563"
+      "color": "#a78bfa"
     },
     {
       "id": "elizabetta",
       "name": "Elizabetta",
-      "color": "#f472b6"
+      "color": "#34d399"
     },
     {
       "id": "fibropool",
       "name": "FibroPool",
-      "color": "#a78bfa"
+      "color": "#fb923c"
     },
     {
       "id": "electric-ride-on-cars",
       "name": "Electric Ride-On Cars",
-      "color": "#34d399"
+      "color": "#38bdf8"
     },
     {
       "id": "qbounce-sport",
       "name": "Qbounce Sport",
-      "color": "#fb923c"
+      "color": "#fb7185"
     },
     {
       "id": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
@@ -79,9 +79,8 @@
       "dueDate": "2026-10-03",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "b79c09ce-2ed3-4a7b-a004-717bdbd51ff7",
@@ -90,9 +89,8 @@
       "dueDate": "2026-10-06",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1789391277817
     },
     {
       "id": "fc7bf3fe-d04f-45da-a864-bbe05d8cdf4a",
@@ -101,9 +99,8 @@
       "dueDate": "2026-11-03",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "7241b224-3744-4778-8cc3-879c199baab5",
@@ -112,9 +109,8 @@
       "dueDate": "2026-11-06",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "aa6ae43f-916e-4fc9-ac82-0b7a55e1bd69",
@@ -123,9 +119,8 @@
       "dueDate": "2026-12-03",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "166685a0-0501-4a9c-8205-950f574eb8c5",
@@ -134,9 +129,8 @@
       "dueDate": "2026-12-06",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "42f32fbb-4fa6-43b2-9b15-c69297f8ac33",
@@ -145,9 +139,8 @@
       "dueDate": "2026-09-08",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "d0ec0e51-04bc-4581-9ecf-38d7301baeab",
@@ -156,9 +149,8 @@
       "dueDate": "2026-09-15",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "1b890226-0bc2-4b5f-aeb1-24cb44d7071b",
@@ -167,9 +159,8 @@
       "dueDate": "2026-10-08",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "e00b7076-e6e9-43ab-bc78-62fb41b0d942",
@@ -178,9 +169,8 @@
       "dueDate": "2026-10-15",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "3fb462bc-07d8-43a2-be82-e76d4b2190e8",
@@ -189,9 +179,8 @@
       "dueDate": "2026-11-08",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "5e2cce83-e08e-4eb6-8991-a4d5c6a38f01",
@@ -200,9 +189,8 @@
       "dueDate": "2026-11-15",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "47ec6c50-677b-4273-9b34-85fba3e8f127",
@@ -211,9 +199,8 @@
       "dueDate": "2026-12-08",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "b5ccaaa7-96c5-4706-9666-3655a41bd211",
@@ -222,9 +209,8 @@
       "dueDate": "2026-12-15",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "3f0f5c2e-698d-4d2f-a2c2-7aad7612e1a4",
@@ -243,9 +229,8 @@
       "dueDate": "2026-09-13",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "6d155181-493c-4af6-9263-89cd23686828",
@@ -254,9 +239,8 @@
       "dueDate": "2026-10-09",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "2249abb7-5a1b-4843-bcce-7f372640d0eb",
@@ -265,9 +249,8 @@
       "dueDate": "2026-10-13",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "9fa5e9a2-d2d1-4bd2-90d0-eba6f71e6cd2",
@@ -276,9 +259,8 @@
       "dueDate": "2026-11-09",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "eb69515f-7d6d-44d4-9f1b-7d2c49ae2272",
@@ -287,9 +269,8 @@
       "dueDate": "2026-11-13",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "2f54b107-318e-4e4c-8ff7-1b7a24ef642d",
@@ -298,9 +279,8 @@
       "dueDate": "2026-12-09",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "7ad4c044-22f3-4330-a997-cad5d8bb3a34",
@@ -309,9 +289,8 @@
       "dueDate": "2026-12-13",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "c2c45ae3-ebf1-4e6b-abe6-e768f09e7a32",
@@ -330,9 +309,8 @@
       "dueDate": "2026-09-16",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "b53077d1-a51c-496d-86d2-749c2932e15a",
@@ -341,9 +319,8 @@
       "dueDate": "2026-10-12",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "49b81186-d7a6-4e91-ae73-cd3dfe4a6759",
@@ -352,9 +329,8 @@
       "dueDate": "2026-10-16",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "472f0890-9de0-4496-bd22-75f9dbb15b47",
@@ -363,9 +339,8 @@
       "dueDate": "2026-11-12",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "36d58362-e12a-4b49-a7ac-a632bbe224c3",
@@ -374,9 +349,8 @@
       "dueDate": "2026-11-16",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "a36d31c0-4769-4777-8ee6-efea7a65463a",
@@ -385,9 +359,8 @@
       "dueDate": "2026-12-12",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "65f537fd-da31-438a-b85a-30f2e2920222",
@@ -396,9 +369,8 @@
       "dueDate": "2026-12-16",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "d313b7fc-750c-41a0-a9a7-34110cffce28",
@@ -417,9 +389,8 @@
       "dueDate": "2026-09-17",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "c9fd6fb3-adc1-46ac-8418-edaf09f9a9e5",
@@ -428,9 +399,8 @@
       "dueDate": "2026-10-13",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "2256449f-cb9e-4e98-a5a6-6ecdf791dd49",
@@ -439,9 +409,8 @@
       "dueDate": "2026-10-17",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "136d4080-fbc1-4e60-a9fc-46e90d03ed36",
@@ -450,9 +419,8 @@
       "dueDate": "2026-11-13",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "e0efee3c-f7a8-493e-bcd2-a2964cb13ada",
@@ -461,9 +429,8 @@
       "dueDate": "2026-11-17",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "14389929-3817-4789-a76b-717b135d5eed",
@@ -472,9 +439,8 @@
       "dueDate": "2026-12-13",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "35212931-d966-40a1-9a50-2ff44c44dee6",
@@ -483,9 +449,8 @@
       "dueDate": "2026-12-17",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "adfe2c73-3523-43f2-aa14-52d121af5530",
@@ -494,9 +459,8 @@
       "dueDate": "2026-09-23",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "31bb1ede-3a80-4e72-8f59-e4ffa6de6f72",
@@ -505,9 +469,8 @@
       "dueDate": "2026-09-27",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "d1bb62ec-d15f-453d-9b37-2c1e6c2fb63f",
@@ -516,9 +479,8 @@
       "dueDate": "2026-10-23",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "eff5a762-7307-4c4f-8e33-050ea337befc",
@@ -527,9 +489,8 @@
       "dueDate": "2026-10-27",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "b8cbcab2-3c8a-4a59-ab5b-7f5ec87e0820",
@@ -538,9 +499,8 @@
       "dueDate": "2026-11-23",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "734d8709-56f3-4ab8-b687-0aeedf01dc71",
@@ -549,9 +509,8 @@
       "dueDate": "2026-11-27",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "49107f87-99db-4556-87ae-8154e35f65df",
@@ -560,9 +519,8 @@
       "dueDate": "2026-12-23",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "2aaea596-b602-47f9-aa7a-10338297d96e",
@@ -571,9 +529,8 @@
       "dueDate": "2026-12-27",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "b17d0ecc-ec3d-4431-94f4-80afcf6b9984",
@@ -582,9 +539,8 @@
       "dueDate": "2026-09-26",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "6cc06457-d0f5-4bd4-ada6-dc1b125bda03",
@@ -593,9 +549,8 @@
       "dueDate": "2026-09-30",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "59b904c1-9e5b-4c53-a004-a76d25b7f343",
@@ -604,9 +559,8 @@
       "dueDate": "2026-10-26",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "53b5d373-933a-4f81-a6ca-ee8d4a1291c4",
@@ -615,9 +569,8 @@
       "dueDate": "2026-10-30",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "224eff78-7af7-4e73-97a0-8be5e005a05c",
@@ -626,9 +579,8 @@
       "dueDate": "2026-11-26",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "b33631f8-5c9a-498d-ba83-5ff5910701c4",
@@ -637,9 +589,8 @@
       "dueDate": "2026-11-30",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "84a170fc-39c3-4e3f-a3fa-cc8e237171b6",
@@ -648,9 +599,8 @@
       "dueDate": "2026-12-26",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "783c2f4e-b22a-4fa7-9111-d26416233e8e",
@@ -659,9 +609,8 @@
       "dueDate": "2026-12-30",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "9014c67c-8abf-4518-a778-6509b0f5229e",
@@ -670,9 +619,8 @@
       "dueDate": "2026-09-30",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "859b1c83-702e-42b3-844d-75ae87a62d43",
@@ -681,9 +629,8 @@
       "dueDate": "2026-10-04",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "f1dec204-1f4d-4f7e-97a8-6cd88b78d831",
@@ -692,9 +639,8 @@
       "dueDate": "2026-10-31",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "43b1f64a-1bd7-45fc-b603-7cb4e19a6842",
@@ -703,9 +649,8 @@
       "dueDate": "2026-11-04",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "e8e5c609-b45c-4ccd-96ca-b529bcdfbff1",
@@ -714,9 +659,8 @@
       "dueDate": "2026-11-30",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "6ed04c56-fb0c-4665-a3a4-f7e5aee91f83",
@@ -725,9 +669,8 @@
       "dueDate": "2026-12-04",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "0fccc851-022f-478f-a101-8d4cde1b664e",
@@ -736,9 +679,8 @@
       "dueDate": "2026-12-31",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
-      "updatedAt": 1789396440152
+      "updatedAt": 1788361315453
     },
     {
       "id": "059d1795-809a-4232-8278-122de10b8dc0",
@@ -747,9 +689,8 @@
       "dueDate": "2027-01-04",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
-      "updatedAt": 1789396439663
+      "updatedAt": 1788361315454
     },
     {
       "id": "67a85994-782f-466a-8c91-ec1dd01a5281",
@@ -835,6 +776,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789396949506
+    "updatedAt": 1789397011490
   }
 }
