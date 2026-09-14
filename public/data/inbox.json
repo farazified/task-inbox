@@ -741,12 +741,12 @@
       "progress": "open",
       "durationMin": 60,
       "focus": {
-        "start": "2026-09-14T16:25:13.239Z",
+        "start": "2026-09-14T16:25:13.000Z",
         "durationMin": 60,
         "eventId": "liv7lj8sgpd2a5bc9em2602tcg"
       },
       "createdAt": 1788342123727,
-      "updatedAt": 1789403234086
+      "updatedAt": 1789403242967
     },
     {
       "id": "852ce9e0-513b-4979-9e8d-9882545e06e7",
@@ -782,6 +782,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789403237920
+    "updatedAt": 1789403243606
   }
 }
