@@ -4,6 +4,8 @@ import { addDaysISO, formatDue, todayISO } from './dates'
 import { PROGRESS_LABELS, PROGRESS_OPTIONS, taskProgress } from './taskStatus'
 import { trimNotes, trimTitle } from './validate'
 import { TrashIcon } from './TrashIcon'
+import { FocusPicker } from './FocusPicker'
+import { DurationPicker } from './DurationPicker'
 import { PERSONAL_ID, type Client, type Task, type TaskProgress } from './types'
 
 type Props = {
@@ -151,6 +153,21 @@ export function EditSheet({ task, clients, onSave, onDelete, onClose }: Props) {
             />
           </label>
         </div>
+        <p className="sheet-label">How long it takes</p>
+        <DurationPicker
+          value={task.durationMin ?? task.focus?.durationMin}
+          onChange={(durationMin) =>
+            onSave({
+              durationMin,
+              ...(task.focus ? { focus: { ...task.focus, durationMin } } : {}),
+            })
+          }
+        />
+        <p className="sheet-label">Focus block</p>
+        <FocusPicker
+          value={task.focus ?? null}
+          onChange={(focus) => onSave({ focus: focus ?? undefined })}
+        />
         <button type="button" className="danger-btn delete-permanent" onClick={onDelete}>
           <TrashIcon />
           Delete permanently

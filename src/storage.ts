@@ -13,11 +13,20 @@ import {
   type DeletedTask,
   type InboxState,
   type Task,
+  type TaskFocus,
   type ViewMode,
 } from './types'
 
 const KEY = 'task-inbox:v1'
-const VIEW_MODES = new Set<ViewMode>(['table', 'kanban', 'calendar', 'list'])
+const VIEW_MODES = new Set<ViewMode>([
+  'table',
+  'kanban',
+  'calendar',
+  'timeline',
+  'list',
+  'insights',
+  'settings',
+])
 
 function defaultViewMode(): ViewMode {
   if (typeof window !== 'undefined' && window.innerWidth < 768) return 'list'
@@ -62,6 +71,24 @@ function parseClients(raw: unknown): Client[] {
   return clients
 }
 
+/** Focus blocks are only kept when both the instant and the duration survive validation. */
+function parseFocus(raw: unknown): TaskFocus | null {
+  if (!isRecord(raw)) return null
+  if (typeof raw.start !== 'string') return null
+  const start = new Date(raw.start)
+  if (Number.isNaN(start.getTime())) return null
+  const durationMin = Number(raw.durationMin)
+  if (!Number.isFinite(durationMin)) return null
+  const rounded = Math.round(durationMin)
+  if (rounded < 5 || rounded > 480) return null
+  const eventId = typeof raw.eventId === 'string' && raw.eventId ? raw.eventId : undefined
+  return {
+    start: start.toISOString(),
+    durationMin: rounded,
+    ...(eventId ? { eventId } : {}),
+  }
+}
+
 function parseTasks(raw: unknown, clientIds: Set<string>): Task[] {
   if (!Array.isArray(raw)) return []
   const seen = new Set<string>()
@@ -89,6 +116,12 @@ function parseTasks(raw: unknown, clientIds: Set<string>): Task[] {
       typeof item.notes === 'string' ? trimNotes(item.notes) : ''
     const done = Boolean(item.done)
     const progress = normalizeProgress(item.progress, done)
+    const focus = parseFocus(item.focus)
+    const rawDuration = Number(item.durationMin)
+    const durationMin =
+      Number.isFinite(rawDuration) && rawDuration >= 5 && rawDuration <= 480
+        ? Math.round(rawDuration)
+        : focus?.durationMin
     tasks.push({
       id,
       title,
@@ -97,6 +130,8 @@ function parseTasks(raw: unknown, clientIds: Set<string>): Task[] {
       done: progress === 'done',
       progress,
       ...(notes ? { notes } : {}),
+      ...(durationMin ? { durationMin } : {}),
+      ...(focus ? { focus } : {}),
       createdAt,
       updatedAt,
     })

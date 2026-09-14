@@ -90,7 +90,30 @@ function preferTask(
   a: InboxState['tasks'][number],
   b: InboxState['tasks'][number],
 ): InboxState['tasks'][number] {
-  return taskStamp(b) >= taskStamp(a) ? b : a
+  const newer = taskStamp(b) >= taskStamp(a) ? b : a
+  const older = newer === b ? a : b
+  let next = newer
+  // Never let a cloud copy without a block erase a local scheduled focus.
+  if (!next.focus && older.focus) {
+    next = { ...next, focus: older.focus }
+  }
+  if (next.durationMin == null && older.durationMin != null) {
+    next = { ...next, durationMin: older.durationMin }
+  }
+  return next
+}
+
+function focusEqual(
+  a: InboxState['tasks'][number]['focus'],
+  b: InboxState['tasks'][number]['focus'],
+): boolean {
+  if (!a && !b) return true
+  if (!a || !b) return false
+  return (
+    a.start === b.start &&
+    a.durationMin === b.durationMin &&
+    (a.eventId ?? '') === (b.eventId ?? '')
+  )
 }
 
 export function statesDiffer(local: InboxState, merged: InboxState): boolean {
@@ -109,6 +132,8 @@ export function statesDiffer(local: InboxState, merged: InboxState): boolean {
       current.done !== task.done ||
       current.progress !== task.progress ||
       (current.notes ?? '') !== (task.notes ?? '') ||
+      (current.durationMin ?? null) !== (task.durationMin ?? null) ||
+      !focusEqual(current.focus, task.focus) ||
       taskStamp(current) !== taskStamp(task)
     ) {
       return true

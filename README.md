@@ -1,47 +1,34 @@
-# Task Inbox
+# Task Inbox (app)
 
-Dump client and personal tasks from your phone or laptop. Dark, fast, no account.
+The browser UI for Focus System. Path: `focus-system/app` (this folder).
 
-**Everything stays in sync automatically** — local edits, live site, and your phone all share the same task list.
+There is no separate `task-inbox` project under Claude Playground anymore.
 
-Seven CLI SEO clients are already loaded: Andor Willow, Wired4Signs USA, Snyder's Furniture, Elizabetta, FibroPool, Electric Ride-On Cars, and Qbounce Sport. Add, rename, or delete others from **Clients**. Personal is always there.
+**Everything stays in sync automatically** — local edits, live site, and your phone can
+still share the same task list via GitHub when cloud sync is configured. Focus calendar
+features need the local agent on this machine.
 
-## Daily use
+## Daily use (from the monorepo root)
 
-Double-click **`start-task-inbox-dashboard.command`**
+```bash
+npm run start:agent   # terminal 1
+npm run dev           # terminal 2 → http://127.0.0.1:5173/
+```
 
-That starts the local app and turns on auto-sync:
+Or from this folder: `npm run dev`, and double-click
+`start-task-inbox-dashboard.command` still works for the Vite app + GitHub auto-push.
 
-- **Tasks** — every add/edit syncs to GitHub within a second (header shows **Synced**)
-- **App code** — saves auto-push to GitHub; Pages rebuilds in ~1 minute
 - **Local URL:** http://127.0.0.1:5173/
-- **Live URL:** https://farazified.github.io/task-inbox/
+- **Live URL (tasks only):** https://farazified.github.io/task-inbox/
 
-Use the **live URL** on your phone (Add to Home Screen) — same tasks everywhere.
+## Views
 
-## One-time setup
+Table, Kanban, Month, Timeline, List, Insights, Settings — plus Auto-schedule and Plan
+in the header. Timeline is where focus blocks are scheduled by drag.
+
+## One-time cloud sync (optional)
 
 ```bash
 npm install
 ./setup-cloud-sync.sh
-```
-
-`setup-cloud-sync.sh` stores your GitHub token so the live site can sync tasks too. You only run this once.
-
-## Use it
-
-Type a task and tap **Add** or press Enter. Client names and due words (`today`, `tomorrow`, `next week`) are detected as you type.
-
-Due dates show as **today**, **tomorrow**, **thursday**, etc.
-
-Phone opens in **List**. Laptop opens in **Table**. Switch anytime: Table, Kanban, Calendar, or List.
-
-Tap a row to edit. The checkbox (or status) marks it done. **Hide done** tucks completed tasks away.
-
-## Manual push (optional)
-
-Usually not needed — auto-sync handles it. If you want to force a push:
-
-```bash
-./push-task-inbox-live.sh
 ```

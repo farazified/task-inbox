@@ -6,6 +6,7 @@ import { dueBucket, dueDateForGroup, todayISO, type DueGroup } from './dates'
 import { EditSheet } from './EditSheet'
 import { loadState, nid, nextColor, saveState } from './storage'
 import { withProgress } from './taskStatus'
+import { clientLabel } from './taskUtils'
 import {
   isCloudEnabled,
   mergeStates,
@@ -21,6 +22,23 @@ import { TaskCalendar } from './TaskCalendar'
 import { TaskKanban } from './TaskKanban'
 import { TaskList } from './TaskList'
 import { TaskTable } from './TaskTable'
+import { TaskTimeline } from './TaskTimeline'
+import { PlannerPanel } from './PlannerPanel'
+import { InsightsView } from './InsightsView'
+import { FocusStatus } from './FocusStatus'
+import { SettingsView } from './SettingsView'
+import { AutoSchedule } from './AutoSchedule'
+import { MeetingsStrip } from './MeetingsStrip'
+import {
+  handleOAuthRedirect,
+  onSession,
+  restoreSession,
+  startExpiryWatch,
+  doOAuth,
+} from './googleAuth'
+import type { GoogleSession } from './googleAuth'
+import * as focusAgent from './focusAgent'
+import type { AgentState, PlanResult } from './focusAgent'
 import { ViewSwitcher } from './ViewSwitcher'
 import { clientNameError, parseDueDate, taskTitleError, trimClientName, trimTitle } from './validate'
 import {
@@ -28,6 +46,7 @@ import {
   type Filter,
   type InboxState,
   type Task,
+  type TaskFocus,
   type TaskProgress,
   type ViewMode,
 } from './types'
@@ -47,6 +66,15 @@ export default function App() {
   const [manualDue, setManualDue] = useState(false)
   const [renamingClientId, setRenamingClientId] = useState<string | null>(null)
   const [cloudStatus, setCloudStatus] = useState<CloudStatus>('loading')
+  const [focusState, setFocusState] = useState<AgentState | null>(null)
+  const [agentStatus, setAgentStatus] = useState<focusAgent.AgentStatus>('offline')
+  const [plan, setPlan] = useState<PlanResult | null>(null)
+  const [showPlanner, setShowPlanner] = useState(false)
+  const [showAutoSchedule, setShowAutoSchedule] = useState(false)
+  const [googleSession, setGoogleSession] = useState<GoogleSession | null>(null)
+  const [sessionLapsed, setSessionLapsed] = useState(false)
+  const [focusDraft, setFocusDraft] = useState<TaskFocus | null>(null)
+  const prevTasks = useRef<Map<string, Task>>(new Map())
   const cloudReady = useRef(false)
   const skipCloudPush = useRef(false)
   const stateRef = useRef(state)
@@ -172,10 +200,204 @@ export default function App() {
   }, [state.tasks, state.clients, filter, search, state.prefs.hideCompleted])
 
   function touchTask(task: Task, patch: Partial<Task>): Task {
-    return { ...task, ...patch, updatedAt: Date.now() }
+    const next = { ...task, ...patch, updatedAt: Date.now() }
+    // An explicit `focus: undefined` in the patch means "clear the block", so drop the key.
+    if ('focus' in patch && !patch.focus) delete next.focus
+    return next
   }
 
   const editing = state.tasks.find((task) => task.id === editingId) ?? null
+
+  /** Sets how long tasks take. A scheduled block is resized to match. */
+  function setDurations(updates: Array<{ taskId: string; durationMin: number }>) {
+    const byId = new Map(updates.map((item) => [item.taskId, item.durationMin]))
+    patch((prev) => ({
+      ...prev,
+      tasks: prev.tasks.map((task) => {
+        const durationMin = byId.get(task.id)
+        if (!durationMin) return task
+        return {
+          ...task,
+          durationMin,
+          ...(task.focus ? { focus: { ...task.focus, durationMin } } : {}),
+          updatedAt: Date.now(),
+        }
+      }),
+    }))
+  }
+
+  /** Applies a focus block to one task without disturbing anything else about it. */
+  function setTaskFocus(taskId: string, focus: TaskFocus | null) {
+    patch((prev) => ({
+      ...prev,
+      tasks: prev.tasks.map((task) => {
+        if (task.id !== taskId) return task
+        if (!focus) {
+          const { focus: _dropped, ...rest } = task
+          return { ...rest, updatedAt: Date.now() }
+        }
+        return { ...task, focus, updatedAt: Date.now() }
+      }),
+    }))
+  }
+
+  // The agent owns Google Calendar, so every local focus change is pushed to it.
+  // Diffing here catches every mutation path (compose, edit sheet, timeline drag, planner).
+  useEffect(() => {
+    const previous = prevTasks.current
+    const current = new Map(state.tasks.map((task) => [task.id, task]))
+    const first = previous.size === 0
+
+    for (const task of state.tasks) {
+      const before = previous.get(task.id)
+      // Skip the first pass after load — otherwise every already-done task with a
+      // leftover focus block would be re-completed against Google Calendar.
+      if (!first && task.progress === 'done' && before?.progress !== 'done' && task.focus) {
+        focusAgent.completeTask(task.id)
+        continue
+      }
+      if (!task.focus) {
+        if (!first && before?.focus) focusAgent.unscheduleTask(task.id)
+        continue
+      }
+      if (first) continue
+      const changed =
+        !before?.focus ||
+        before.focus.start !== task.focus.start ||
+        before.focus.durationMin !== task.focus.durationMin ||
+        before.title !== task.title ||
+        before.clientId !== task.clientId
+      if (changed) focusAgent.scheduleTask(task, clientLabel(task.clientId, state.clients).name)
+    }
+
+    if (!first) {
+      for (const [id, before] of previous) {
+        if (!current.has(id) && before.focus) focusAgent.unscheduleTask(id)
+      }
+    }
+    prevTasks.current = current
+  }, [state.tasks])
+
+  // Google sign-in, run in the browser exactly as the SEO-IQ dashboard does it.
+  useEffect(() => {
+    // The banner is only honest if a session actually existed and then lapsed;
+    // never having signed in is not an expiry.
+    let everSignedIn = false
+    const off = onSession((session) => {
+      setGoogleSession(session)
+      if (session) {
+        everSignedIn = true
+        setSessionLapsed(false)
+      } else if (everSignedIn) {
+        setSessionLapsed(true)
+      }
+    })
+    if (!handleOAuthRedirect()) restoreSession()
+    const stopWatch = startExpiryWatch()
+    return () => {
+      off()
+      stopWatch()
+    }
+  }, [])
+
+  // Live agent link: state pushes, calendar-side edits, and the evening plan nudge.
+  useEffect(() => {
+    const offStatus = focusAgent.onStatus(setAgentStatus)
+    focusAgent
+      .fetchState()
+      .then(setFocusState)
+      .catch(() => undefined)
+    void focusAgent.flushQueue()
+
+    // Pull agent schedules into local tasks so the timeline shows blocks created
+    // outside this tab (API, another device, or a prior session).
+    void focusAgent.fetchSchedules().then(({ schedules }) => {
+      const byId = new Map(
+        schedules
+          .filter((row) => row.status === 'scheduled')
+          .map((row) => [row.taskId, row]),
+      )
+      if (!byId.size) return
+      const stamp = Date.now()
+      const withAgentFocus = (tasks: Task[]) =>
+        tasks.map((task) => {
+          const row = byId.get(task.id)
+          if (!row) return task
+          const durationMin = Math.max(
+            5,
+            Math.round((Date.parse(row.end) - Date.parse(row.start)) / 60_000),
+          )
+          const focus: TaskFocus = {
+            start: row.start,
+            durationMin,
+            ...(row.eventId ? { eventId: row.eventId } : {}),
+          }
+          if (
+            task.focus?.start === focus.start &&
+            task.focus.durationMin === focus.durationMin &&
+            (task.focus.eventId ?? '') === (focus.eventId ?? '')
+          ) {
+            return task
+          }
+          return { ...task, focus, durationMin, updatedAt: stamp }
+        })
+      prevTasks.current = new Map(
+        withAgentFocus(stateRef.current.tasks).map((task) => [task.id, task]),
+      )
+      patch((prev) => ({ ...prev, tasks: withAgentFocus(prev.tasks) }))
+    }).catch(() => undefined)
+
+    const unsubscribe = focusAgent.subscribe({
+      onState: setFocusState,
+      onScheduleChanged: (payload) => {
+        patch((prev) => ({
+          ...prev,
+          tasks: prev.tasks.map((task) => {
+            if (task.id !== payload.taskId) return task
+            const next: TaskFocus = {
+              start: payload.start,
+              durationMin: payload.durationMin,
+              ...(payload.eventId ? { eventId: payload.eventId } : {}),
+            }
+            if (
+              task.focus?.start === next.start &&
+              task.focus.durationMin === next.durationMin &&
+              task.focus.eventId === next.eventId
+            ) {
+              return task
+            }
+            return { ...task, focus: next, durationMin: next.durationMin, updatedAt: Date.now() }
+          }),
+        }))
+      },
+      onScheduleRemoved: (payload) => {
+        patch((prev) => ({
+          ...prev,
+          tasks: prev.tasks.map((task) => {
+            if (task.id !== payload.taskId || !task.focus) return task
+            const { focus: _dropped, ...rest } = task
+            return { ...rest, updatedAt: Date.now() }
+          }),
+        }))
+      },
+      onPlanDue: () => {
+        setShowPlanner(true)
+      },
+    })
+
+    const flusher = setInterval(() => {
+      void focusAgent.flushQueue()
+    }, 15_000)
+    const onFocusWindow = () => void focusAgent.flushQueue()
+    window.addEventListener('focus', onFocusWindow)
+
+    return () => {
+      offStatus()
+      unsubscribe()
+      clearInterval(flusher)
+      window.removeEventListener('focus', onFocusWindow)
+    }
+  }, [])
 
   function patch(updater: (prev: InboxState) => InboxState) {
     setState((prev) => {
@@ -199,9 +421,11 @@ export default function App() {
       dueDate: parseDueDate(parsed.dueDate ?? dueDate),
       done: false,
       progress: 'open',
+      ...(focusDraft ? { focus: focusDraft } : {}),
       createdAt: now,
       updatedAt: now,
     }
+    // Let the sync effect push the schedule once — do not call the agent here too.
     patch((prev) => ({
       ...prev,
       tasks: [task, ...prev.tasks],
@@ -209,6 +433,7 @@ export default function App() {
     }))
     setTitle('')
     setDueDate(null)
+    setFocusDraft(null)
     setManualClient(false)
     setManualDue(false)
     setShowComposer(false)
@@ -308,6 +533,8 @@ export default function App() {
           task.id === taskId ? touchTask(task, { dueDate: parseDueDate(dueDate) }) : task,
         ),
       })),
+    onDurationChange: (taskId: string, durationMin: number) =>
+      setDurations([{ taskId, durationMin }]),
     onMoveToGroup: (taskId: string, group: DueGroup | 'done') =>
       patch((prev) => ({
         ...prev,
@@ -324,12 +551,32 @@ export default function App() {
   }
 
   const clientFilter = state.clients.some((client) => client.id === filter) ? filter : ''
+  const taskChrome = viewMode !== 'settings' && viewMode !== 'insights'
+  const showMeetings = taskChrome
+  const heading =
+    viewMode === 'timeline'
+      ? { eyebrow: 'Focus blocks', title: 'Timeline' }
+      : viewMode === 'calendar'
+        ? { eyebrow: 'By due date', title: 'Month' }
+        : viewMode === 'settings'
+          ? { eyebrow: 'Focus', title: 'Settings' }
+          : viewMode === 'insights'
+            ? { eyebrow: 'Focus', title: 'Insights' }
+            : { eyebrow: 'Focus', title: 'Tasks' }
 
   function setViewMode(mode: ViewMode) {
     patch((prev) => ({
       ...prev,
       prefs: { ...prev.prefs, viewMode: mode },
     }))
+    if (mode === 'settings' || mode === 'insights') {
+      setShowComposer(false)
+      setShowAutoSchedule(false)
+      setShowPlanner(false)
+    } else if (mode !== 'timeline') {
+      setShowAutoSchedule(false)
+      setShowPlanner(false)
+    }
   }
 
   function renderView() {
@@ -338,6 +585,67 @@ export default function App() {
         return <TaskKanban {...viewProps} />
       case 'calendar':
         return <TaskCalendar {...viewProps} />
+      case 'timeline':
+        return (
+          <TaskTimeline
+            tasks={visibleTasks}
+            clients={state.clients}
+            session={focusState?.session ?? null}
+            pomodoro={focusState?.pomodoro ?? { phase: 'idle', cycle: 0, secondsLeft: 0, anchor: null }}
+            workingHours={focusState?.settings.workingHours ?? { start: '09:00', end: '18:00' }}
+            ghosts={plan?.items.map((item) => ({
+              taskId: item.taskId,
+              start: item.start,
+              durationMin: item.durationMin,
+            }))}
+            onFocusChange={setTaskFocus}
+            onOpen={setEditingId}
+          />
+        )
+      case 'settings':
+        return (
+          <SettingsView
+            settings={
+              focusState?.settings
+                ? {
+                    ...focusState.settings,
+                    aiKeySet: focusState.aiKeySet ?? focusState.settings.aiKeySet,
+                    aiKeyHint: focusState.aiKeyHint ?? focusState.settings.aiKeyHint,
+                  }
+                : null
+            }
+            agentOnline={agentStatus !== 'offline' && focusState !== null}
+            aiEnabled={focusState?.ai === 'on'}
+            extension={focusState?.extension}
+            onSettingsChange={(patch) =>
+              setFocusState((prev) =>
+                prev
+                  ? {
+                      ...prev,
+                      ai: patch.aiKeySet === false ? 'off' : patch.aiKeySet ? 'on' : prev.ai,
+                      aiProvider: patch.aiProvider ?? prev.aiProvider,
+                      aiKeySet: patch.aiKeySet ?? prev.aiKeySet,
+                      aiKeyHint: patch.aiKeyHint ?? prev.aiKeyHint,
+                      settings: { ...prev.settings, ...patch },
+                    }
+                  : prev,
+              )
+            }
+          />
+        )
+      case 'insights':
+        return (
+          <InsightsView
+            clients={state.clients}
+            aiEnabled={focusState?.ai === 'on'}
+            blockedSites={focusState?.settings.blockedSites ?? []}
+            onSettingsChange={(blockedSites) =>
+              setFocusState((prev) =>
+                prev ? { ...prev, settings: { ...prev.settings, blockedSites } } : prev,
+              )
+            }
+          />
+        )
       case 'list':
         return <TaskList {...viewProps} />
       default:
@@ -383,8 +691,8 @@ export default function App() {
         <>
           <header className="top">
             <div>
-              <p className="eyebrow">Inbox</p>
-              <h1>Tasks</h1>
+              <p className="eyebrow">{heading.eyebrow}</p>
+              <h1>{heading.title}</h1>
             </div>
             <div className="top-actions">
               {cloudStatus !== 'off' && (
@@ -395,26 +703,51 @@ export default function App() {
                   {cloudLabel(cloudStatus)}
                 </span>
               )}
+              <FocusStatus
+                status={agentStatus}
+                state={focusState}
+                onStateChange={setFocusState}
+                onOpenSetup={() => setViewMode('settings')}
+              />
               <ViewSwitcher value={viewMode} onChange={setViewMode} />
-              <button
-                type="button"
-                className={`text-btn ${state.prefs.hideCompleted ? 'on-text' : ''}`}
-                onClick={() =>
+              {taskChrome && (
+                <button
+                  type="button"
+                  className={`text-btn ${showAutoSchedule ? 'on-text' : ''}`}
+                  onClick={() => {
+                    const next = !showAutoSchedule
+                    setShowAutoSchedule(next)
+                    setShowPlanner(false)
+                    if (next) setViewMode('timeline')
+                  }}
+                >
+                  Auto-schedule
+                </button>
+              )}
+              <MoreActions
+                hideCompleted={state.prefs.hideCompleted}
+                planOpen={showPlanner}
+                settingsOn={viewMode === 'settings'}
+                onTogglePlan={() => {
+                  const next = !showPlanner
+                  setShowPlanner(next)
+                  setShowAutoSchedule(false)
+                  if (next) setViewMode('timeline')
+                }}
+                onToggleDone={() =>
                   patch((prev) => ({
                     ...prev,
                     prefs: { ...prev.prefs, hideCompleted: !prev.prefs.hideCompleted },
                   }))
                 }
-              >
-                {state.prefs.hideCompleted ? 'Show done' : 'Hide done'}
-              </button>
-              <button type="button" className="ghost-btn" onClick={() => setShowClients(true)}>
-                Clients
-              </button>
+                onClients={() => setShowClients(true)}
+                onSettings={() => setViewMode('settings')}
+              />
             </div>
           </header>
 
           <div className="main-pane">
+              {taskChrome && (
               <div className="filter-bar">
                 <nav className="filters filters-quick" aria-label="Quick filters">
                   <FilterChip
@@ -496,11 +829,79 @@ export default function App() {
                   </button>
                 ) : null}
               </div>
+              )}
+
+              {sessionLapsed && !googleSession && (
+                <div className="session-banner">
+                  <span>Your Google session expired. Calendar sync is paused.</span>
+                  <button type="button" className="session-reconnect" onClick={() => doOAuth()}>
+                    Reconnect →
+                  </button>
+                </div>
+              )}
+
+              {showMeetings && <MeetingsStrip signedIn={focusState?.auth === 'ok'} />}
+
+              {showAutoSchedule && (
+                <AutoSchedule
+                  tasks={state.tasks}
+                  clients={state.clients}
+                  onDurationsChange={setDurations}
+                  onApply={(updates) => {
+                    const byId = new Map(updates.map((item) => [item.taskId, item.focus]))
+                    const stamp = Date.now()
+                    const withFocus = (tasks: Task[]) =>
+                      tasks.map((task) => {
+                        const focus = byId.get(task.id)
+                        return focus
+                          ? {
+                              ...task,
+                              focus,
+                              durationMin: focus.durationMin,
+                              updatedAt: stamp,
+                            }
+                          : task
+                      })
+                    // Build the map the sync effect will see next, from the same apply.
+                    prevTasks.current = new Map(
+                      withFocus(stateRef.current.tasks).map((task) => [task.id, task]),
+                    )
+                    patch((prev) => ({ ...prev, tasks: withFocus(prev.tasks) }))
+                    setViewMode('timeline')
+                  }}
+                  onClose={() => setShowAutoSchedule(false)}
+                />
+              )}
+
+              {showPlanner && (
+                <PlannerPanel
+                  tasks={state.tasks}
+                  clients={state.clients}
+                  aiEnabled={focusState?.ai === 'on'}
+                  plan={plan}
+                  onPlan={setPlan}
+                  onApply={(updates) => {
+                    const byId = new Map(updates.map((item) => [item.taskId, item.focus]))
+                    const stamp = Date.now()
+                    const withFocus = (tasks: Task[]) =>
+                      tasks.map((task) => {
+                        const focus = byId.get(task.id)
+                        return focus ? { ...task, focus, durationMin: focus.durationMin, updatedAt: stamp } : task
+                      })
+                    prevTasks.current = new Map(
+                      withFocus(stateRef.current.tasks).map((task) => [task.id, task]),
+                    )
+                    patch((prev) => ({ ...prev, tasks: withFocus(prev.tasks) }))
+                    setViewMode('timeline')
+                  }}
+                  onClose={() => setShowPlanner(false)}
+                />
+              )}
 
               {renderView()}
           </div>
 
-          {!showComposer && (
+          {taskChrome && !showComposer && (
             <button
               type="button"
               className="add-btn quick-add-fab"
@@ -533,6 +934,9 @@ export default function App() {
                   manualDue={manualDue}
                   onManualClient={() => setManualClient(true)}
                   onManualDue={() => setManualDue(true)}
+                  focus={focusDraft}
+                  onFocus={setFocusDraft}
+                  aiEnabled={focusState?.ai === 'on'}
                 />
               </div>
             </div>
@@ -569,6 +973,16 @@ export default function App() {
                 Object.assign(patchTask, withProgress(next.progress))
               } else if (typeof next.done === 'boolean') {
                 Object.assign(patchTask, withProgress(next.done ? 'done' : 'open'))
+              }
+            }
+            if ('focus' in next) {
+              patchTask.focus = next.focus ?? undefined
+            }
+            if (typeof next.durationMin === 'number' && next.durationMin >= 5) {
+              patchTask.durationMin = next.durationMin
+              if (next.focus) patchTask.focus = next.focus
+              else if (editing.focus) {
+                patchTask.focus = { ...editing.focus, durationMin: next.durationMin }
               }
             }
             if ('notes' in next) {
@@ -623,6 +1037,105 @@ function cloudLabel(status: CloudStatus): string {
     default:
       return 'Cloud'
   }
+}
+
+function MoreActions({
+  hideCompleted,
+  planOpen,
+  settingsOn,
+  onTogglePlan,
+  onToggleDone,
+  onClients,
+  onSettings,
+}: {
+  hideCompleted: boolean
+  planOpen: boolean
+  settingsOn: boolean
+  onTogglePlan: () => void
+  onToggleDone: () => void
+  onClients: () => void
+  onSettings: () => void
+}) {
+  const [open, setOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const onPointer = (event: PointerEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) setOpen(false)
+    }
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointer)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('pointerdown', onPointer)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
+  return (
+    <div className="header-more" ref={menuRef}>
+      <button
+        type="button"
+        className={`text-btn header-more-btn ${open || settingsOn || planOpen ? 'on-text' : ''}`}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label="More actions"
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        Menu
+      </button>
+      {open && (
+        <div className="view-more-menu" role="menu">
+          <button
+            type="button"
+            role="menuitem"
+            className={planOpen ? 'on' : ''}
+            onClick={() => {
+              onTogglePlan()
+              setOpen(false)
+            }}
+          >
+            Plan
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            className={hideCompleted ? 'on' : ''}
+            onClick={() => {
+              onToggleDone()
+              setOpen(false)
+            }}
+          >
+            {hideCompleted ? 'Show done' : 'Hide done'}
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              onClients()
+              setOpen(false)
+            }}
+          >
+            Clients
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            className={settingsOn ? 'on' : ''}
+            onClick={() => {
+              onSettings()
+              setOpen(false)
+            }}
+          >
+            Settings
+          </button>
+        </div>
+      )}
+    </div>
+  )
 }
 
 function FilterChip({

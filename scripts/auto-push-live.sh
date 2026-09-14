@@ -31,11 +31,17 @@ push_if_dirty() {
 }
 
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-  exit 0
+  echo "[auto-push] Not inside a git repo — skipping." >&2
+  exit 1
 fi
 
 if ! git remote get-url origin >/dev/null 2>&1; then
-  exit 0
+  cat >&2 <<'EOF'
+[auto-push] No git remote "origin" on the focus-system monorepo.
+Live Pages still publishes from the sibling ../task-inbox clone.
+Auto-push is disabled here so it cannot silently no-op or ship the wrong tree.
+EOF
+  exit 1
 fi
 
 gh auth setup-git 2>/dev/null || true

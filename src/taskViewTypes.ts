@@ -11,6 +11,7 @@ export type TaskViewProps = {
   onOpen: (id: string) => void
   onClientChange?: (taskId: string, clientId: string) => void
   onDueChange?: (taskId: string, dueDate: string | null) => void
+  onDurationChange?: (taskId: string, durationMin: number) => void
   onMoveToGroup?: (taskId: string, group: DueGroup | 'done') => void
   onDelete?: (taskId: string) => void
 }

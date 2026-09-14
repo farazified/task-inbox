@@ -1,9 +1,13 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ClientPicker } from './ClientPicker'
 import { DuePicker } from './DuePicker'
+import { FocusPicker } from './FocusPicker'
 import { formatDue, todayISO } from './dates'
+import { parseCapture } from './focusAgent'
+import type { ParsedCapture } from './focusAgent'
+import { formatDayClock, formatDuration } from './focusTime'
 import { parseTaskInput } from './parseTask'
-import { PERSONAL_ID, type Client } from './types'
+import { PERSONAL_ID, type Client, type TaskFocus } from './types'
 
 type Props = {
   title: string
@@ -19,6 +23,9 @@ type Props = {
   manualDue: boolean
   onManualClient: () => void
   onManualDue: () => void
+  focus: TaskFocus | null
+  onFocus: (focus: TaskFocus | null) => void
+  aiEnabled: boolean
 }
 
 export function Composer({
@@ -35,9 +42,72 @@ export function Composer({
   manualDue,
   onManualClient,
   onManualDue,
+  focus,
+  onFocus,
+  aiEnabled,
 }: Props) {
   const today = todayISO()
   const inputRef = useRef<HTMLInputElement>(null)
+  const [ai, setAi] = useState<ParsedCapture | null>(null)
+  const [aiBusy, setAiBusy] = useState(false)
+  const [aiError, setAiError] = useState<string | null>(null)
+  const appliedFor = useRef<string | null>(null)
+
+  // Claude reads the line 500ms after typing stops. The local parser still runs
+  // underneath, so capture keeps working when the agent or the key is missing.
+  useEffect(() => {
+    if (!aiEnabled) return
+    const text = title.trim()
+    if (text.length < 4) {
+      setAi(null)
+      return
+    }
+    const controller = new AbortController()
+    const timer = setTimeout(() => {
+      setAiBusy(true)
+      setAiError(null)
+      parseCapture(
+        text,
+        clients.map((client) => ({ id: client.id, name: client.name })),
+        controller.signal,
+      )
+        .then((result) => {
+          setAi(result.parsed)
+        })
+        .catch((error) => {
+          if ((error as Error).name === 'AbortError') return
+          setAi(null)
+          setAiError((error as Error).message === 'agent-offline' ? null : 'Claude could not read that line')
+        })
+        .finally(() => setAiBusy(false))
+    }, 500)
+    return () => {
+      controller.abort()
+      clearTimeout(timer)
+    }
+  }, [title, aiEnabled, clients])
+
+  function applyAi() {
+    if (!ai) return
+    appliedFor.current = title
+    if (ai.clientId) {
+      onManualClient()
+      onClient(ai.clientId)
+    }
+    if (ai.dueDate) {
+      onManualDue()
+      onDue(ai.dueDate)
+    }
+    if (ai.start) {
+      const start = new Date(ai.start)
+      if (!Number.isNaN(start.getTime())) {
+        onFocus({ start: start.toISOString(), durationMin: ai.durationMin ?? 60 })
+      }
+    } else if (ai.durationMin && focus) {
+      onFocus({ ...focus, durationMin: ai.durationMin })
+    }
+    if (ai.title && ai.title !== title) onTitle(ai.title)
+  }
 
   const guess = useMemo(
     () => (title.trim() ? parseTaskInput(title, clients, clientId, today) : null),
@@ -104,7 +174,29 @@ export function Composer({
             Add task
           </button>
         </div>
-        {guessLabel && <p className="composer-hint">Detected: {guessLabel}</p>}
+        {guessLabel && !ai && <p className="composer-hint">Detected: {guessLabel}</p>}
+        {aiBusy && !ai && <p className="composer-hint">Reading the line…</p>}
+        {aiError && <p className="composer-hint">{aiError}</p>}
+        {ai && appliedFor.current !== title && (
+          <div className="ai-suggest">
+            <div className="ai-chips">
+              <span className="ai-chip strong">{ai.title || title}</span>
+              {ai.clientId && (
+                <span className="ai-chip">
+                  {ai.clientId === PERSONAL_ID
+                    ? 'Personal'
+                    : clients.find((client) => client.id === ai.clientId)?.name ?? ai.clientId}
+                </span>
+              )}
+              {ai.durationMin && <span className="ai-chip">{formatDuration(ai.durationMin)}</span>}
+              {ai.start && <span className="ai-chip">{formatDayClock(ai.start)}</span>}
+              {ai.dueDate && <span className="ai-chip">due {formatDue(ai.dueDate, today)}</span>}
+            </div>
+            <button type="button" className="text-btn" onClick={applyAi}>
+              Use this
+            </button>
+          </div>
+        )}
         <div className="composer-meta">
           <label className="field">
             <span>Client</span>
@@ -128,6 +220,7 @@ export function Composer({
             />
           </label>
         </div>
+        <FocusPicker value={focus} onChange={onFocus} compact />
       </div>
     </form>
   )

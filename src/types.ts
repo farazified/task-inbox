@@ -8,6 +8,15 @@ export type Client = {
 
 export type TaskProgress = 'open' | 'doing' | 'done'
 
+/** A scheduled focus block, mirrored to Google Calendar by the focus agent. */
+export type TaskFocus = {
+  /** ISO instant the block starts. */
+  start: string
+  durationMin: number
+  /** Google Calendar event id once the agent has pushed it. */
+  eventId?: string
+}
+
 export type Task = {
   id: string
   title: string
@@ -17,11 +26,21 @@ export type Task = {
   done: boolean
   progress: TaskProgress
   notes?: string
+  /** How long this task takes, set before it has a slot. Minutes. */
+  durationMin?: number
+  focus?: TaskFocus
   createdAt: number
   updatedAt?: number
 }
 
-export type ViewMode = 'table' | 'kanban' | 'calendar' | 'list'
+export type ViewMode =
+  | 'table'
+  | 'kanban'
+  | 'calendar'
+  | 'timeline'
+  | 'list'
+  | 'insights'
+  | 'settings'
 
 export type Prefs = {
   lastClientId: string

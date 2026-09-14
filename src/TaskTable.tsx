@@ -2,6 +2,7 @@ import { type CSSProperties } from 'react'
 import { formatDueDate, todayISO } from './dates'
 import { ClientPicker } from './ClientPicker'
 import { DuePicker } from './DuePicker'
+import { DurationPicker } from './DurationPicker'
 import { StatusPicker } from './StatusPicker'
 import { STATUS_LABELS, taskStatus } from './taskStatus'
 import { groupOpenTasksByDue } from './taskGroups'
@@ -20,11 +21,14 @@ export function TaskTable({
   onOpen,
   onClientChange,
   onDueChange,
+  onDurationChange,
   onDelete,
 }: TaskViewProps) {
   const today = todayISO()
   const groups = groupOpenTasksByDue(tasks, today)
-  const done = hideCompleted ? [] : tasks.filter((task) => task.done).sort((a, b) => b.createdAt - a.createdAt)
+  const done = hideCompleted
+    ? []
+    : tasks.filter((task) => task.done).sort((a, b) => b.createdAt - a.createdAt)
   const sections: { id: string; groupClass: string; label: string; items: Task[] }[] = [
     ...groups.map((group) => ({
       id: group.group,
@@ -66,6 +70,7 @@ export function TaskTable({
                     <th>Client</th>
                     <th>Status</th>
                     <th>Due date</th>
+                    <th>Duration</th>
                     {onDelete && <th className="col-actions"> </th>}
                   </tr>
                 </thead>
@@ -81,6 +86,7 @@ export function TaskTable({
                       onOpen={onOpen}
                       onClientChange={onClientChange}
                       onDueChange={onDueChange}
+                      onDurationChange={onDurationChange}
                       onDelete={onDelete}
                     />
                   ))}
@@ -103,6 +109,7 @@ function TaskRow({
   onOpen,
   onClientChange,
   onDueChange,
+  onDurationChange,
   onDelete,
 }: {
   task: TaskViewProps['tasks'][number]
@@ -113,6 +120,7 @@ function TaskRow({
   onOpen: TaskViewProps['onOpen']
   onClientChange?: TaskViewProps['onClientChange']
   onDueChange?: TaskViewProps['onDueChange']
+  onDurationChange?: TaskViewProps['onDurationChange']
   onDelete?: TaskViewProps['onDelete']
 }) {
   const client = clientLabel(task.clientId, clients)
@@ -175,6 +183,17 @@ function TaskRow({
           />
         ) : (
           formatDueDate(task.dueDate, today)
+        )}
+      </td>
+      <td className="cell-edit cell-duration" onClick={(event) => event.stopPropagation()}>
+        {onDurationChange ? (
+          <DurationPicker
+            compact
+            value={task.durationMin ?? task.focus?.durationMin}
+            onChange={(minutes) => onDurationChange(task.id, minutes)}
+          />
+        ) : (
+          '—'
         )}
       </td>
       {onDelete && (
