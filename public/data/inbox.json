@@ -780,8 +780,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "insights",
+    "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789403986351
+    "updatedAt": 1789403994042
   }
 }
