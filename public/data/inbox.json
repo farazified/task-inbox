@@ -780,8 +780,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "timeline",
+    "viewMode": "list",
     "defaultsVersion": 1,
-    "updatedAt": 1789404263826
+    "updatedAt": 1789404269465
   }
 }
