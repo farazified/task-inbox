@@ -53,6 +53,20 @@
   ],
   "tasks": [
     {
+      "id": "3fb81b23-7f31-4572-9879-a187d21c7536",
+      "title": "Focus system smoke test",
+      "clientId": "personal",
+      "dueDate": null,
+      "done": false,
+      "progress": "open",
+      "focus": {
+        "start": "2026-09-14T13:04:00.000Z",
+        "durationMin": 25
+      },
+      "createdAt": 1789390990810,
+      "updatedAt": 1789390990810
+    },
+    {
       "id": "86a11c18-52fa-46f3-bfba-3cf961be9573",
       "title": "SEO sprint",
       "clientId": "andor-willow",
@@ -774,6 +788,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789390958226
+    "updatedAt": 1789390991510
   }
 }
