@@ -3,37 +3,37 @@
     {
       "id": "andor-willow",
       "name": "Andor Willow",
-      "color": "#7c9cff"
+      "color": "#f5c563"
     },
     {
       "id": "wired4signs-usa",
       "name": "Wired4Signs USA",
-      "color": "#5eead4"
+      "color": "#f472b6"
     },
     {
       "id": "snyders-furniture",
       "name": "Snyder's Furniture",
-      "color": "#f5c563"
+      "color": "#a78bfa"
     },
     {
       "id": "elizabetta",
       "name": "Elizabetta",
-      "color": "#f472b6"
+      "color": "#34d399"
     },
     {
       "id": "fibropool",
       "name": "FibroPool",
-      "color": "#a78bfa"
+      "color": "#fb923c"
     },
     {
       "id": "electric-ride-on-cars",
       "name": "Electric Ride-On Cars",
-      "color": "#34d399"
+      "color": "#38bdf8"
     },
     {
       "id": "qbounce-sport",
       "name": "Qbounce Sport",
-      "color": "#fb923c"
+      "color": "#fb7185"
     },
     {
       "id": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
@@ -59,7 +59,6 @@
       "dueDate": "2026-09-03",
       "done": true,
       "progress": "done",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -70,7 +69,6 @@
       "dueDate": "2026-09-06",
       "done": true,
       "progress": "done",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -81,7 +79,6 @@
       "dueDate": "2026-10-03",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -92,7 +89,6 @@
       "dueDate": "2026-10-06",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -103,7 +99,6 @@
       "dueDate": "2026-11-03",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -114,7 +109,6 @@
       "dueDate": "2026-11-06",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -125,7 +119,6 @@
       "dueDate": "2026-12-03",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -136,7 +129,6 @@
       "dueDate": "2026-12-06",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -147,12 +139,6 @@
       "dueDate": "2026-09-08",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
-      "focus": {
-        "start": "2026-09-15T08:00:00.000Z",
-        "durationMin": 240,
-        "eventId": "9gg9q25tpj0akjflq6fm91acl0"
-      },
       "createdAt": 1788361315453,
       "updatedAt": 1789404936863
     },
@@ -163,12 +149,6 @@
       "dueDate": "2026-09-15",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
-      "focus": {
-        "start": "2026-09-15T14:00:00.000Z",
-        "durationMin": 90,
-        "eventId": "ge0gnp91uf6anuhdr0kq0tvpn0"
-      },
       "createdAt": 1788361315454,
       "updatedAt": 1789404938272
     },
@@ -179,7 +159,6 @@
       "dueDate": "2026-10-08",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -190,7 +169,6 @@
       "dueDate": "2026-10-15",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -201,7 +179,6 @@
       "dueDate": "2026-11-08",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -212,7 +189,6 @@
       "dueDate": "2026-11-15",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -223,7 +199,6 @@
       "dueDate": "2026-12-08",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -234,7 +209,6 @@
       "dueDate": "2026-12-15",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -245,7 +219,6 @@
       "dueDate": "2026-09-09",
       "done": true,
       "progress": "done",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -256,12 +229,6 @@
       "dueDate": "2026-09-13",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
-      "focus": {
-        "start": "2026-09-15T12:15:00.000Z",
-        "durationMin": 90,
-        "eventId": "cu2emok96s6rn2s859q1ksuv30"
-      },
       "createdAt": 1788361315454,
       "updatedAt": 1789404937540
     },
@@ -272,7 +239,6 @@
       "dueDate": "2026-10-09",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -283,7 +249,6 @@
       "dueDate": "2026-10-13",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -294,7 +259,6 @@
       "dueDate": "2026-11-09",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -305,7 +269,6 @@
       "dueDate": "2026-11-13",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -316,7 +279,6 @@
       "dueDate": "2026-12-09",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -327,7 +289,6 @@
       "dueDate": "2026-12-13",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -338,7 +299,6 @@
       "dueDate": "2026-09-12",
       "done": true,
       "progress": "done",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -349,12 +309,6 @@
       "dueDate": "2026-09-16",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
-      "focus": {
-        "start": "2026-09-16T10:15:00.000Z",
-        "durationMin": 90,
-        "eventId": "12vrpk1lah25cbqinad08breqs"
-      },
       "createdAt": 1788361315454,
       "updatedAt": 1789404940615
     },
@@ -365,7 +319,6 @@
       "dueDate": "2026-10-12",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -376,7 +329,6 @@
       "dueDate": "2026-10-16",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -387,7 +339,6 @@
       "dueDate": "2026-11-12",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -398,7 +349,6 @@
       "dueDate": "2026-11-16",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -409,7 +359,6 @@
       "dueDate": "2026-12-12",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -420,7 +369,6 @@
       "dueDate": "2026-12-16",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -431,7 +379,6 @@
       "dueDate": "2026-09-13",
       "done": true,
       "progress": "done",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -442,12 +389,6 @@
       "dueDate": "2026-09-17",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
-      "focus": {
-        "start": "2026-09-17T08:00:00.000Z",
-        "durationMin": 90,
-        "eventId": "53l6sa4m2kdknjqv10uqv4el0g"
-      },
       "createdAt": 1788361315454,
       "updatedAt": 1789404941470
     },
@@ -458,7 +399,6 @@
       "dueDate": "2026-10-13",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -469,7 +409,6 @@
       "dueDate": "2026-10-17",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -480,7 +419,6 @@
       "dueDate": "2026-11-13",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -491,7 +429,6 @@
       "dueDate": "2026-11-17",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -502,7 +439,6 @@
       "dueDate": "2026-12-13",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -513,7 +449,6 @@
       "dueDate": "2026-12-17",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -524,12 +459,6 @@
       "dueDate": "2026-09-23",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
-      "focus": {
-        "start": "2026-09-21T08:00:00.000Z",
-        "durationMin": 240,
-        "eventId": "tsrqi1e9jn9naqsvksemf73kb0"
-      },
       "createdAt": 1788361315453,
       "updatedAt": 1789404946241
     },
@@ -540,12 +469,6 @@
       "dueDate": "2026-09-27",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
-      "focus": {
-        "start": "2026-09-21T16:30:00.000Z",
-        "durationMin": 90,
-        "eventId": "l1tbrtdebs06lc8v1jk9036iok"
-      },
       "createdAt": 1788361315454,
       "updatedAt": 1789404951267
     },
@@ -556,7 +479,6 @@
       "dueDate": "2026-10-23",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -567,7 +489,6 @@
       "dueDate": "2026-10-27",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -578,7 +499,6 @@
       "dueDate": "2026-11-23",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -589,7 +509,6 @@
       "dueDate": "2026-11-27",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -600,7 +519,6 @@
       "dueDate": "2026-12-23",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -611,7 +529,6 @@
       "dueDate": "2026-12-27",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -622,12 +539,6 @@
       "dueDate": "2026-09-26",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
-      "focus": {
-        "start": "2026-09-21T12:15:00.000Z",
-        "durationMin": 240,
-        "eventId": "vmf31kt2u05pt4qf9um0idprao"
-      },
       "createdAt": 1788361315453,
       "updatedAt": 1789404950597
     },
@@ -638,7 +549,6 @@
       "dueDate": "2026-09-30",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -649,7 +559,6 @@
       "dueDate": "2026-10-26",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -660,7 +569,6 @@
       "dueDate": "2026-10-30",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -671,7 +579,6 @@
       "dueDate": "2026-11-26",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -682,7 +589,6 @@
       "dueDate": "2026-11-30",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -693,7 +599,6 @@
       "dueDate": "2026-12-26",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -704,7 +609,6 @@
       "dueDate": "2026-12-30",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -715,7 +619,6 @@
       "dueDate": "2026-09-30",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -726,7 +629,6 @@
       "dueDate": "2026-10-04",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -737,7 +639,6 @@
       "dueDate": "2026-10-31",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -748,7 +649,6 @@
       "dueDate": "2026-11-04",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -759,7 +659,6 @@
       "dueDate": "2026-11-30",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -770,7 +669,6 @@
       "dueDate": "2026-12-04",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -781,7 +679,6 @@
       "dueDate": "2026-12-31",
       "done": false,
       "progress": "open",
-      "durationMin": 240,
       "createdAt": 1788361315453,
       "updatedAt": 1789404719155
     },
@@ -792,7 +689,6 @@
       "dueDate": "2027-01-04",
       "done": false,
       "progress": "open",
-      "durationMin": 90,
       "createdAt": 1788361315454,
       "updatedAt": 1789404719155
     },
@@ -803,12 +699,6 @@
       "dueDate": "2026-09-02",
       "done": false,
       "progress": "open",
-      "durationMin": 60,
-      "focus": {
-        "start": "2026-09-15T15:45:00.000Z",
-        "durationMin": 60,
-        "eventId": "k2rt9unj12u99m6m0bvcvim14c"
-      },
       "createdAt": 1788342597548,
       "updatedAt": 1789404939266
     },
@@ -829,12 +719,6 @@
       "dueDate": "2026-09-02",
       "done": false,
       "progress": "open",
-      "durationMin": 60,
-      "focus": {
-        "start": "2026-09-14T17:45:00.000Z",
-        "durationMin": 60,
-        "eventId": "ek8e5c0bh9g4leeq48todglgrk"
-      },
       "createdAt": 1788342518365,
       "updatedAt": 1789404936166
     },
@@ -845,7 +729,6 @@
       "dueDate": "2026-09-02",
       "done": true,
       "progress": "done",
-      "durationMin": 60,
       "createdAt": 1788342485393,
       "updatedAt": 1789404719155
     },
@@ -856,12 +739,6 @@
       "dueDate": null,
       "done": false,
       "progress": "open",
-      "durationMin": 60,
-      "focus": {
-        "start": "2026-09-14T16:25:13.000Z",
-        "durationMin": 60,
-        "eventId": "liv7lj8sgpd2a5bc9em2602tcg"
-      },
       "createdAt": 1788342123727,
       "updatedAt": 1789403242970
     },
@@ -899,6 +776,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789414764406
+    "updatedAt": 1789415433252
   }
 }
