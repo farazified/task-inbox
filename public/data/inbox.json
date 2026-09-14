@@ -154,7 +154,7 @@
         "eventId": "9gg9q25tpj0akjflq6fm91acl0"
       },
       "createdAt": 1788361315453,
-      "updatedAt": 1789404936861
+      "updatedAt": 1789404936863
     },
     {
       "id": "d0ec0e51-04bc-4581-9ecf-38d7301baeab",
@@ -899,6 +899,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789404986369
+    "updatedAt": 1789404993088
   }
 }
