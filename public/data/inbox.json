@@ -53,6 +53,20 @@
   ],
   "tasks": [
     {
+      "id": "resize-test-1",
+      "title": "Resize probe",
+      "clientId": "personal",
+      "dueDate": null,
+      "done": false,
+      "progress": "open",
+      "focus": {
+        "start": "2026-09-16T06:00:00.000Z",
+        "durationMin": 120
+      },
+      "createdAt": 1789391493223,
+      "updatedAt": 1789391506880
+    },
+    {
       "id": "86a11c18-52fa-46f3-bfba-3cf961be9573",
       "title": "SEO sprint",
       "clientId": "andor-willow",
@@ -761,20 +775,6 @@
       "progress": "done",
       "createdAt": 1788341601367,
       "updatedAt": 1788378397292
-    },
-    {
-      "id": "resize-test-1",
-      "title": "Resize probe",
-      "clientId": "personal",
-      "dueDate": null,
-      "done": false,
-      "progress": "open",
-      "focus": {
-        "start": "2026-09-16T06:00:00.000Z",
-        "durationMin": 60
-      },
-      "createdAt": 1789391493223,
-      "updatedAt": 1789391493223
     }
   ],
   "deletedTaskIds": [
@@ -792,6 +792,6 @@
     "hideCompleted": false,
     "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789391499218
+    "updatedAt": 1789391507509
   }
 }
