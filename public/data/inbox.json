@@ -3,37 +3,37 @@
     {
       "id": "andor-willow",
       "name": "Andor Willow",
-      "color": "#7c9cff"
+      "color": "#f5c563"
     },
     {
       "id": "wired4signs-usa",
       "name": "Wired4Signs USA",
-      "color": "#5eead4"
+      "color": "#f472b6"
     },
     {
       "id": "snyders-furniture",
       "name": "Snyder's Furniture",
-      "color": "#f5c563"
+      "color": "#a78bfa"
     },
     {
       "id": "elizabetta",
       "name": "Elizabetta",
-      "color": "#f472b6"
+      "color": "#34d399"
     },
     {
       "id": "fibropool",
       "name": "FibroPool",
-      "color": "#a78bfa"
+      "color": "#fb923c"
     },
     {
       "id": "electric-ride-on-cars",
       "name": "Electric Ride-On Cars",
-      "color": "#34d399"
+      "color": "#38bdf8"
     },
     {
       "id": "qbounce-sport",
       "name": "Qbounce Sport",
-      "color": "#fb923c"
+      "color": "#fb7185"
     },
     {
       "id": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
@@ -57,10 +57,10 @@
       "title": "SEO sprint",
       "clientId": "andor-willow",
       "dueDate": "2026-09-03",
-      "done": false,
-      "progress": "open",
+      "done": true,
+      "progress": "done",
       "createdAt": 1788361315453,
-      "updatedAt": 1788361315453
+      "updatedAt": 1789395698598
     },
     {
       "id": "17a6a667-ebbd-4192-8e8f-c094b943d68a",
@@ -217,10 +217,10 @@
       "title": "SEO sprint",
       "clientId": "qbounce-sport",
       "dueDate": "2026-09-09",
-      "done": false,
-      "progress": "open",
+      "done": true,
+      "progress": "done",
       "createdAt": 1788361315453,
-      "updatedAt": 1788361315453
+      "updatedAt": 1789395701984
     },
     {
       "id": "538da07e-3794-4402-9f30-665ec582b1b6",
@@ -297,10 +297,10 @@
       "title": "SEO sprint",
       "clientId": "fibropool",
       "dueDate": "2026-09-12",
-      "done": false,
-      "progress": "open",
+      "done": true,
+      "progress": "done",
       "createdAt": 1788361315453,
-      "updatedAt": 1788361315453
+      "updatedAt": 1789395705145
     },
     {
       "id": "1057f2a0-c51b-4d2d-9420-d753a5450390",
@@ -780,8 +780,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "settings",
+    "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789395647793
+    "updatedAt": 1789395705772
   }
 }
