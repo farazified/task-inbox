@@ -62,10 +62,11 @@
       "durationMin": 30,
       "focus": {
         "start": "2026-09-15T10:00:00.000Z",
-        "durationMin": 30
+        "durationMin": 30,
+        "eventId": "p4jpcrklaurge9b982u6evkb1k"
       },
       "createdAt": 1789414502642,
-      "updatedAt": 1789414502642
+      "updatedAt": 1789414503604
     },
     {
       "id": "86a11c18-52fa-46f3-bfba-3cf961be9573",
@@ -914,6 +915,6 @@
     "hideCompleted": false,
     "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789414503254
+    "updatedAt": 1789414504872
   }
 }
