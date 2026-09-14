@@ -780,8 +780,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "table",
+    "viewMode": "kanban",
     "defaultsVersion": 1,
-    "updatedAt": 1789395638214
+    "updatedAt": 1789395640529
   }
 }
