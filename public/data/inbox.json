@@ -53,6 +53,21 @@
   ],
   "tasks": [
     {
+      "id": "d1375a51-fbdf-475a-ad86-2f0bd2495e2c",
+      "title": "Meeting",
+      "clientId": "personal",
+      "dueDate": "2026-09-15",
+      "done": false,
+      "progress": "open",
+      "durationMin": 30,
+      "focus": {
+        "start": "2026-09-15T10:00:00.000Z",
+        "durationMin": 30
+      },
+      "createdAt": 1789414502642,
+      "updatedAt": 1789414502642
+    },
+    {
       "id": "86a11c18-52fa-46f3-bfba-3cf961be9573",
       "title": "SEO sprint",
       "clientId": "andor-willow",
@@ -899,6 +914,6 @@
     "hideCompleted": false,
     "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789414152410
+    "updatedAt": 1789414503254
   }
 }
