@@ -53,6 +53,21 @@
   ],
   "tasks": [
     {
+      "id": "6894dd09-2e0d-4ef9-a082-4713e685c4be",
+      "title": "Focus block",
+      "clientId": "personal",
+      "dueDate": null,
+      "done": false,
+      "progress": "open",
+      "durationMin": 120,
+      "focus": {
+        "start": "2026-09-15T18:13:00.000Z",
+        "durationMin": 120
+      },
+      "createdAt": 1789496015966,
+      "updatedAt": 1789496015966
+    },
+    {
       "id": "d1375a51-fbdf-475a-ad86-2f0bd2495e2c",
       "title": "Meeting",
       "clientId": "personal",
@@ -914,6 +929,6 @@
     "hideCompleted": false,
     "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789495971945
+    "updatedAt": 1789496016614
   }
 }
