@@ -274,12 +274,11 @@
       "progress": "open",
       "durationMin": 90,
       "focus": {
-        "start": "2026-09-15T12:15:00.000Z",
-        "durationMin": 90,
-        "eventId": "cu2emok96s6rn2s859q1ksuv30"
+        "start": "2026-09-15T12:13:24.375Z",
+        "durationMin": 90
       },
       "createdAt": 1788361315454,
-      "updatedAt": 1789404937540
+      "updatedAt": 1789471538553
     },
     {
       "id": "6d155181-493c-4af6-9263-89cd23686828",
@@ -915,6 +914,6 @@
     "hideCompleted": false,
     "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789471533902
+    "updatedAt": 1789471539160
   }
 }
