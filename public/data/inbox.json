@@ -3,37 +3,37 @@
     {
       "id": "andor-willow",
       "name": "Andor Willow",
-      "color": "#f5c563"
+      "color": "#7c9cff"
     },
     {
       "id": "wired4signs-usa",
       "name": "Wired4Signs USA",
-      "color": "#f472b6"
+      "color": "#5eead4"
     },
     {
       "id": "snyders-furniture",
       "name": "Snyder's Furniture",
-      "color": "#a78bfa"
+      "color": "#f5c563"
     },
     {
       "id": "elizabetta",
       "name": "Elizabetta",
-      "color": "#34d399"
+      "color": "#f472b6"
     },
     {
       "id": "fibropool",
       "name": "FibroPool",
-      "color": "#fb923c"
+      "color": "#a78bfa"
     },
     {
       "id": "electric-ride-on-cars",
       "name": "Electric Ride-On Cars",
-      "color": "#38bdf8"
+      "color": "#34d399"
     },
     {
       "id": "qbounce-sport",
       "name": "Qbounce Sport",
-      "color": "#fb7185"
+      "color": "#fb923c"
     },
     {
       "id": "039422ec-301b-4c8f-8a22-ca76c6b86ed3",
@@ -904,6 +904,21 @@
       },
       "createdAt": 1789496015966,
       "updatedAt": 1789496015966
+    },
+    {
+      "id": "f48c1fce-8aec-4433-adee-3667722ea126",
+      "title": "Focus mode",
+      "clientId": "personal",
+      "dueDate": null,
+      "done": false,
+      "progress": "open",
+      "durationMin": 360,
+      "focus": {
+        "start": "2026-09-16T11:57:00.000Z",
+        "durationMin": 360
+      },
+      "createdAt": 1789559874757,
+      "updatedAt": 1789559874757
     }
   ],
   "deletedTaskIds": [
@@ -927,8 +942,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "table",
+    "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789549546429
+    "updatedAt": 1789559874830
   }
 }
