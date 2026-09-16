@@ -914,12 +914,8 @@
       "done": false,
       "progress": "open",
       "durationMin": 360,
-      "focus": {
-        "start": "2026-09-16T11:57:00.000Z",
-        "durationMin": 360
-      },
       "createdAt": 1789559874757,
-      "updatedAt": 1789559874757
+      "updatedAt": 1789579055832
     }
   ],
   "deletedTaskIds": [
@@ -945,6 +941,6 @@
     "hideCompleted": false,
     "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789579055007
+    "updatedAt": 1789579056574
   }
 }
