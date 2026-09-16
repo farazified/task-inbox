@@ -919,7 +919,7 @@
         "durationMin": 360
       },
       "createdAt": 1789559874757,
-      "updatedAt": 1789579055833
+      "updatedAt": 1789579055834
     }
   ],
   "deletedTaskIds": [
@@ -945,6 +945,6 @@
     "hideCompleted": false,
     "viewMode": "settings",
     "defaultsVersion": 1,
-    "updatedAt": 1789579303275
+    "updatedAt": 1789579313315
   }
 }
