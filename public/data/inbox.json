@@ -914,6 +914,10 @@
       "done": false,
       "progress": "open",
       "durationMin": 360,
+      "focus": {
+        "start": "2026-09-16T11:57:00.000Z",
+        "durationMin": 360
+      },
       "createdAt": 1789559874757,
       "updatedAt": 1789579055833
     }
@@ -941,6 +945,6 @@
     "hideCompleted": false,
     "viewMode": "settings",
     "defaultsVersion": 1,
-    "updatedAt": 1789579071576
+    "updatedAt": 1789579081435
   }
 }
