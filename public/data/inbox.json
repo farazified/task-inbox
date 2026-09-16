@@ -915,7 +915,7 @@
       "progress": "open",
       "durationMin": 360,
       "createdAt": 1789559874757,
-      "updatedAt": 1789579055832
+      "updatedAt": 1789579055837
     }
   ],
   "deletedTaskIds": [
@@ -941,6 +941,6 @@
     "hideCompleted": false,
     "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789579056574
+    "updatedAt": 1789579061524
   }
 }
