@@ -918,7 +918,7 @@
         "durationMin": 360
       },
       "createdAt": 1789559874757,
-      "updatedAt": 1789579055833
+      "updatedAt": 1789579055834
     }
   ],
   "deletedTaskIds": [
@@ -942,8 +942,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "timeline",
+    "viewMode": "settings",
     "defaultsVersion": 1,
-    "updatedAt": 1789579062915
+    "updatedAt": 1789579068530
   }
 }
