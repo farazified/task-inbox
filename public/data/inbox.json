@@ -910,15 +910,15 @@
       "title": "Focus mode",
       "clientId": "personal",
       "dueDate": null,
-      "done": false,
-      "progress": "open",
+      "done": true,
+      "progress": "done",
       "durationMin": 360,
       "focus": {
         "start": "2026-09-16T11:57:00.000Z",
         "durationMin": 360
       },
       "createdAt": 1789559874757,
-      "updatedAt": 1789579055833
+      "updatedAt": 1789579159548
     }
   ],
   "deletedTaskIds": [
@@ -942,8 +942,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "timeline",
+    "viewMode": "table",
     "defaultsVersion": 1,
-    "updatedAt": 1789579153551
+    "updatedAt": 1789579160199
   }
 }
