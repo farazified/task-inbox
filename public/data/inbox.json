@@ -275,10 +275,11 @@
       "durationMin": 90,
       "focus": {
         "start": "2026-09-15T12:13:24.375Z",
-        "durationMin": 90
+        "durationMin": 90,
+        "eventId": "cu2emok96s6rn2s859q1ksuv30"
       },
       "createdAt": 1788361315454,
-      "updatedAt": 1789471538553
+      "updatedAt": 1789579012641
     },
     {
       "id": "6d155181-493c-4af6-9263-89cd23686828",
@@ -918,7 +919,7 @@
         "durationMin": 360
       },
       "createdAt": 1789559874757,
-      "updatedAt": 1789579055833
+      "updatedAt": 1789579055837
     }
   ],
   "deletedTaskIds": [
@@ -942,8 +943,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "table",
+    "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789579117647
+    "updatedAt": 1789579120720
   }
 }
