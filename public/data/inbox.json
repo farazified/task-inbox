@@ -901,19 +901,18 @@
       "durationMin": 120,
       "focus": {
         "start": "2026-09-15T18:13:00.000Z",
-        "durationMin": 120,
-        "eventId": "37b9e2enfsqeac413jt3sid00s"
+        "durationMin": 120
       },
       "createdAt": 1789496015966,
-      "updatedAt": 1789605570056
+      "updatedAt": 1789496015966
     },
     {
       "id": "f48c1fce-8aec-4433-adee-3667722ea126",
       "title": "Focus mode",
       "clientId": "personal",
       "dueDate": null,
-      "done": true,
-      "progress": "done",
+      "done": false,
+      "progress": "open",
       "durationMin": 360,
       "focus": {
         "start": "2026-09-16T11:57:00.000Z",
@@ -921,7 +920,7 @@
         "eventId": "hlhet3j5bjs4kjtaq07n457mns"
       },
       "createdAt": 1789559874757,
-      "updatedAt": 1789605570052
+      "updatedAt": 1789605570042
     }
   ],
   "deletedTaskIds": [
@@ -945,8 +944,8 @@
   "prefs": {
     "lastClientId": "personal",
     "hideCompleted": false,
-    "viewMode": "settings",
+    "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789605667675
+    "updatedAt": 1789605726649
   }
 }
