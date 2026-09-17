@@ -920,7 +920,7 @@
         "eventId": "hlhet3j5bjs4kjtaq07n457mns"
       },
       "createdAt": 1789559874757,
-      "updatedAt": 1789605570043
+      "updatedAt": 1789605570042
     }
   ],
   "deletedTaskIds": [
@@ -946,6 +946,6 @@
     "hideCompleted": false,
     "viewMode": "timeline",
     "defaultsVersion": 1,
-    "updatedAt": 1789605662250
+    "updatedAt": 1789605665036
   }
 }
